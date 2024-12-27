@@ -1,0 +1,389 @@
+/*PC*/
+@media(min-width:1024px){
+
+}
+
+/* table  */
+@media  only screen and (min-width :740px ) and (max-width :1023px) {
+
+    .header{
+        padding: 0 0 0 10px ;
+    }
+
+    .nav-menu {
+        padding-left: 0;
+        font-size: 11px;
+    }
+    .nav-menu-item-link {
+        padding: 0;
+        /* margin: 0 4px; */
+    }
+
+    .header__nav-log-in, .header__nav-shopping-cart {
+        /* margin: 0 2px; */
+    }
+    .header__nav-right-search {
+        padding: 0 8px;
+    }
+    .header__nav-right-search::before{
+        right: -3px;
+    }
+    .header__nav-right-search,
+    .header__nav-shopping-cart,
+    .header__nav-log-in{
+        font-size: 11px;
+    }
+    .header__nav-shopping-cart::before{
+        right: 86px;
+    }
+
+    /* chỉnh ảnh  */
+    .backgroup_item-1,
+    .backgroup_item-2{
+        background-position: 30% ; /*dịch ảnh 30% theo chiều ngang và chiều dọc, dịch từ trái qua và từ trên xuống 30% */
+    }
+    .backgroup_item-3,
+    .backgroup_item-4,
+    .backgroup_item-5,
+    .backgroup_item-6{
+        background-position:center; /*lấy phần giữa*/
+    }
+    .application_wrap{
+        margin-top: 60px;
+    }
+    .application-content{
+        width: 52%;
+    }
+
+    .ezviz_show{
+        background-position: right;
+    }
+    .footer-top{
+        margin: 0 15px;
+    }
+
+    .footer-bottom__info-item-link{
+        font-size: 10px;
+        margin: 0 4px;
+    }
+    .footer-bottom-right-title,
+    .footer-bottom-right-language{
+        font-size: 10px;
+    }
+
+    /* camera security */
+    .section_wrap{
+        margin: 6px 20px;
+    }
+    .product-item {
+        width: calc(33.33% - 20px); 
+    }
+    .benefit-list{
+        margin: 30px 0 0 0;
+    }
+    .product_quantity{
+        padding: 0;
+    }
+
+    /* product-detail  */
+    .product-item-img{
+        width: 60%;
+    }
+}
+
+/* mobile  */
+@media only screen and (max-width: 739px){
+    .header{
+        padding: 0;
+        height: 50px;
+        background-color: var(--white-color);
+        color: var(--black-color);
+    }
+    .header__nav-logo{
+        padding-left: 20px;
+    }
+    .header__nav{
+        display: block;
+        line-height: 50px;
+        overflow: hidden;
+    }
+
+    .nav-menu{ 
+        display:block;
+        width: 100%;
+        padding: 0;
+    }
+    .nav-menu-item {
+        width: 100%;
+    }
+    .nav-menu-item-link {
+        margin: 0;
+        padding-left: 20px;
+        height: 50px;
+        align-items: center;
+        border-bottom: 1px solid var(--broder-color);
+    }
+
+    .header__nav-right{
+        display: block; 
+        /* position: absolute; */
+        margin-left: 0;
+        width: 100%;
+        background-color: var(--white-color);
+    }
+
+    .header__nav-shopping-cart::before{
+        display: none;
+    }
+    
+    .header__nav-right-search {
+        display: none;
+    }
+    .header__nav-log-in, .header__nav-shopping-cart {
+        margin: 0;
+        padding-left: 16px;
+        height: 50px;
+        border-bottom: 1px solid var(--broder-color);
+    }
+
+    .nav-menu-sub{
+        display: none;
+    }
+
+    .bars{
+        display: flex;
+    }
+    .angle-up{
+        display: flex;
+    }
+
+    .nav-menu-sub-mobile{
+        display: block;
+    }
+    /* ảnh nền  */
+    .container__silde-img{
+        height: 700px; 
+    }
+    .container__silde-conten{
+        top: 27%;
+        left: 10%;
+        right: 10%;
+        margin: 0;
+        text-align: center;
+        width: 84%;
+    }
+    .container__silde-conten-icon-next{
+        display: none;
+    }
+    .d-none{
+        display:inherit !important;
+    }
+
+    .icon__slide-next-left-right:hover{
+        color: var(--white-color);
+    }
+
+    .home__scenes-title{
+        font-size: 14px;
+        padding: 20px 14px 0;
+    }
+    .home__scenes-title h4{
+        font-size: 18px;
+    }
+    /* ẩn next slider 2 */
+    .button-slider-wrap{ 
+        display: none;
+    }
+
+    .button-slider-wrap-mobile{
+        display: flex;
+    }
+    
+    .button-detail{
+        height: 32px;
+        font-size: 10px;
+        width: 140px;
+    }
+    .product{
+        margin:  20px 0;
+        /* display: none; */
+    }
+    .product_list{
+        width: 100%;
+        padding: 0;
+    }
+    .product_list-item-title,
+    .product_list-item-detail,
+    .product_list-item-button {
+        opacity: 1;
+    }
+    .product_list-item{
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    .row{
+        margin: 0;
+    }
+    .product_list {
+        display: none; 
+    }
+    .product_list.active {
+        display: block; 
+    }
+    .application{
+        background-image: url('/assets/img/Bia_ung_dung_HoangCamPro_mobile.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 600px;
+        margin-top: 40px;
+    }
+    .application_wrap{
+        margin-top: 40px;
+        width: 100%;
+        margin-left: 0;
+        text-align: center;
+    }
+    .application-img{
+        height: 50px;
+        width: 70px;
+        border-radius: 20px;
+    }
+    .application-name{
+        font-size: 20px;
+        padding-bottom: 0;
+    }
+    .application-title{
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--white-color);
+    }
+    .application-content{
+        font-size: 14px;
+        color: var(--white-color);
+        width: 100%;
+        padding: 0 10px 20px;
+    }
+    .button{
+        width: 90px;
+    }
+    .room_news-wrap{
+        overflow-x: auto;/* cho phép cuộn ngang */
+    }
+
+    .room_news-wrap::-webkit-scrollbar {
+        height: 4px; /* chiều cao thanh cuộn ngang tin tức*/
+    }
+    .room_news-wrap::-webkit-scrollbar-track {
+        background: #f0f0f0; /* màu nền của track thanh cuộn */
+    }
+    
+    .room_news-wrap::-webkit-scrollbar-thumb {
+        background-color: var(--primary-color); /* màu của thanh kéo */
+        border-radius: 10px; 
+    }
+    .room_news-item {
+        flex: 0 0 auto; /* Đảm bảo phần tử không bị co lại */
+        width: 70%;
+    }
+    .room_news-item-name{
+        margin: 4px 0;
+        font-size: 14px;
+        height: 42px;
+    }
+    .room_news-item-content{
+        margin: 4px 0 20px;
+    }
+    .room_news-item{
+        border: none;
+    }
+    .room_news-item-content{
+        margin-bottom: 0;
+    }
+    .introduce_show{
+        position: relative;
+        place-items: center;
+        padding: 20px 0;
+    }
+    .introduce_show-title{
+        font-size: 20px;
+        padding-bottom: 8px;
+    }
+    .introduce_show-content{
+        width: 85%;
+        align-items: center;
+        padding: 4px 0;
+        text-align: justify;
+        line-height: 1.5;
+        margin-bottom: 10px;
+    }
+    .button.button-white{
+        background-color: var(--primary-color);
+        color: var(--white-color);
+    }
+
+    /* footer  */
+    .footer-top-left{
+        display: block;
+    }
+    .footer-top-left-items{
+        width: 100%;
+        /* float: left; */
+    }
+    .footer-top-right{
+        width: 100%;
+    }
+    .footer-top-right-heading-icon{
+        margin-bottom: 10px;
+        height: auto;
+        width: 100%;
+    }
+
+    .footer-bottom-right-title{
+        text-align: center;
+    }
+
+    /* camera security */
+    /* lọc sản phẩm  theo tiêu chí */
+    .filter {
+        display: none;
+    }
+    .header_security-img{
+        display: none;
+    }
+    .section_wrap{
+        margin: 68px 10px 0;
+    }
+    .product-item {
+        width: calc(50% - 20px); 
+    }
+    .sort-options-mobile{
+        margin-top: 10px;
+        display: flex;
+    }
+    .dropdown{
+        margin-top: -5px;
+    }
+
+    .sort-options-destop{
+        display: none;
+    }
+    /* product-detail  */
+    .product-item-img{
+        width: 60%;
+    }
+    .product-details{
+        padding: 0;
+    }
+    .section_wrap-product-detail{
+        margin: 58px 16px 0;
+    }
+    .product-detail{
+        padding: 0;
+    }
+    .benefit-list{
+        margin: 20px 0;
+    }
+    .feature-section-wrap {
+        margin-top: 0;
+        padding: 0;
+    }
+}

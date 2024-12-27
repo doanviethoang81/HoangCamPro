@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/head::head"></head>
+
+<body>
+<div th:replace="layout/header::header"></div>
+<!-- container -->
+<div class="header_security-img" style="margin-top: 68px;">
+  <img th:src="@{/fe/img/img_security_header.jpg}" alt="" class="w-100 d-block ">
+  <div class="note_img_header">
+    <h4>Camera An ninh </h4>
+    <p>Thời lượng pin siêu dài để bạn yên tâm sử dụng quanh năm.</p>
+  </div>
+</div>
+
+<div class="section_wrap" th:each="category : ${category}">
+  <nav class="breadcrumbb" style="margin-top: 18px">
+    <a href="/" class="breadcrumb-link text-secondary">Trang chủ </a>
+    <span class="breadcrumb-item">/ Camera an ninh /</span>
+    <span class="breadcrumb-item" th:text="${category.name}"></span>
+
+  </nav>
+  <div class="section_products">
+    <div class="row">
+     <div th:replace="@{layout/right}"></div>
+      <div class="col-md-9 col-sm-12 ">
+        <div class="product-section">
+          <h4 th:text="${category.name}"></h4>
+          <!--hiển thị trên desktop -->
+          <div class="sort-options sort-options-destop">
+            <span>Sắp xếp:</span>
+            <a href="#">Tên A → Z</a>
+            <a href="#">Tên Z → A</a>
+            <a href="#">Giá tăng dần</a>
+            <a href="#">Giá giảm dần</a>
+            <a href="#">Hàng mới</a>
+          </div>
+          <div class="sort-options sort-options-mobile"> <!--chỉ hiện trên mobile -->
+            <span>Sắp xếp:</span>
+            <div class="dropdown">
+              <button class="btn btn-light dropdown-toggle" type="button" id="dropdownSort"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                Tên A → Z
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownSort">
+                <li><a class="dropdown-item" href="#">Thứ tự </a></li>
+                <li><a class="dropdown-item" href="#">Tên A → Z</a></li>
+                <li><a class="dropdown-item" href="#">Tên Z → A</a></li>
+                <li><a class="dropdown-item" href="#">Giá tăng dần</a></li>
+                <li><a class="dropdown-item" href="#">Giá giảm dần</a></li>
+                <li><a class="dropdown-item" href="#">Hàng mới</a></li>
+              </ul>
+            </div>
+            <!-- loc san pham -->
+            <div class="product-filtering">
+              <button class="btn product-filtering-button" type="button" data-bs-toggle="offcanvas"
+                      data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                <i class="fa-solid fa-filter"></i>
+                Lọc
+              </button>
+              <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                   aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvasRightLabel">Tìm theo</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                          aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                  <div class="filter-mobile">
+                    <div class="filter-section">
+                      <h3>ĐỘ PHÂN GIẢI</h3>
+                      <label>
+                        <input type="radio" name="resolution" value="2MP">
+                        2MP
+                      </label>
+                      <label>
+                        <input type="radio" name="resolution" value="3MP">
+                        3MP
+                      </label>
+                      <label>
+                        <input type="radio" name="resolution" value="4MP">
+                        4MP
+                      </label>
+                      <label>
+                        <input type="radio" name="resolution" value="5MP">
+                        5MP
+                      </label>
+                    </div>
+                    <hr>
+                    <div class="filter-section">
+                      <h3>GIÁ</h3>
+                      <label>
+                        <input type="checkbox" name="price" value="under500k">
+                        Giá dưới 500.000₫
+                      </label>
+                      <label>
+                        <input type="checkbox" name="price" value="500k-1m">
+                        500.000₫ - 1.000.000₫
+                      </label>
+                      <label>
+                        <input type="checkbox" name="price" value="1m-1.5m">
+                        1.000.000₫ - 1.500.000₫
+                      </label>
+                      <label>
+                        <input type="checkbox" name="price" value="1.5m-2m">
+                        1.500.000₫ - 2.000.000₫
+                      </label>
+                      <label>
+                        <input type="checkbox" name="price" value="2m-3m">
+                        2.000.000₫ - 3.000.000₫
+                      </label>
+                      <label>
+                        <input type="checkbox" name="price" value="3m-5m">
+                        3.000.000₫ - 5.000.000₫
+                      </label>
+                      <label>
+                        <input type="checkbox" name="price" value="over5m">
+                        Giá trên 5.000.000₫
+                      </label>
+                    </div>
+                    <hr>
+                    <div class="filter-section">
+                      <h3>LOẠI SẢN PHẨM</h3>
+                      <label>
+                        <input type="checkbox" name="price" value="under500k">
+                        Camera cố định trong nhà
+                      </label>
+                      <label>
+                        <input type="checkbox" name="price" value="500k-1m">
+                        Camera trong nhà xoay 360
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-list">
+            <p th:if="${message}" th:text="${message}"></p>
+            <!-- Sản phẩm 1 -->
+            <div class="product-item" th:each="product : ${list}"  th:if="${list}" >
+              <a th:href="@{/product/product_detail/{name}(name=${product.name})}">
+                <span th:text="${product.id}" hidden></span>
+                <img th:src="@{${'/uploads/' + product.imageUrl}}"  class="product-item-img" th:alt="${product.name}">
+                <h3>
+                  <span th:text="${product.name}"></span>
+                </h3>
+                <div class="rating">★★★★★</div>
+                <p class="price">
+                  <span class="current-price">850.000₫</span>
+                  <span class="old-price">1.700.000₫</span>
+                  <span class="discount">-50%</span>
+                </p>
+                <a href="">
+                  <i class="fa-solid fa-cart-shopping "></i>
+                </a>
+              </a>
+            </div>
+          </div>
+          <!-- next sản phẩm  -->
+          <div class="pagination-wrap">
+            <nav aria-label="Page navigation example ">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">
+                       <i class="fa-solid fa-angle-left"
+                          style="color: #0d6efd; width: 100%;"></i>
+                    </span>
+                  </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">
+                       <i class="fa-solid fa-angle-right"
+                          style="color: #0d6efd; width: 100%;"></i>
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:replace ="layout/footer::footer"></div>
+
+<div th:replace ="layout/utilities::utilities"></div>
+
+<div th:replace="layout/script::script"></div>
+
+</body>
+
+</html>

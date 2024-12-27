@@ -1,0 +1,28 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Roboto ,sans-serif;
+}
+:root{
+    --primary-color: #519bff;
+    --white-color: #fff;
+    --black-color: #000;
+    --broder-color: #dfdcdc;
+    --price-color : #ed3324;
+    --primary-light-color: linear-gradient(90deg, rgb(84, 156, 255), rgb(141, 183, 249));
+
+    --header-height: 68px;
+    --sub-nav:180px;
+}
+a {
+    text-decoration: none;
+    list-style: none;
+    color: #000;
+}
+
+.text-white{
+    color: #fff;
+}
+.strikethrough {
+    text-decoration: line-through; /* Gạch ngang */
+}

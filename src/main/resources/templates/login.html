@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/head::head"></head>
+
+<body>
+<div th:replace="layout/header::header"></div>
+
+<div class="login">
+    <div class="login_left">
+        <img th:src="@{/fe/img/login.png}" alt="">
+    </div>
+    <div class="login_right">
+        <form th:action="@{/login}" method="post">
+            <p class="login_right-title">Đăng nhập</p>
+
+            <div>
+                <div class="form_login-name">
+                    <i class="fa-regular fa-user"></i>
+                    <input class="form_login-name-input" type="text" placeholder="Số điện thoại"
+                           name="name" value="0989706755">
+                </div>
+                <div class="form_login-password password-field">
+                    <i class="fa-solid fa-key"></i>
+                    <input class="form_login-password-input" type="password" id="password"
+                           name="password" placeholder="Mật khẩu" value="123456">
+                    <!-- <i class="fa-regular fa-eye look_password"></i> -->
+                    <i class="fa-regular fa-eye-slash look_password"></i>
+                </div>
+            </div>
+            <!-- Hiển thị lỗi đăng nhập -->
+            <div th:if="${session.error}" style="color: red; text-align: center; margin-bottom: 10px;">
+                <span th:text="${session.error}"></span>
+            </div>
+            <div class="">
+                <a href="#">
+                    <button type="submit" class="login_right-button">
+                        Đăng nhập
+                    </button>
+                </a>
+            </div>
+        </form>
+        <div style="display: flex; justify-content: center; margin-top:14px; ">
+            Bạn chưa có tài khoản?
+            <a th:href="@{/register}" style="color: #519bff; padding-left: 4px;">Đăng ký </a>
+        </div>
+        <div style="display: flex; justify-content: center; ">
+            <a href="#" style="color: #519bff;">Quên mật khẩu?</a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="layout/script::script"></div>
+</body>
+
+</html>

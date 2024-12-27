@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/head::head"></head>
+
+<body>
+<div th:replace="layout/header::header"></div>
+<!-- main -->
+<div class="section_wrap-profile-detail ">
+  <main>
+    <form class="form-profile" enctype="multipart/form-data">
+      <div class="row-profile">
+        <label class="form-label">Tên: </label>
+        <span th:text="${user.name}"></span>
+      </div>
+      <div class="row-profile">
+        <label  class="form-label">Số điện thoại</label>
+        <span th:text="${user.phone}"></span>
+      </div>
+      <div class="row-profile">
+        <label  class="form-label">Địa chỉ</label>
+        <span th:text="${user.address}"></span>
+      </div>
+      <div class="row-profile">
+        <label  class="form-label">Ngày sinh</label>
+        <span th:text="${formattedDateOfBirth}"></span>
+      </div>
+      <div class="btn-profile  ">
+        <a th:href="@{/profile/edit-profile}">
+            Chỉnh sửa thông tin
+        </a>
+      </div>
+    </form>
+  </main>
+
+
+</div>
+<!--footer -->
+<div th:replace="layout/footer::footer"></div>
+
+<!--các nút liên hệ ... -->
+<div th:replace="layout/utilities::utilities"></div>
+
+<!--script -->
+<div th:replace="layout/script::script"></div>
+</body>
+
+</html>

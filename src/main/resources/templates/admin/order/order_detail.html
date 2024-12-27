@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head::head"></head>
+<body>
+
+<!-- SIDEBAR -->
+<section id="sidebar" >
+  <a href="#" class="brand ">
+    <i class='bx bxs-smile'></i>
+    <span class="text">ADMIN</span>
+  </a>
+  <ul class="side-menu top">
+    <li >
+      <a th:href="@{/admin/product}">
+        <i class='bx bxs-dashboard'></i>
+        <span class="text">Quản lý sản phẩm</span>
+      </a>
+    </li>
+    <li class="active">
+      <a th:href="@{/admin/order}">
+        <i class='bx bxs-shopping-bag-alt'></i>
+        <span class="text">Quản lý đơn hàng</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/admin/user}">
+        <i class='bx bxs-doughnut-chart'></i>
+        <span class="text">Quản lý người dùng</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/admin/profile}">
+        <i class='bx bxs-group'></i>
+        <span class="text">Hồ sơ</span>
+      </a>
+    </li>
+  </ul>
+  <ul class="side-menu">
+    <li>
+      <a th:href="@{/logout}" class="logout">
+        <i class='bx bxs-log-out-circle'></i>
+        <span class="text">Đăng xuất</span>
+      </a>
+    </li>
+  </ul>
+
+
+</section>
+
+<!-- CONTENT -->
+
+<section id="content">
+  <!--    header -->
+  <nav th:replace="admin/fragments/header::header"> </nav>
+  <!-- MAIN -->
+  <main>
+    <div class="head-title">
+      <div class="left">
+        <h1>Chi tiết đơn hàng</h1>
+      </div>
+      <a th:href="@{/admin/order}" class="btn-download">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span class="text">Quay lại</span>
+      </a>
+    </div>
+    <div class="pd-product-details" >
+      <p class="">
+        <strong>Tên người đặt hàng</strong>
+      </p>
+      <p class="pd-value" th:text="${order.recipientName}"></p>
+      <p class="pd-title">
+        <strong>Số điện thoại</strong>
+      </p>
+      <p class="pd-value" th:text="${order.recipientPhone}"></p>
+
+      <p class="pd-title">
+        <strong>Địa chỉ</strong>
+      </p>
+      <p class="pd-value" th:text="${order.recipientAddress}">Hoang Cam</p>
+<!--note-->
+      <p class="pd-title">
+        <strong>Ngày đặt</strong>
+      </p>
+      <p class="pd-value" th:text="${order.date}">Hoang Cam</p>
+      <p class="pd-title">
+        <strong>Trạng thái đơn hàng</strong>
+      </p>
+      <p class="pd-value" th:text="${order.status}"></p>
+      <p class="pd-title">
+        <strong>Ghi chú của khách</strong>
+      </p>
+      <p class="pd-value" th:text="${order.note}"></p>
+      <p class="pd-title">
+        <strong>Tổng tiền</strong>
+      </p>
+      <p class="pd-value" th:text="${#numbers.formatInteger(order.totalMoney,3,'POINT')} + 'đ'" ></p>
+
+      <p class="pd-title">
+        <strong>Các sản phẩm đã đặt </strong>
+      </p>
+      <table class="custom-table custom-table-striped custom-table-hover custom-table-bordered">
+        <thead class="custom-table-header">
+          <tr>
+            <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Mã sản phẩm</th>
+            <th scope="col">Loại sản phẩm</th>
+            <th scope="col">Số lượng </th>
+            <th scope="col">Giá </th>
+            <th scope="col">Tổng tiền</th>
+          </tr>
+        </thead>
+        <tbody  th:each="orderDetail : ${listOrderDetail}">
+          <tr>
+            <td th:text="${orderDetail.product.product.name}"></td>
+            <td th:text="${orderDetail.product.sku}"></td>
+            <td th:text="${orderDetail.product.storage}"></td>
+            <td th:text="${orderDetail.numberOfProducts}"></td>
+            <td th:text="${#numbers.formatInteger(orderDetail.price,3,'POINT')} + 'đ'"></td>
+            <td th:text="${#numbers.formatInteger(orderDetail.totalPrice,3,'POINT')} + 'đ'"></td>
+<!--            <td th:text="${#numbers.formatCurrency(orderDetail.totalPrice)}"></td>-->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</section>
+
+<script th:src="@{/assets/js/script.js}"></script>
+</body>
+
+</html>

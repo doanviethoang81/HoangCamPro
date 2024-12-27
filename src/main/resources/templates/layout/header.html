@@ -1,0 +1,251 @@
+<div class="header header--white" th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml"
+     xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div class="header__nav ">
+        <div class="header__nav-logo">
+            <div class="header__nav-logo-img">
+                <a th:href="@{/}">
+                    <picture>
+                        <source media="(max-width:739px)" th:srcset="@{/fe/img/logo.svg}">
+                        <img id="logo" th:src="@{/fe/img/logo_white.svg}" alt="logo">
+                    </picture>
+                </a>
+            </div>
+        </div>
+        <div class="header__nav-menu ">
+            <ul class="nav-menu ">
+                <li class="nav-menu-item ">
+                    <a href="#" class="nav-menu-item-link nav-menu-item-link-mobile header--white ">
+                        Camera An Ninh
+                    </a>
+
+                    <!-- sub nav 1 -->
+                    <div class="nav-menu-sub slick-slider">
+                        <div class="nav_menu-sub--inner ">
+                            <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Camera Wi-Fi Trong Nhà')}">
+<!--                                <a th:href="@{/product/product_security_home}">-->
+                                <img loading="lazy" th:src="@{/fe/img/Camera_An_Ninh_camera_Wi-Fi_trong_nha.png}"
+                                     class="nav_menu-sub-img" alt="">
+                                <p class="nav_menu-sub--title">Camera Wi-Fi Trong Nhà</p>
+                            </a>
+                        </div>
+                        <div class="nav_menu-sub--inner">
+                            <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Camera Wi-Fi Ngoài Trời')}">
+
+                                <img loading="lazy" th:src="@{/fe/img/Camera_An_Ninh_camera_ngoai_troi.png}" alt=""
+                                     class="nav_menu-sub-img">
+                                <p class="nav_menu-sub--title">Camera Wi-Fi Ngoài Trời</p>
+                            </a>
+                        </div>
+                        <div class="nav_menu-sub--inner">
+                            <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Camera Pin sạc')}">
+
+                            <img loading="lazy" th:src="@{/fe/img/Camera_An_Ninh_Camera_pin_sac.png}" alt=""
+                                     class="nav_menu-sub-img">
+                                <p class="nav_menu-sub--title">Camera Pin sạc</p>
+                            </a>
+                        </div>
+                        <div class="nav_menu-sub--inner">
+                            <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Camera PoE')}">
+
+                            <img loading="lazy" th:src="@{/fe/img/Camera_An_Ninh_camera_poe.png}" alt="" class="nav_menu-sub-img">
+                                <p class="nav_menu-sub--title">Camera PoE</p>
+                            </a>
+                        </div>
+                        <div class="nav_menu-sub--inner">
+                            <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Phụ Kiện')}">
+
+                            <img loading="lazy" th:src="@{/fe/img/Camera_An_Ninh_phu_kien.png}" alt="" class="nav_menu-sub-img">
+                                <p class="nav_menu-sub--title">Phụ Kiện</p>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- NAV mobile 1 -->
+                    <div class="nav-menu-sub-mobile">
+                        <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Camera Wi-Fi Trong Nhà')}">
+                            <p class="nav-menu-sub-mobile-title">Camera Wi-Fi Trong Nhà</p>
+                        </a>
+                        <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Camera Wi-Fi Ngoài Trời')}">
+                            <p class="nav-menu-sub-mobile-title">Camera Wi-Fi Ngoài Trời</p>
+                        </a>
+                        <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Camera Wi-Fi Pin sạc')}">
+                            <p class="nav-menu-sub-mobile-title">Camera Pin sạc</p>
+                        </a>
+                        <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Camera PoE')}">
+                            <p class="nav-menu-sub-mobile-title">Camera Poe</p>
+                        </a>
+                        <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Phụ Kiện')}">
+                            <p class="nav-menu-sub-mobile-title">Phụ Kiện</p>
+                        </a>
+                        <a href="">
+                            <p class="nav-menu-sub-mobile-title nav-menu-sub-mobile-all-product">Tất cả sản phẩm</p>
+                        </a>
+                    </div>
+                    <div class="angle-up">
+                        <i class="fa-solid fa-angle-down"></i>
+                    </div>
+
+                </li>
+                <li class="nav-menu-item">
+                    <a th:href="@{/category_smart_home}"
+                       class="nav-menu-item-link nav-menu-item-link-mobile header--white ">
+                        Nhà Thông Minh
+                    </a>
+                    <!-- sub nav 2  -->
+                    <div class="nav-menu-sub slick-slider">
+                        <div class="nav_menu-sub--inner ">
+                            <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Khóa và Chuông cửa')}">
+                                <img loading="lazy" th:src="@{/fe/img/Khoa_Va_Chuong_Cua.png}" class="nav_menu-sub-img" alt="">
+                                <p class="nav_menu-sub--title">Khóa và Chuông cửa</p>
+                            </a>
+                        </div>
+                        <div class="nav_menu-sub--inner">
+                            <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Thiết bị nhà thông minh')}">
+                                <img loading="lazy" th:src="@{/fe/img/Thiet_bi_nha_thong_minh.jpg}" alt="" class="nav_menu-sub-img">
+                                <p class="nav_menu-sub--title">Thiết bị nhà thông minh</p>
+                            </a>
+                        </div>
+                        <div class="nav_menu-sub--inner">
+                            <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Cảnh báo và Cảm biến')}">
+                                <img loading="lazy" th:src="@{/fe/img/Canh_bao_va_cam_bien.png}" alt="" class="nav_menu-sub-img">
+                                <p class="nav_menu-sub--title">Cảnh báo & Cảm biến</p>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- NAV mobile  -->
+                    <div class="nav-menu-sub-mobile">
+                        <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Khóa và Chuông cửa')}">
+                            <p class="nav-menu-sub-mobile-title">Khóa và Chuông cửa</p>
+                        </a>
+                        <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Thiết bị nhà thông minh')}">
+                            <p class="nav-menu-sub-mobile-title">Thiết bị nhà thông minh</p>
+                        </a>
+                        <a th:href="@{/product/product_security_home/{categoryName}(categoryName='Cảnh báo và Cảm biến')}">
+                            <p class="nav-menu-sub-mobile-title">Cảnh báo & Cảm biến</p>
+                        </a>
+                        <a href="">
+                            <p class="nav-menu-sub-mobile-title nav-menu-sub-mobile-all-product">Tất cả sản phẩm</p>
+                        </a>
+                    </div>
+                    <div class="angle-up">
+                        <i class="fa-solid fa-angle-down"></i>
+                    </div>
+                </li>
+                <li class="nav-menu-item"><a href="" class="nav-menu-item-link header--white">CloudPlay</a></li>
+                <li class="nav-menu-item"><a href="" class="nav-menu-item-link header--white">Nơi Để
+                    Mua</a></li>
+                <li class="nav-menu-item"><a href="#" class="nav-menu-item-link nav-menu-item-link-mobile header--white">Hỗ
+                    Trợ</a>
+                    <!-- sub nav 3 -->
+                    <div class="nav-menu-sub">
+                        <div class="nav_menu-sub--inner-support ">
+                            <p class="nav_menu-sub--title"> <a href="#">Hỏi đáp </a></p>
+                        </div>
+                        <div class="nav_menu-sub--inner-support ">
+                            <p class="nav_menu-sub--title"><a href="#">Tải về</a></p>
+                        </div>
+                        <div class="nav_menu-sub--inner-support ">
+                            <p class="nav_menu-sub--title"><a href="#">Trung tâm bảo hành </a></p>
+                        </div>
+                    </div>
+                    <!-- NAV mobile  -->
+                    <div class="nav-menu-sub-mobile">
+                        <a href="">
+                            <p class="nav-menu-sub-mobile-title">Hỏi đáp</p>
+                        </a>
+                        <a href="">
+                            <p class="nav-menu-sub-mobile-title">Tải về</p>
+                        </a>
+                        <a href="">
+                            <p class="nav-menu-sub-mobile-title">Trung tâm bảo hành</p>
+                        </a>
+                    </div>
+                    <div class="angle-up">
+                        <i class="fa-solid fa-angle-down"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="header__nav-right ">
+            <div class="header__nav-right-search ">
+                <a href="/search" class="header--white">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </a>
+            </div>
+            <div class="header__nav-shopping-cart">
+                <a href="/cart" class="header--white">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    Giỏ hàng
+                </a>
+            </div>
+            <div class="header__nav-log-in">
+                <a th:href="@{/login}" class="header--white" sec:authorize="isAnonymous()">
+                    <i class="fa-solid fa-user"></i>
+                    Đăng nhập
+                </a>
+
+                <span sec:authorize="isAuthenticated()">
+                    <a href="#" class="header--white">
+                        <i class="fa-solid fa-user"></i>
+                        <span sec:authentication="principal.name"></span>
+                        <!--principal là đối tượng CustomUserDetail  trả về từ CustomUserDetailService-->
+                    </a>
+                    <div class="account-dropdown">
+                        <ul>
+                          <li><a href="/profile">Tài khoản của tôi</a></li>
+                          <li><a href="/orders">Đơn mua</a></li>
+                          <li><a href="/logout">Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                </span>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- MOBILE  -->
+    <!-- bars mobile -->
+    <div class="bars">
+        <div class="search_mobile">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="bars_mobile">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </div>
+    <div class="search_mobile-nav">
+        <div class="search_mobile-nav-head">
+            <div class="search_mobile-nav-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div class="search_mobile-nav-input-wrap">
+                <input type="text" name="" class="search_mobile-nav-input" placeholder="Tìm kiếm...">
+            </div>
+            <div class="search_mobile-nav-close">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+        </div>
+        <div class="search_mobile-nav-body">
+            <p> Đường dẫn nhanh</p>
+            <p>
+                <a href="">
+                    EB8 4G
+                </a>
+            </p>
+            <p>
+                <a href="">
+                    C8C
+                </a>
+            </p>
+            <p>
+                <a href="">
+                    C6W
+                </a>
+            </p>
+            <p>
+                <a href="">
+                    BC1
+                </a>
+            </p>
+        </div>
+    </div>
+</div>

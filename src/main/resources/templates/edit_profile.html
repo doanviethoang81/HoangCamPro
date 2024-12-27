@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/head::head"></head>
+
+<body>
+<div th:replace="layout/header::header"></div>
+<!-- Main -->
+<div class="section_wrap-profile-detail ">
+  <main>
+    <div class="head-title">
+      <div class="left">
+        <h4>Chỉnh sửa hồ sơ</h4>
+      </div>
+    </div>
+    <div th:if="${message}" class="alert alert-success" role="alert">
+      <p th:text="${message}"></p>
+    </div>
+    <div th:if="${error}" class="alert alert-danger" role="alert">
+      <p th:text="${error}"></p>
+    </div>
+    <form th:object="${user}" th:action="@{/profile/edit-profile/{id}(id=${user.id})}" method="post"
+          enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="name" class="form-label">Tên người dùng</label>
+        <input type="text" id="name" th:field="${user.name}" class="form-control">
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Số điện thoại</label>
+        <input type="number" id="phone" th:field="${user.phone}" class="form-control" >
+        <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger"></span>
+      </div>
+      <div class="mb-3">
+        <label for="address" class="form-label">Địa chỉ</label>
+        <input type="text" id="address" th:field="${user.address}" class="form-control">
+        <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></span>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth" class="form-label">Ngày sinh</label>
+        <input type="date" id="dateOfBirth" th:field="${user.dateOfBirth}" class="form-control">
+        <span th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}" class="text-danger"></span>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Mật khẩu mới</label>
+        <input type="password" id="password" th:field="*{password}" class="form-control">
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"  placeholder="Mật khẩu mới"></span>
+      </div>
+      <div class="mb-3">
+        <label for="confirm-password" class="form-label">Nhập lại mật khẩu mới</label>
+        <input type="password" id="confirm-password" name="confirm-password" class="form-control" placeholder="Nhập lại mật khẩu mới">
+      </div>
+
+      <div class="button-edit-profile">
+        <button type="submit" class="btn-profile ">Lưu</button>
+      </div>
+
+    </form>
+  </main>
+</div>
+
+<!--footer -->
+<div th:replace="layout/footer::footer"></div>
+
+<!--các nút liên hệ ... -->
+<div th:replace="layout/utilities::utilities"></div>
+
+<!--script -->
+<div th:replace="layout/script::script"></div>
+</body>
+
+</html>

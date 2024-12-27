@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/head::head"></head>
+
+<body>
+<div th:replace="layout/header::header"></div>
+<!--MAIN -->
+<div class="order-container">
+    <div class="order-tabs">
+        <button class="order-tab active">Tất cả</button>
+        <button class="order-tab">Chờ thanh toán</button>
+        <button class="order-tab">Vận chuyển</button>
+        <button class="order-tab">Chờ giao hàng</button>
+        <button class="order-tab">Hoàn thành</button>
+    </div>
+
+    <div class="order-search-bar">
+        <input type="text" placeholder="Bạn có thể tìm kiếm theo tên Shop, ID đơn hàng hoặc Tên Sản phẩm">
+    </div>
+<!--    <div th:if="${orderDetailsMap}">-->
+<!--        <div th:each="order : ${orderDetailsMap}">-->
+<!--            <div th:each="orderDetail : ${order.value}">-->
+<!--                sản phẩm số 1-->
+<!--                <p th:text="${orderDetail.product.product.name}"></p>-->
+<!--                <p th:text="${orderDetail.product.storage}"></p>-->
+<!--                <p th:text="${orderDetail.product.discount}"></p>-->
+<!--                <p th:text="${orderDetail.price}"></p>-->
+<!--                <p th:text="${orderDetail.totalPrice}"></p>-->
+<!--                <p th:text="${orderDetail.numberOfProducts}"></p>-->
+<!--                <img th:src="@{${'/uploads/' + orderDetail.product.product.imageUrl}}" class="payment_product-details-img"-->
+<!--                     th:alt="${orderDetail.product.product.imageUrl}">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div  th:if="${orderDetailsMap}" >
+        <div class="order-item" th:each="order : ${orderDetailsMap}">
+            <div class="order-shop-info">
+                <p class="order-chat-btn" th:text="${order.key.status}"></p>
+                <p class="order-view-shop-btn">CHỜ GIAO HÀNG</p>
+            </div>
+            <hr>
+            <div th:each="orderDetail : ${order.value}">
+                <div class="order-product-info" >
+                    <div class="order-product-details">
+                        <div style="display: flex;">
+                            <div>
+                                <img th:src="@{${'/uploads/' + orderDetail.product.product.imageUrl}}" class="order-product-img"
+                                     th:alt="${orderDetail.product.product.imageUrl}">
+                            </div>
+                            <div style="margin-left: 12px;">
+                                <h3 th:text="${orderDetail.product.product.name}"></h3>
+                                <p  th:text="${orderDetail.product.storage}"></p>
+                                <p>Số lượng:
+                                    <span th:text="${orderDetail.numberOfProducts}"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="order-price">
+                            <span class="order-old-price"  th:text="${#numbers.formatInteger(orderDetail.product.price,3,'POINT')} + 'đ'"></span>
+                            <span class="order-new-price"  th:text="${#numbers.formatInteger(orderDetail.price,3,'POINT')} + 'đ'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-summary">
+                <div>
+                    <p class="order-summary-note">Vui lòng nhấn "Đã nhận được hàng" khi đơn hàng đã được giao.
+                    </p>
+                    <button class="order-receive-btn disabled">Đã Nhận Hàng</button>
+                    <button class="order-contact-btn">Liên Hệ Người Bán</button>
+                </div>
+                <div>
+                    <p class="order-total-price">Tổng tiền: <span orderDetail.price th:text="${#numbers.formatInteger(order.key.totalMoney,3,'POINT')} + 'đ'"></span></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--footer -->
+<div th:replace="layout/footer::footer"></div>
+
+<!--các nút liên hệ ... -->
+<div th:replace="layout/utilities::utilities"></div>
+
+<!--script -->
+<div th:replace="layout/script::script"></div>
+</body>
+
+</html>

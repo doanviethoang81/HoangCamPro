@@ -1,0 +1,20 @@
+<nav id="content" th:fragment="header"  xmlns:th="http://www.w3.org/1999/xhtml">
+    <i class='bx bx-menu'></i>
+    <form action="/admin/search" method="get">
+        <div class="form-input">
+            <input type="search" name="keyword" placeholder="Tìm kiếm sản phẩm...">
+            <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+        </div>
+    </form>
+    <input type="checkbox" id="switch-mode" hidden>
+    <label for="switch-mode" class="switch-mode"></label>
+    <a href="#" class="notification">
+        <i class='bx bxs-bell'></i>
+        <span class="num">7</span>
+    </a>
+    <a href="#" class="profile">
+        <img th:src="@{/assets/img/people.png}">
+    </a>
+</nav>
+
+

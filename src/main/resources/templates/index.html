@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/head::head"></head>
+
+<body>
+<!--header -->
+<div th:replace="layout/header::header"></div>
+
+<!-- container -->
+<div class="containers">
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="2000">
+                <a href="">
+                    <!-- ảnh nền trên cùng -->
+                    <picture>
+                        <source media="(max-width:739px)" th:srcset="@{fe/img/img_slide_1_mobile.jpg}">
+                        <img th:src="@{/fe/img/img_slide_1.jpg}" alt="Flowers" class="container__silde-img d-block w-100">
+                    </picture>
+                    <div class="container__silde-conten  d-none d-md-block">
+                        <h2 class="container__silde-conten-title">H7c Dual 2K<sup>+</sup> Camera</h2>
+                        <p class="container__silde-conten-utilities">Tầm nhìn bao quát hơn cho sự bảo vệ toàn diện và thông minh
+                            hơn với ống kính kép</p>
+                        <button class="container__silde-conten-button">
+                            Xem thêm
+                            <i class="fa-solid fa-arrow-right container__silde-conten-icon-next"></i>
+                        </button>
+                    </div>
+                </a>
+            </div>
+            <div class="carousel-item" data-bs-interval="4000">
+                <a href="">
+                    <picture>
+                        <source media="(max-width:739px)" th:srcset="@{/fe/img/img_slide_2_mobile.jpg}">
+                        <img th:src="@{/fe/img/img_slide_2.jpg}" alt="Flowers" class="container__silde-img d-block w-100">
+                    </picture>
+                    <div class="container__silde-conten  d-none d-md-block">
+                        <h2 class="container__silde-conten-title text-white">H7c Dual 2K<sup>+</sup> Camera</h2>
+                        <p class="container__silde-conten-utilities text-white">Tầm nhìn bao quát hơn cho sự bảo vệ toàn diện và
+                            thông minh
+                            hơn với ống kính kép</p>
+                        <button class="container__silde-conten-button">
+                            Xem thêm
+                            <i class="fa-solid fa-arrow-right container__silde-conten-icon-next"></i>
+                        </button>
+                    </div>
+                </a>
+            </div>
+            <div class="carousel-item" data-bs-interval="4000">
+                <a href="">
+                    <picture>
+                        <source media="(max-width:739px)" th:srcset="@{/fe/img/img_slide_3_mobile.png}">
+                        <img th:src="@{/fe/img/img_slide_3.jpg}" alt="Flowers" class="container__silde-img d-block w-100">
+                    </picture>
+                    <div class="container__silde-conten  d-none d-md-block">
+                        <h2 class="container__silde-conten-title">H7c Dual 2K<sup>+</sup> Camera</h2>
+                        <p class="container__silde-conten-utilities">Tầm nhìn bao quát hơn cho sự bảo vệ toàn diện và thông minh
+                            hơn với ống kính kép</p>
+                        <button class="container__silde-conten-button">
+                            Xem thêm
+                            <i class="fa-solid fa-arrow-right container__silde-conten-icon-next"></i>
+                        </button>
+                    </div>
+                </a>
+            </div>
+            <div class="carousel-item" data-bs-interval="4000">
+                <a href="">
+                    <picture>
+                        <source media="(max-width:739px)"th:srcset="@{/fe/img/img_slide_4_mobile.jpg}">
+                        <img th:src="@{/fe/img/img_slide_4.jpg}" alt="Flowers" class="container__silde-img d-block w-100">
+                    </picture>
+                    <div class="container__silde-conten  d-none d-md-block">
+                        <h2 class="container__silde-conten-title text-white">H7c Dual 2K<sup>+</sup> Camera</h2>
+                        <p class="container__silde-conten-utilities text-white">
+                            Tầm nhìn bao quát hơn cho sự bảo vệ toàn diện và thông minh hơn với ống kính kép
+                        </p>
+                        <button class="container__silde-conten-button">
+                            Xem thêm
+                            <i class="fa-solid fa-arrow-right container__silde-conten-icon-next"></i>
+                        </button>
+                    </div>
+                </a>
+            </div>
+            <div class="carousel-item" data-bs-interval="4000">
+                <a href="">
+                    <picture>
+                        <source media="(max-width:739px)" th:srcset="@{/fe/img/img_slide_5_mobile.jpg}">
+                        <img th:src="@{/fe/img/img_slide_5.jpg}" alt="Flowers" class="container__silde-img d-block w-100">
+                    </picture>
+                    <div class="container__silde-conten  d-none d-md-block">
+                        <h2 class="container__silde-conten-title">H7c Dual 2K<sup>+</sup> Camera</h2>
+                        <p class="container__silde-conten-utilities">Tầm nhìn bao quát hơn cho sự bảo vệ toàn diện và thông minh
+                            hơn với ống kính kép</p>
+                        <button class="container__silde-conten-button">
+                            Xem thêm
+                            <i class="fa-solid fa-arrow-right container__silde-conten-icon-next"></i>
+                        </button>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="prev">
+            <i class="fa-solid fa-circle-chevron-left  icon__slide-next-left-right" aria-hidden="true"></i>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="next">
+            <i class="fa-solid fa-circle-chevron-right  icon__slide-next-left-right" aria-hidden="true"></i>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+<div class="home__scenes">
+    <div class="home__scenes-title">
+        <h4>Liên Kết Nhà Thông Minh </h4>
+        <p>
+            Tích hợp tất cả các sản phẩm EZVIZ của bạn thành một giải pháp an ninh nhà thông minh cho riêng bạn
+        </p>
+    </div>
+    <!-- <div class="home__scenes-circle"> dấu chấm xanh hover
+    </div> -->
+    <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="button-slider-wrap-mobile">
+            <button class="button-slider-wrap-mobile-click button-slider-wrap-mobile-active active" type="button"
+                    data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" aria-current="true"
+                    aria-label="Slide 1">
+                Phòng khách
+            </button>
+            <button class="button-slider-wrap-mobile-click" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="1" aria-label="Slide 2">
+                Góc làm việc
+            </button>
+            <button class="button-slider-wrap-mobile-click" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="2" aria-label="Slide 3">
+                Trước cửa
+            </button>
+            <button class="button-slider-wrap-mobile-click" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="3" aria-label="Slide 4">
+                Ngoài sân
+            </button>
+        </div>
+        <div class="button-slider-wrap">
+            <div>
+                <button class="button-slider-wrap-click active" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to="0" aria-current="true" aria-label="Slide 1">
+                    <!-- khi click vao thi moi hien  -->
+                    <div class="button-slider-wrap-item-hide">
+                        <i class="button-slider-wrap-item-hide-iocn fa-regular fa-circle-dot"></i>
+                        Phòng Khách
+                    </div>
+                    <i class="button-slider-wrap-click-icon fa-solid fa-bullseye"></i>
+                    <div class="button-slider-wrap-title aaa">
+                        Phòng khách
+                    </div>
+                </button>
+            </div>
+            <div>
+                <button class="button-slider-wrap-click " type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to="1" aria-label="Slide 2">
+                    <!-- khi click vao thi moi hien  -->
+                    <div class="button-slider-wrap-item-hide">
+                        <i class="button-slider-wrap-item-hide-iocn fa-regular fa-circle-dot"></i>
+                        Góc làm việc
+                    </div>
+                    <i class="button-slider-wrap-click-icon fa-solid fa-bullseye"></i>
+                    <div class="button-slider-wrap-title">
+                        Góc làm việc
+                    </div>
+                </button>
+            </div>
+            <div>
+                <button class="button-slider-wrap-click " type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to="2" aria-label="Slide 3">
+                    <!-- khi click vao thi moi hien  -->
+                    <div class="button-slider-wrap-item-hide">
+                        <i class="button-slider-wrap-item-hide-iocn fa-regular fa-circle-dot"></i>
+                        Trước cửa
+                    </div>
+                    <i class="button-slider-wrap-click-icon fa-solid fa-bullseye"></i>
+                    <div class="button-slider-wrap-title">
+                        Trước cửa
+                    </div>
+                </button>
+            </div>
+            <div>
+                <button class="button-slider-wrap-click " type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to="3" aria-label="Slide 4">
+                    <!-- khi click vao thi moi hien  -->
+                    <div class="button-slider-wrap-item-hide">
+                        <i class="button-slider-wrap-item-hide-iocn fa-regular fa-circle-dot"></i>
+                        Ngoài sân
+                    </div>
+                    <i class="button-slider-wrap-click-icon fa-solid fa-bullseye"></i>
+                    <div class="button-slider-wrap-title">
+                        Ngoài sân
+                    </div>
+                </button>
+            </div>
+            <!-- next prev -->
+            <div>
+                <div class="slider_next-prev">
+                    <button class="button_slider" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="prev">
+                        <i class="fa-solid fa-circle-chevron-left  button_slider_icon-white" aria-hidden="true"></i>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="button_slider" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="next">
+                        <i class="fa-solid fa-circle-chevron-right  button_slider_icon-blue " aria-hidden="true"></i>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img th:src="@{/fe/img/Phong_Khach.jpg}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img th:src="@{/fe/img/Goc_Lam_Viec.jpg}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img th:src="@{/fe/img/Truoc_Cua.jpg}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img th:src="@{/fe/img/img_ngoai_troi.jpg}" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="home__scenes-title">
+    <h4>Kiệt tác về An ninh Nhà Thông minh </h4>
+    <p>
+        Từ camera an ninh đến chuông cửa và nhiều sản phẩm khác, luôn kết nối khi bạn ở nhà hay đi vắng
+    </p>
+    <div class="button-wrap">
+        <button class="button-detail button-detail-camera-security button-detail-click"> Camera An ninh </button>
+        <button class="button-detail button-detail-smart-home"> Nhà Thông minh </button>
+    </div>
+</div>
+
+<div class="product ">
+    <div class="product-camera-security">
+        <div class="row ">
+            <div class="col-md-6 col-sm-12 product_list ">
+                <div class="product_list-wrap " th:style="|background-image: url('@{/fe/img/Camera_Pin_Sac.jpg}');|">
+                    <div class="product_list-item">
+                        <p class="product_list-item-title">Camera An ninh </p>
+                        <h5 class="product_list-item-name-hidden">Camera Pin sạc</h5>
+                        <p class="product_list-item-detail">Hoạt động ở bất cứ đâu bạn cần nhờ thời lượng pin lâu dài và thiết kế
+                            không dây 100%.</p>
+                        <a class="product_list-item-button">Xem thêm </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 product_list ">
+                <div class="product_list-wrap " th:style="|background-image: url('@{/fe/img/Camera_Wi-Fi_Trong_nha.jpg}');|">
+                    <div class="product_list-item">
+                        <p class="product_list-item-title">Camera An ninh </p>
+                        <h5 class="product_list-item-name-hidden">Camera Wi-Fi Trong nhà</h5>
+                        <p class="product_list-item-detail">Được thiết kế để tự lắp đặt đơn giản và trực quan, an ninh cho nhà
+                            thông
+                            minh trở nên thật dễ dàng.</p>
+                        <a class="product_list-item-button">Xem thêm </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 product_list ">
+                <div class="product_list-wrap " th:style="|background-image: url('@{/fe/img/Camera_Wi-Fi_Ngoai_troi.jpg}');|">
+                    <div class="product_list-item">
+                        <p class="product_list-item-title">Camera An ninh </p>
+                        <h5 class="product_list-item-name-hidden">Camera Wi-Fi Ngoài trời</h5>
+                        <p class="product_list-item-detail">Phát hiện, cảnh báo và bảo vệ ngôi nhà của bạn 24/7 với tầm nhìn ban
+                            đêm
+                            tuyệt vời.</p>
+                        <a class="product_list-item-button">Xem thêm </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 product_list ">
+                <div class="product_list-wrap " th:style="|background-image: url('@{/fe/img/Phu_kien.jpg}');|">
+                    <div class="product_list-item">
+                        <p class="product_list-item-title">Camera An ninh </p>
+                        <h5 class="product_list-item-name-hidden">Phụ kiện</h5>
+                        <p class="product_list-item-detail">Các thiết bị bổ trợ giúp bạn kết hợp hoàn hảo với an ninh nhà thông
+                            minh.</p>
+                        <a class="product_list-item-button">Xem thêm </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product-smart-home">
+        <div class="row ">
+            <div class="col-md-6 col-sm-12 product_list ">
+                <div class="product_list-wrap " th:style="|background-image: url('@{/fe/img/Khoa_va_chuong_cua_product.jpg}');|">
+                    <div class="product_list-item">
+                        <p class="product_list-item-title">Nhà thông minh </p>
+                        <h5 class="product_list-item-name-hidden">Khóa và Chuông cửa</h5>
+                        <p class="product_list-item-detail">Biết trước khi họ gõ cửa. Xem ai đang ở trước cửa nhà bạn từ đầu đến
+                            chân ở độ phân giải 2K⁺.</p>
+                        <a class="product_list-item-button">Xem thêm </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 product_list ">
+                <div class="product_list-wrap " th:style="|background-image: url('@{/fe/img/Thiet_bi_nha_thong_minh_product.jpg}');|">
+                    <div class="product_list-item">
+                        <p class="product_list-item-title">Nhà thông minh </p>
+                        <h5 class="product_list-item-name-hidden">Thiết bị nhà thông minh</h5>
+                        <p class="product_list-item-detail">Mở rộng an ninh và tiện nghi trong toàn bộ ngôi nhà của bạn với các
+                            thiết bị gia dụng thông minh EZVIZ.</p>
+                        <a class="product_list-item-button">Xem thêm </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="application" th:style="|background-image: url('@{/fe/img/Bia_ung_dung_HoangCamPro.jpg}');|">
+    <div class="application_wrap">
+        <img loading="lazy" class="application-img" th:src="@{fe/img/logo_single.png}" alt="">
+        <h3 class="application-name">Ứng dụng HoangCamPro</h3>
+        <h4 class="application-title">Bảo vệ an ninh ngay trên đầu ngón tay của bạn</h4>
+        <h5 class="application-content">
+            Ứng dụng HoangCamPro là cách tốt nhất để kết nối các thiết bị thông minh của bạn
+            tới HoangCamPro Cloud.
+        </h5>
+        <a href="">
+            <button class="button">Xem thêm</button>
+        </a>
+    </div>
+</div>
+<div class="room_news-title">
+    <h4>Phòng tin tức</h4>
+</div>
+<div class="room_news">
+    <ul class="room_news-wrap">
+        <li class="room_news-item">
+            <a href="" class="room_news-link">
+                <div class="room_news-item-backgroup  " th:style="|background-image: url('@{/fe/img/tin_tuc_1.png}');|"></div>
+                <div class="room_news-item-name">
+                    Camera được vinh danh Sáng kiến của năm tại Giải thưởng bền vững với Camera Green, thúc đẩy đổi mới thân
+                    thiện môi trường và nuôi dưỡng rừng toàn cầu
+                </div>
+                <div class="room_news-item-content">
+                    Ngày 5/8/2024 – Camera, thương hiệu toàn cầu về nhà thông minh, vinh dự nhận giải thưởng Bền vững năm 2024
+                    (the 2024 Sustainability Award) cho sáng kiến EZVIZ Green. Đây là thành quả xuất sắc trong nỗ lực bảo vệ môi
+                    trường của công ty.
+                </div>
+            </a>
+        </li>
+        <li class="room_news-item">
+            <a href="">
+                <div class="room_news-item-backgroup "  th:style="|background-image: url('@{/fe/img/tin_tuc_2.png}');|"></div>
+                <div class="room_news-item-name">
+                    H9c Dual - camera an ninh cao cấp của Ezviz
+                </div>
+                <div class="room_news-item-content">
+                    H9c Dual của Camera được trang bị hai camera 2K hoạt động liên kết, tương đương với hệ thống nhiều camera.
+                    H9C Dual là dòng sản phẩm mới vừa được bổ sung vào dòng sản phẩm an ninh cao cấp đến từ thương hiệu Ezviz.
+                    Theo nhà sản xuất công bộ, dòng camera mới này được trang bị nhiều công nghệ và tính năng tiên tiến.
+                </div>
+            </a>
+        </li>
+        <li class="room_news-item">
+            <a href="">
+                <div class="room_news-item-backgroup " th:style="|background-image: url('@{/fe/img/tin_tuc_3.png}');|"></div>
+                <div class="room_news-item-name">
+                    <p>
+                        Gia đình trẻ và bí kíp vi vu mùa hè
+                    </p>
+                </div>
+                <div class="room_news-item-content">
+                    Ngày nay, với sự phát triển của công nghệ smarthome đã giúp các gia đình trẻ tận hưởng kỳ nghỉ một cách trọn
+                    vẹn.
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="room_news-button ">
+    <a href="">
+        <button class="button ">Tất cả tin tức</button>
+    </a>
+</div>
+<div class="introduce_show-img">
+    <picture>
+        <source media="(max-width:739px)" th:srcset="@{/fe/img/gioi_thieu_mobile.jpg}">
+        <img th:src="@{/fe/img/gioi_thieu.jpg}" alt="Flowers" class="d-block w-100">
+    </picture>
+    <!-- <img src="/assets/img/gioi_thieu.jpg" alt="" class="w-100 d-block"> -->
+    <div class="introduce_show ">
+        <h4 class="introduce_show-title">Giới thiệu HoangCamPro</h4>
+        <h5 class="introduce_show-content">Được thành lập vào năm 2013, HoangCaPro nỗ lực hết mình để tạo ra một cuộc sống
+            an
+            toàn,
+            tiện lợi và thông minh cho người dùng thông qua các thiết bị thông minh, công nghệ AI tiên tiến và dịch vụ đám
+            mây.
+        </h5>
+        <a href="">
+            <button class="button button-white">Xem thêm</button>
+        </a>
+    </div>
+</div>
+
+<!--footer -->
+<div th:replace="layout/footer::footer"></div>
+
+<!--các nút liên hệ ... -->
+<div th:replace="layout/utilities::utilities"></div>
+
+<!--script -->
+<div th:replace="layout/script::script"></div>
+</body>
+
+</html>

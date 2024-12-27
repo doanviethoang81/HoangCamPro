@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/head::head"></head>
+
+<body>
+<div th:replace="layout/header::header"></div>
+<!-- product-detail -->
+<div class="section_wrap-product-detail">
+    <nav class="breadcrumbb">
+        <a href="/" class="breadcrumb-link text-secondary">Trang chủ </a>
+        <span class="breadcrumb-item">/ Camera an ninh</span>
+    </nav>
+    <div class="section_products">
+        <div class="row">
+
+        </div>
+    </div>
+</div>
+<div class="product-details">
+    <div class="row">
+        <div class="col-lg-9 col-sm-12">
+            <div class="product-detail" th:each="product : ${list}">
+                <div class="row">
+                    <div class="col-lg-5 col-sm-12">
+                        <div class="product-image">
+                            <img th:src="@{${'/uploads/' + product.imageUrl}}" class="product-item-img"
+                                 th:alt="${product.name}">
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-m-12">
+                        <div class="product-info" th:each="variant, iterStat : ${variants}"
+                             th:if="${iterStat.index == 0}">
+                            <h1 th:text="${product.name}"></h1>
+                            <div class="d-flex">
+                                <p class="mb-1">
+                                    Thương hiệu:
+                                    <a href="#" class="text-primary">
+                                        <span th:text="${product.brand}"></span>
+                                    </a>
+                                </p>
+                                <p class="mb-1 ps-3">
+                                    Mã sản phẩm:
+                                    <span class="text-primary product_code" data-memory="none"
+                                          th:text="${variant.sku}"></span>
+                                </p>
+                            </div>
+                            <div>
+                                <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
+                                <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
+                                <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
+                                <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
+                                <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
+                            </div>
+                            <div class="product-price m-1">
+                                    <span class="current-price" data-memory="none"
+                                          th:text="${#numbers.formatCurrency(variant.discount)}">
+                                    </span>
+                                <span class="old-price" data-memory="none"
+                                      th:text="${#numbers.formatCurrency(variant.price)}"></span>
+                                <span class="discount">-50%</span>
+
+                            </div>
+                            <p class="saving">
+                                <span>Tiết kiệm</span>
+                                <span>390.000đ</span>
+                            </p>
+                            <ul class="product-specs">
+                                <span th:utext="${product.description}"></span>
+                            </ul>
+
+                            <div class="memory-options">
+                                <span>Thẻ nhớ:</span>
+                                <button class="memory-options-button memory-options-button-active"
+                                        data-memory="none"
+                                        th:attr="data-id=${variants[0].id}, data-discount=${variant.discount}"
+                                        th:text="${variant.storage}"></button>
+                                <button th:each="variant, iterStat : ${variants}" th:if="${iterStat.index > 0}"
+                                        class="memory-options-button"
+                                        th:attr="data-memory=${variant.storage}, data-price=${variant.price},data-id=${variant.id}, data-discount=${variant.discount}"
+                                        th:text="${variant.storage}">
+                                </button>
+                            </div>
+
+                            <div class="quantity">
+                                <span>Số lượng:</span>
+                                <button class="decrement">-</button>
+                                <input class="product_quantity" type="number" value="1" min="1">
+                                <button class="increment">+</button>
+                            </div>
+
+                            <div class="action-buttons">
+                                <div>
+                                    <a id="buy-now-link"
+                                       th:href="@{/payment/get-payment/{name}(name=${product.name})}">
+                                        <button class="buy-now">
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                            <span class="fw-bold">
+                                                    Mua Ngay
+                                                </span>
+                                            <p class="fw-bold text-white m-0">
+                                                Giao hàng tận nơi hoặc nhận tại cửa hàng
+                                            </p>
+                                        </button>
+                                    </a>
+                                </div>
+                                <div>
+                                    <!--                                    th:href="@{/cart/{name}(name=${product.name})}"-->
+                                    <a id="cart">
+                                        <button class="add-to-cart fw-bold" id="add-to-cart-button"
+                                                th:attr="data-name=${product.name}, data-price-cart=${variant.discount}">
+                                            Thêm Vào Giỏ
+                                        </button>
+                                    </a>
+                                </div>
+                                <p class=" text-center">Gọi đặt mua <a class="text-primary"
+                                                                       href="tel:0989720550">0989.720.550</a> (7:30 - 22:00)</p>
+                                <div class="promotion">
+                                    <div class="promotion-name">
+                                        <span class="fa-solid fa-gift" style="color: #ffffff;"></span>
+                                        <h3>KHUYẾN MÃI - ƯU ĐÃI</h3>
+                                    </div>
+                                    <div class="wrap-promotion">
+                                        <ul>
+                                            <li>Cam kết sản phẩm chính hãng <span
+                                                    class="text-primary">HoangCampro</span> </li>
+                                            <li>Sản phẩm được <span class="text-primary">HoangCampro </span>bảo hành
+                                                chính hãng <span class="text-primary">24 tháng</span></li>
+                                            <li><span class="text-primary">Tặng kèm đế treo tường</span> khi mua
+                                                <span class="text-primary">từ 2 camera</span> trở lên
+                                            </li>
+                                            <li><span class="text-primary">Giao hàng</span> và thu tiền tận nơi toàn
+                                                quốc</li>
+                                            <li>Nhận hàng, kiểm tra hàng phát hiện <span class="text-primary">hàng
+                                                        nhái 1 đền 10</span></li>
+                                            <li>Hỗ trợ sử dụng sản phẩm 24/24 hotline: <span
+                                                    class="text-primary">0989.720.550</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-12">
+            <ul class="benefit-list">
+                <li class="benefit-item">
+                    <i class="fas fa-truck"></i>
+                    <span>Cam kết hàng chính hãng - Nhái 1 đền 10</span>
+                </li>
+                <li class="benefit-item">
+                    <i class="fas fa-gift"></i>
+                    <span>Tặng ngay đế gắn tường khi mua từ 2 sản phẩm trở lên</span>
+                </li>
+                <li class="benefit-item">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span>Miễn phí cước giao hàng với đơn hàng từ 3 triệu đồng</span>
+                </li>
+                <li class="benefit-item">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Đổi mới trong vòng 30 ngày đầu</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="feature-section-wrap">
+    <div class="row">
+        <!-- Feature Section -->
+        <div class="col-lg-8 col-sm-12">
+            <div class="feature-section">
+                <h5 class="feature-title">ĐẶC ĐIỂM NỔI BẬT</h5>
+                <h2 class="product-name">Thông số nổi bật camera H6C Pro 2K (3.0 Megapixel)</h2>
+                <div class="image-placeholder d-flex justify-content-center align-items-center mt-4">
+                    <!-- Placeholder for Product Image -->
+                    <span>Hình ảnh sản phẩm</span>
+                </div>
+                <a href="#" class="view-more-btn mt-3">
+                    <i class="fas fa-plus-circle"></i> Xem thêm
+                </a>
+            </div>
+        </div>
+
+        <!-- Specifications Section -->
+        <div class="col-lg-4 col-sm-12">
+            <div class="specs-section">
+                <h5 class="feature-title">Thông số kỹ thuật</h5>
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th>Model</th>
+                        <td>CS-H6C-R105-1J5WF</td>
+                    </tr>
+                    <tr>
+                        <th>Camera</th>
+                        <td>CMOS quét lũy tiến 1/2,7"</td>
+                    </tr>
+                    <tr>
+                        <th>Tốc độ màn trập</th>
+                        <td>Màn trập tự điều chỉnh</td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+                <a href="#" class="view-more-btn">
+                    <i class="fas fa-plus-circle"></i> Xem thêm
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--footer -->
+<div th:replace="layout/footer::footer"></div>
+
+<!--các nút liên hệ ... -->
+<div th:replace="layout/utilities::utilities"></div>
+
+<!--script -->
+<div th:replace="layout/script::script"></div>
+</body>
+
+</html>

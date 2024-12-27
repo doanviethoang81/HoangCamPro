@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/head::head"></head>
+
+<body onload="updateTotal()">
+<div th:replace="layout/header::header"></div>
+<div class="container-cart">
+    <nav class="breadcrumbb">
+        <a href="/" class="breadcrumb-link text-secondary">Trang chủ </a>
+        <span class="#">/ Giỏ hàng</span>
+    </nav>
+    <p class="breadcrumbb-title">
+        <strong>Giỏ hàng của bạn </strong>
+    </p>
+    <p th:if="${message}" th:text="${message}"></p>
+    <div class="row"  th:if="${cartDetails}">
+        <div class="col-lg-8 col-sm-12 px-3 pt-2" >
+            <div class="payment_cart_product-info" >
+                <div class="payment_product-details"  th:each="cartDetail : ${cartDetails}">
+                    <input type="checkbox"
+                           class="mx-3 product-checkbox"
+                           th:attr="data-price=${cartDetail.price * cartDetail.quantity},
+                           data-product-id=${cartDetail.id}"
+                           onchange="updateTotal()">
+                    <img th:src="@{${'/uploads/' + cartDetail.productVariant.product.imageUrl}}" class="payment_product-details-img"
+                         th:alt="${cartDetail.productVariant.product.imageUrl}">
+                    <div class="payment_product-details-information">
+                        <span><strong th:text="${cartDetail.productVariant.product.name}"></strong></span>
+                        <div>
+                            <span th:text="${cartDetail.productVariant.storage}"></span>
+                            <span style="margin-left: 10px;">
+                                Số lượng:
+                                <span th:text="${cartDetail.quantity}"> </span>
+                            </span>
+                        </div>
+                    </div>
+                    <span class="ms-3 payment_product-details-price-cart strikethrough" th:text="${#numbers.formatCurrency(cartDetail.productVariant.price)}"></span>
+                    <span class="ms-2 payment_product-details-price-cart" th:text="${#numbers.formatCurrency(cartDetail.price)}"></span>
+                    <span class="ms-4 payment_product-details-price-cart-sum" th:text="${#numbers.formatCurrency(cartDetail.price * cartDetail.quantity)}"></span>
+<!--                    <div class="quantity" style="margin-top: 0;">-->
+<!--                        <button class="decrement">-</button>-->
+<!--                        <input class="product_quantity" type="number" value="1" min="1">-->
+<!--                        <button class="increment">+</button>-->
+<!--                    </div>-->
+                    <a href="#" class="text-danger"  style="margin: 0 17px 0 auto; font-weight: 300;">
+                        xóa
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12 px-3 pt-2">
+            <div class="title-cart">
+                <div>
+                    Tổng thanh toán
+                </div>
+                <div class="text-danger">
+                    <span id="total-price"></span>
+                </div>
+            </div>
+            <div class=" price_vat ">(Đã bao gồm VAT nếu có)</div>
+            <button type="submit" class="button-cart-payment" onclick="submitSelectedProducts()">
+                Thanh toán
+            </button>
+        </div>
+
+    </div>
+
+</div>
+<!--footer -->
+<div th:replace="layout/footer::footer"></div>
+
+<!--các nút liên hệ ... -->
+<div th:replace="layout/utilities::utilities"></div>
+
+<!--script -->
+<div th:replace="layout/script::script"></div>
+
+</body>
+
+</html>

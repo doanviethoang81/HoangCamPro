@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="">
+<head th:replace="admin/fragments/head::head"></head>
+<body>
+
+<!-- SIDEBAR -->
+<section id="sidebar" >
+    <a href="#" class="brand ">
+        <i class='bx bxs-smile'></i>
+        <span class="text">ADMIN</span>
+    </a>
+    <ul class="side-menu top">
+        <li class="active">
+            <a th:href="@{/admin/product}">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Quản lý sản phẩm</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/order}">
+                <i class='bx bxs-shopping-bag-alt'></i>
+                <span class="text">Quản lý đơn hàng</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/user}">
+                <i class='bx bxs-doughnut-chart'></i>
+                <span class="text">Quản lý người dùng</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/profile}">
+                <i class='bx bxs-group'></i>
+                <span class="text">Hồ sơ</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a th:href="@{/logout}" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Đăng xuất</span>
+            </a>
+        </li>
+    </ul>
+
+
+</section>
+
+<!-- CONTENT -->
+<section id="content">
+    <!--    header -->
+    <nav th:replace="admin/fragments/header::header"> </nav>
+    <!-- MAIN -->
+    <main>
+        <div class="head-title">
+            <div class="left">
+                <h1>Thêm sản phẩm</h1>
+            </div>
+            <a th:href="@{/admin/product}" class="btn-download">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span class="text">Quay lại</span>
+            </a>
+        </div>
+
+        <div th:if="${message}" class="alert alert-success" role="alert">
+            <p th:text="${message}"></p>
+        </div>
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <p th:text="${error}"></p>
+        </div>
+
+        <form action="/admin/add-product" method="POST" th:object="${PRODUCT}" enctype="multipart/form-data">
+
+            <!-- Thông tin sản phẩm chính -->
+            <div class="mb-3">
+                <label for="categoriesName" class="form-label">Chọn danh mục sản phẩm</label>
+                <select name="category" id="categoriesName" class="form-control" >
+                    <option value="" disabled selected>-- Chọn danh mục --</option>
+                    <option th:each="category : ${listCategories}" th:value="${category.id}" th:text="${category.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="productName" class="form-label">Tên sản phẩm</label>
+                <input type="text" id="productName" th:field="*{name}"  class="form-control"
+                       placeholder="Nhập tên sản phẩm"  >
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+
+            </div>
+            <div class="mb-3">
+                <label for="brand" class="form-label">Thương hiệu</label>
+                <input type="text" id="brand"  th:field="*{brand}"  class="form-control" placeholder="Nhập thương hiệu" >
+                <span th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}" class="text-danger"></span>
+
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Mô tả</label>
+                <textarea id="description"  th:field="*{description}"  class="form-control" rows="4"
+                          placeholder="Nhập mô tả sản phẩm"></textarea>
+                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></span>
+
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Ảnh sản phẩm</label>
+                <input type="file" id="image"  name="image"  class="form-control" accept="image/*" required>
+            </div>
+
+            <!-- Thông tin biến thể sản phẩm -->
+            <h5>Biến Thể Sản Phẩm</h5>
+            <div id="variantContainer">
+                <div class="variant row mb-3">
+                    <div class="col-md-5">
+                        <input type="text" name="variantSku[]" class="form-control"
+                               placeholder="Sku biến thể (VD: Hc1, Hc1-32, Hc1-64 ...)" required>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" name="variantStorage[]" class="form-control"
+                               placeholder="Tên biến thể (VD: Không thẻ, 64GB, 128GB, ...)" required>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="number" name="variantDiscount[]" class="form-control"
+                               placeholder="Giá  giảm (VNĐ)" required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                    </div>
+                    <div class="col-md-5">
+                        <input type="number" name="variantPrice[]" class="form-control" placeholder="Giá gốc (VNĐ)"
+                               required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="addVariant" class="btn btn-success mb-3">Thêm Biến Thể</button>
+
+            <button type="submit" class="btn btn-primary col-md-5">Thêm Sản Phẩm</button>
+        </form>
+    </main>
+</section>
+
+<script>
+    CKEDITOR.replace('description');
+</script>
+<script th:src="@{/assets/js/script.js}"></script>
+</body>
+
+</html>

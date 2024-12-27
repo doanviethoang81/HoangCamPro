@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/head::head"></head>
+
+<body>
+<div th:replace="layout/header::header"></div>
+<!-- container -->
+<div class="search">
+  <div class="search_wrap">
+    <h3 class="search_name">TÌM KIẾM CAMERA CHÍNH HÃNG </h3>
+    <p class="search_title">
+      Nếu bạn đang tìm kiếm camera an toàn bảo mật, chúng tôi đảm bảo sẽ mang đến cho bạn những sản phẩm chất
+      lượng và đáng tin cậy nhất.
+    </p>
+    <form action="/search/product" method="get">
+      <div class="search_input">
+        <input type="search"  name="keywordUser" class="search_input-text" placeholder="Tìm kiếm..." >
+        <button type="submit" class="search_input-icon">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+      </form>
+  </div>
+  <h4>Kết quả:</h4>
+</div>
+<div class="product_details-wrap">
+  <div class="product-list" th:if="${products}">
+    <!-- Sản phẩm 1 -->
+    <div class="product-item" style="background-color: #fff !important;" th:each="product : ${products}">
+      <a href="/templates/product-detail.html">
+        <img th:src="@{${'/uploads/' + product.imageUrl}}" class="product-item-img" th:alt="${product.name}"  style="width: 150px; height: 150px;">
+        <h3 th:text="${product.name}"></h3>
+        <div class="rating">★★★★★</div>
+        <p class="price">
+        <p class="current-price" style="margin: 0;">850.000₫</p>
+        <p class="old-price">1.700.000₫</p>
+        <span class="discount">-50%</span>
+        </p>
+        <a href="">
+          <i class="fa-solid fa-cart-shopping "></i>
+        </a>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<div th:replace ="layout/footer::footer"></div>
+
+<div th:replace ="layout/utilities::utilities"></div>
+
+<div th:replace="layout/script::script"></div>
+
+</body>
+
+</html>
