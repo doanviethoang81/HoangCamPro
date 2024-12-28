@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +38,15 @@ public class CartController {
         Map<String, Object> response = new HashMap<>();
 
         try {
+            // Kiểm tra trạng thái đăng nhập
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null || !authentication.isAuthenticated() ||
+                    authentication.getPrincipal() instanceof String) { // Trường hợp principal là "anonymousUser"
+                response.put("success", false);
+                response.put("message", "Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.");
+                return response;
+            }
+
             // Lấy thông tin từ request
             Integer variantId = request.containsKey("variantId")
                     ? Integer.parseInt(request.get("variantId").toString())

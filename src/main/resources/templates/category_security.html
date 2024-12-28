@@ -19,7 +19,6 @@
     <a href="/" class="breadcrumb-link text-secondary">Trang chủ </a>
     <span class="breadcrumb-item">/ Camera an ninh /</span>
     <span class="breadcrumb-item" th:text="${category.name}"></span>
-
   </nav>
   <div class="section_products">
     <div class="row">
@@ -140,7 +139,7 @@
           <div class="product-list">
             <p th:if="${message}" th:text="${message}"></p>
             <!-- Sản phẩm 1 -->
-            <div class="product-item" th:each="product : ${list}"  th:if="${list}" >
+            <div class="product-item" th:each="product : ${productsWithPrices}"  th:if="${productsWithPrices}" >
               <a th:href="@{/product/product_detail/{name}(name=${product.name})}">
                 <span th:text="${product.id}" hidden></span>
                 <img th:src="@{${'/uploads/' + product.imageUrl}}"  class="product-item-img" th:alt="${product.name}">
@@ -149,11 +148,11 @@
                 </h3>
                 <div class="rating">★★★★★</div>
                 <p class="price">
-                  <span class="current-price">850.000₫</span>
-                  <span class="old-price">1.700.000₫</span>
-                  <span class="discount">-50%</span>
+                  <p class="current-price"  th:text="${#numbers.formatInteger(product.discount,3,'POINT')} + 'đ'" ></p>
+                  <p class="old-price"  th:text="${#numbers.formatInteger(product.price,3,'POINT')} + 'đ'"></p>
+                  <span class="discount" th:text="${#numbers.formatInteger(product.discountPercentage,1,'POINT') + '%'}"></span>
                 </p>
-                <a href="">
+                <a href="#">
                   <i class="fa-solid fa-cart-shopping "></i>
                 </a>
               </a>

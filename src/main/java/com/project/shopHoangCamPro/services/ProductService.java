@@ -87,8 +87,8 @@ public class ProductService implements IProductService{
         return products;
     }
 
-    public void updateProduct(Integer name, Product updatedProduct) {
-        Optional<Product> existingProduct = productRepository.findById(name);
+    public void updateProduct(Integer id, Product updatedProduct) {
+        Optional<Product> existingProduct = productRepository.findById(id);
         if (existingProduct.isPresent()) {
             Product product = existingProduct.get();
             product.setName(updatedProduct.getName());

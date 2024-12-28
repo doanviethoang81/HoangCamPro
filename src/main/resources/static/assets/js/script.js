@@ -60,19 +60,19 @@ $('#addVariant').on('click', function () {
 	<hr style="margin-bottom: 30px;">
     	<div class="col-md-5">
             <input type="text" name="variantSku[]" class="form-control"
-                placeholder="Sku biến thể (VD: Hc1, Hc1-32, Hc1-64 ...)" required>
+                placeholder="Sku biến thể (VD: Hc1, Hc1-32, Hc1-64 ...)" >
         </div>
         <div class="col-md-5">
             <input type="text" name="variantStorage[]" class="form-control"
-                placeholder="Tên biến thể (VD: Không thẻ, 64GB, 128GB, ...)" required>
+                placeholder="Tên biến thể (VD: Không thẻ, 64GB, 128GB, ...)" >
         </div>
         <div class="col-md-5">
             <input type="number" name="variantDiscount[]" class="form-control"
-                placeholder="Giá  giảm (VNĐ)" required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                placeholder="Giá  giảm (VNĐ)"  oninput="this.value = this.value.replace(/[^0-9]/g, '');">
         </div>
     	<div class="col-md-5">
             <input type="number" name="variantPrice[]" class="form-control" placeholder="Giá gốc (VNĐ)"
-                required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                 oninput="this.value = this.value.replace(/[^0-9]/g, '');">
         </div>
     	<div class="col-md-2">
     		<button type="button" class="btn btn-danger btn-remove-variant ">Xóa biến thể</button>

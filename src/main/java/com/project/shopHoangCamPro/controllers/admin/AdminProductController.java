@@ -51,6 +51,155 @@ public class AdminProductController {
         }
     }
 
+    // thêm sản phẩm
+    @PostMapping("/add-product")
+    public String addProduct(
+            @Valid
+            @ModelAttribute("PRODUCT") Product product,
+            BindingResult result,
+            @RequestParam("image") MultipartFile image,
+            @RequestParam("variantSku[]") List<String> variantSkus,
+            @RequestParam("variantStorage[]") List<String> variantStorages,
+            @RequestParam("variantDiscount[]") List<String> variantDiscounts,
+            @RequestParam("variantPrice[]") List<String> variantPrices,
+            Model model,
+            RedirectAttributes redirectAttributes) {
+        if (product.getCategory() != null) {
+            model.addAttribute("selectedCategoryId", product.getCategory().getId());
+        }
+        if(result.hasErrors()){
+            List<Category> categories = categoryService.getAllCategorys();
+            model.addAttribute("listCategories", categories);
+            return "admin/product/add";
+        }
+        if (variantSkus != null && !variantSkus.isEmpty()) {
+            List<ProductVariant> variants = new ArrayList<>();
+            for (int i = 0; i < variantSkus.size(); i++) {
+                ProductVariant variant = new ProductVariant();
+                String sku = (variantSkus.get(i));
+                String storage =(i < variantStorages.size() ? variantStorages.get(i) : "");
+                String discount= (i < variantDiscounts.size() ? variantDiscounts.get(i) : "");
+                String price = (i < variantPrices.size() ? variantPrices.get(i) : "");
+                if (price.isEmpty() || sku.isEmpty() || storage.isEmpty() || discount.isEmpty()) {
+                    model.addAttribute("error", "Vui lòng nhập đầy đủ thông tin cho các biến thể sản phẩm!");
+                    List<Category> categories = categoryService.getAllCategorys();
+                    model.addAttribute("listCategories", categories);
+                    return "admin/product/add";
+                }
+                variant.setSku(sku);
+                variant.setStorage(storage);
+                variant.setDiscount(discount);
+                variant.setPrice(price);
+
+                variants.add(variant);
+                model.addAttribute("variants", variants);
+            }
+//            model.addAttribute("variants", variants);
+        }
+        //kiểm tra danh mục sản phẩm
+        if (product.getCategory() == null) {
+            model.addAttribute("error", "Vui lòng chọn danh mục sản phẩm!");
+            List<Category> categories = categoryService.getAllCategorys();
+            model.addAttribute("listCategories", categories);
+            return "admin/product/add";// trả về url
+        }
+        try {
+            // Kiểm tra các mảng đầu vào không được để trống
+            if ( variantSkus.isEmpty() || variantStorages.isEmpty() ||
+                    variantDiscounts.isEmpty() || variantPrices.isEmpty()) {
+                model.addAttribute("error", "Vui lòng nhập đầy đủ thông tin cho các biến thể sản phẩm!");
+                List<Category> categories = categoryService.getAllCategorys();
+                model.addAttribute("listCategories", categories);
+                return "admin/product/add";
+            }
+
+            // Kiểm tra nếu giá = 0
+            for (String price : variantPrices) {
+                if (Double.parseDouble(price) == 0) {
+                    model.addAttribute("error", "Giá sản phẩm không được bằng 0!");
+                    List<Category> categories = categoryService.getAllCategorys();
+                    model.addAttribute("listCategories", categories);
+                    return "admin/product/add";
+                }
+            }
+            for (String discount : variantDiscounts) {
+                if (Double.parseDouble(discount) == 0) {
+                    model.addAttribute("error", "Giá bán ra không được bằng 0!");
+                    List<Category> categories = categoryService.getAllCategorys();
+                    model.addAttribute("listCategories", categories);
+                    return "admin/product/add";
+                }
+            }
+            // Xử lý ảnh
+            if (!image.isEmpty()) {
+                // Lấy tên file và phần mở rộng
+                String fileNameImage = image.getOriginalFilename();
+                String fileExtension = fileNameImage.substring(fileNameImage.lastIndexOf(".") + 1).toLowerCase(); // lấy phầm mở rộng thành chữ thường
+
+                // Kiểm tra phần mở rộng của file
+                if (!fileExtension.equals("jpg") && !fileExtension.equals("png") && !fileExtension.equals("webp")) {
+                    model.addAttribute("error", "Chỉ chấp nhận các định dạng ảnh: .jpg, .png, .webp");
+                    List<Category> categories = categoryService.getAllCategorys();
+                    model.addAttribute("listCategories", categories);
+                    return "admin/product/add";
+                }
+
+                String uploadDir = "uploads";// đường dẫn
+                File uploadPath = new File(uploadDir);
+                if (!uploadPath.exists()) {
+                    uploadPath.mkdirs();
+                }
+
+                String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename().replaceAll("[^a-zA-Z0-9.-]", "_");
+                Path filePath = Paths.get(uploadDir, fileName);
+                Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+                product.setImageUrl(fileName);
+                model.addAttribute("image",fileName );
+
+            } else {
+//                product.setImageUrl("default.png");
+                List<Category> categories = categoryService.getAllCategorys();
+                model.addAttribute("listCategories", categories);
+                model.addAttribute("error", "Sản phẩm chưa có ảnh ");
+                return "/admin/product/add";
+            }
+            //các biến thể sản phẩm
+            List<ProductVariant> variants = new ArrayList<>();
+            for (int i = 0; i < variantSkus.size(); i++) {
+                double price = Double.parseDouble(variantPrices.get(i));
+                double discount = Double.parseDouble(variantDiscounts.get(i));
+
+                //kiểm tra điều kiện discount < price
+                if (discount > price) {
+                    model.addAttribute("error","Giá giảm phải nhỏ hơn giá gốc!");
+                    List<Category> categories = categoryService.getAllCategorys();
+                    model.addAttribute("listCategories", categories);
+                    return "/admin/product/add";
+                }
+                ProductVariant variant = new ProductVariant();
+                variant.setSku(variantSkus.get(i));
+                variant.setStorage(variantStorages.get(i));
+                variant.setDiscount(variantDiscounts.get(i));
+                variant.setPrice(variantPrices.get(i));
+                variant.setProduct(product); // Gắn biến thể vào sản phẩm
+                variants.add(variant);
+            }
+
+
+            productService.save(product);
+            productVariantService.saveAll(variants);
+            redirectAttributes.addFlashAttribute("message", "Thêm sản phẩm thành công!");
+            return "redirect:/admin/product/add";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Có lỗi xảy ra khi thêm sản phẩm.");
+            List<Category> categories = categoryService.getAllCategorys();
+            model.addAttribute("listCategories", categories);
+            return "admin/product/add";
+        }
+    }
+
     @RequestMapping("/product-detail/{id}")
     public String getProductsDetailByProductName(@PathVariable("id") Integer id, Model model) {
         try {
@@ -111,8 +260,28 @@ public class AdminProductController {
             return "redirect:/admin/product/add";
         }
         try {
+            // Lấy sản phẩm gốc từ database để giữ lại thông tin ảnh cũ nếu không upload ảnh mới
+            Product existingProduct = productService.getProductById(id);
+            if (existingProduct == null) {
+                redirectAttributes.addFlashAttribute("error", "Sản phẩm không tồn tại!");
+                return "redirect:/admin/product-edit/" + id;
+            }
+
+
             // Xử lý ảnh
             if (!productImage.isEmpty()) {
+                // Lấy tên file và phần mở rộng
+                String fileNameImage = productImage.getOriginalFilename();
+                String fileExtension = fileNameImage.substring(fileNameImage.lastIndexOf(".") + 1).toLowerCase(); // lấy phầm mở rộng thành chữ thường
+
+                // Kiểm tra phần mở rộng của file
+                if (!fileExtension.equals("jpg") && !fileExtension.equals("png") && !fileExtension.equals("webp")) {
+                    redirectAttributes.addFlashAttribute("error", "Chỉ chấp nhận các định dạng ảnh: .jpg, .png, .webp");
+                    List<Category> categories = categoryService.getAllCategorys();
+                    model.addAttribute("listCategories", categories);
+                    return "redirect:/admin/product-Edit/" + updatedProduct.getId();
+                }
+
                 String uploadDir = "uploads"; //đường dẫn
                 String fileName = UUID.randomUUID().toString() + "_" + productImage.getOriginalFilename().replaceAll("[^a-zA-Z0-9.-]", "_");
                 Path filePath = Paths.get(uploadDir, fileName);
@@ -120,7 +289,7 @@ public class AdminProductController {
 
                 updatedProduct.setImageUrl(fileName);
             } else {
-                updatedProduct.setImageUrl("default.png");
+                updatedProduct.setImageUrl(existingProduct.getImageUrl());
             }
 
             // Xử lý cập nhật các biến thể sản phẩm
@@ -130,9 +299,9 @@ public class AdminProductController {
                 double discount = Double.parseDouble(variantDiscounts.get(i));
 
                 // Kiểm tra điều kiện discount < price
-                if (discount >= price) {
+                if (discount > price) {
                     redirectAttributes.addFlashAttribute("error", "Giá giảm phải nhỏ hơn giá gốc!");
-                    return "redirect:/admin/product-Edit/" + updatedProduct.getName();
+                    return "redirect:/admin/product-Edit/" + updatedProduct.getId();
                 }
 
                 ProductVariant variant = new ProductVariant();
@@ -144,7 +313,7 @@ public class AdminProductController {
                 updatedVariants.add(variant);
             }
             productService.updateProduct(id, updatedProduct);
-            //cập nhật biến thể trong cơ sở dữ liệu
+
             productVariantService.updateVariantsForProduct(id, updatedVariants);
 
             redirectAttributes.addFlashAttribute("message", "Sửa sản phẩm thành công!");
@@ -156,82 +325,7 @@ public class AdminProductController {
     }
 
 
-    // thêm sản phẩm
-    @PostMapping("/add-product")
-    public String addProduct(
-            @Valid
-            @ModelAttribute("PRODUCT") Product product,
-            BindingResult result,
-            @RequestParam("image") MultipartFile image,
-            @RequestParam("variantSku[]") List<String> variantSkus,
-            @RequestParam("variantStorage[]") List<String> variantStorages,
-            @RequestParam("variantDiscount[]") List<String> variantDiscounts,
-            @RequestParam("variantPrice[]") List<String> variantPrices,
-            Model model,
-            RedirectAttributes redirectAttributes) {
-        if(result.hasErrors()){
-            List<Category> categories = categoryService.getAllCategorys();
-            model.addAttribute("listCategories", categories);
-            return "admin/product/add";
-        }
-        //kiểm tra danh mục sản phẩm
-        if (product.getCategory() == null) {
-            redirectAttributes.addFlashAttribute("error", "Vui lòng chọn danh mục sản phẩm!");
-            List<Category> categories = categoryService.getAllCategorys();
-            model.addAttribute("listCategories", categories);
-            return "redirect:/admin/product/add";
-        }
-        try {
-            // Xử lý ảnh
-            if (!image.isEmpty()) {
-                String uploadDir = "uploads";
-//                String uploadDir = "src/main/resources/static/uploads"; //đường dẫn
-                File uploadPath = new File(uploadDir);
-                if (!uploadPath.exists()) {
-                    uploadPath.mkdirs();
-                }
 
-                String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename().replaceAll("[^a-zA-Z0-9.-]", "_");
-                Path filePath = Paths.get(uploadDir, fileName);
-                Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-                product.setImageUrl(fileName);
-            } else {
-                product.setImageUrl("default.png");
-            }
-            //các biến thể sản phẩm
-            List<ProductVariant> variants = new ArrayList<>();
-            for (int i = 0; i < variantSkus.size(); i++) {
-                double price = Double.parseDouble(variantPrices.get(i));
-                double discount = Double.parseDouble(variantDiscounts.get(i));
-
-                //kiểm tra điều kiện discount < price
-                if (discount >= price) {
-                    model.addAttribute("error","Giá giảm phải nhỏ hơn giá gốc!");
-                    List<Category> categories = categoryService.getAllCategorys();
-                    model.addAttribute("listCategories", categories);
-                    return "/admin/product/add";
-                }
-                ProductVariant variant = new ProductVariant();
-                variant.setSku(variantSkus.get(i));
-                variant.setStorage(variantStorages.get(i));
-                variant.setDiscount(variantDiscounts.get(i));
-                variant.setPrice(variantPrices.get(i));
-                variant.setProduct(product); // Gắn biến thể vào sản phẩm
-                variants.add(variant);
-            }
-            productService.save(product);
-            productVariantService.saveAll(variants);
-            redirectAttributes.addFlashAttribute("message", "Thêm sản phẩm thành công!");
-            return "redirect:/admin/product/add";
-        } catch (Exception e) {
-            e.printStackTrace();
-            model.addAttribute("error", "Có lỗi xảy ra khi thêm sản phẩm.");
-            List<Category> categories = categoryService.getAllCategorys();
-            model.addAttribute("listCategories", categories);
-            return "admin/product/add";
-        }
-    }
 
     @GetMapping("/product-remove/{id}")
     public String deleteProduct(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {

@@ -10,15 +10,16 @@
 <div class="header_security-img" style="margin-top: 68px;">
     <img th:src="@{/fe/img/img_smart_home_header.jpg}" alt="" class="w-100 d-block ">
     <div class="note_img_header">
-        <h4>Camera An ninh </h4>
-        <p>Thời lượng pin siêu dài để bạn yên tâm sử dụng quanh năm.</p>
+        <h4>Nhà thông minh </h4>
+        <p>Mở rộng an ninh và tiện nghi trong toàn bộ ngôi nhà của bạn với các thiết bị gia dụng thông minh EZVIZ.</p>
     </div>
 </div>
 
-<div class="section_wrap">
-    <nav class="breadcrumb">
+<div class="section_wrap" th:each="category : ${category}">
+    <nav class="breadcrumbb" style="margin-top: 18px">
         <a href="/" class="breadcrumb-link text-secondary">Trang chủ </a>
-        <span class="breadcrumb-item">/ Camera an ninh /</span>
+        <span class="breadcrumb-item">/ Nhà thông minh </span>
+        <span class="breadcrumb-item" th:text="${category.name}"></span>
     </nav>
     <div class="section_products">
         <div class="row">
@@ -91,7 +92,7 @@
             </div>
             <div class="col-md-9 col-sm-12 ">
                 <div class="product-section">
-                    <h4>Camera an ninh</h4>
+                    <h4 th:text="${category.name}"></h4>
                     <!--hiển thị trên desktop -->
                     <div class="sort-options sort-options-destop">
                         <span>Sắp xếp:</span>
@@ -203,9 +204,9 @@
                     </div>
 
                     <div class="product-list">
-                        <!-- Sản phẩm 1 -->
                         <p th:if="${message}" th:text="${message}"></p>
-                        <div class="product-item" th:each="product : ${list}" >
+                        <!-- Sản phẩm 1 -->
+                        <div class="product-item" th:each="product : ${productsWithPrices}"  th:if="${productsWithPrices}" >
                             <a th:href="@{/product/product_detail/{name}(name=${product.name})}">
                                 <span th:text="${product.id}" hidden></span>
                                 <img th:src="@{${'/uploads/' + product.imageUrl}}"  class="product-item-img" th:alt="${product.name}">
@@ -214,16 +215,15 @@
                                 </h3>
                                 <div class="rating">★★★★★</div>
                                 <p class="price">
-                                    <span class="current-price">850.000₫</span>
-                                    <span class="old-price">1.700.000₫</span>
-                                    <span class="discount">-50%</span>
+                                <p class="current-price"  th:text="${#numbers.formatInteger(product.discount,3,'POINT')} + 'đ'" ></p>
+                                <p class="old-price"  th:text="${#numbers.formatInteger(product.price,3,'POINT')} + 'đ'"></p>
+                                <span class="discount" th:text="${#numbers.formatInteger(product.discountPercentage,1,'POINT') + '%'}"></span>
                                 </p>
-                                <a href="">
+                                <a href="#">
                                     <i class="fa-solid fa-cart-shopping "></i>
                                 </a>
                             </a>
                         </div>
-                        <!-- Sản phẩm 1 -->
                     </div>
                     <!-- next sản phẩm  -->
                     <div class="pagination-wrap">

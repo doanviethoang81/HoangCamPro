@@ -64,6 +64,12 @@
                 <span class="text">Thêm người dùng</span>
             </a>
         </div>
+        <div th:if="${message}" class="alert alert-success" role="alert">
+            <p th:text="${message}"></p>
+        </div>
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <p th:text="${error}"></p>
+        </div>
 
         <div class="table-data">
             <div class="order">
@@ -74,8 +80,8 @@
                         <th>Số điện thoại</th>
                         <th>Địa chỉ</th>
                         <th>Ngày sinh</th>
-                        <th>Trạng thái</th>
                         <th>Quyền</th>
+                        <th>Trạng thái</th>
                         <th>Tác vụ</th>
                     </tr>
                     </thead>
@@ -85,9 +91,9 @@
                         <td th:text="${user.phone}"></td>
                         <td th:text="${user.address}"></td>
                         <td th:text="${#dates.format(user.dateOfBirth, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${user.isActive ? 'Còn hoạt động' : 'Bị khóa'}"></td>
                         <td th:text="${user.role_id.name}"></td>
-                        <td>
+                        <td th:text="${user.isActive ? 'Còn hoạt động' : 'Bị chặn'}"></td>
+                        <td th:if="${user.isActive == true}">
                             <button style="background-color: rgb(12, 77, 229); border: none; border-radius: 6px;">
                                 <a th:href="@{/admin/user-edit/{id}(id=${user.id})}" style=" color: #fff;">
                                     <i class="fa-solid fa-wrench"></i>
@@ -95,12 +101,27 @@
                                 </a>
                             </button>
                             <button style="background-color: rgb(237, 38, 38); border: none; border-radius: 6px;">
-                                <a th:href="@{/admin/user-remove/{id}(id=${user.id})}" style=" color: #fff;">
-                                    <i class="fa-solid fa-trash"></i>
-                                    Xóa
+                                <a th:href="@{/admin/user-lock/{id}(id=${user.id})}" style=" color: #fff;">
+                                    <i class="fa-solid fa-lock"></i>
+                                    Chặn
                                 </a>
                             </button>
                         </td>
+                        <td th:unless="${user.isActive}">
+                            <button style="background-color: rgb(12, 77, 229); border: none; border-radius: 6px;">
+                                <a th:href="@{/admin/user-edit/{id}(id=${user.id})}" style=" color: #fff;">
+                                    <i class="fa-solid fa-wrench"></i>
+                                    Sửa
+                                </a>
+                            </button>
+                            <button style="background-color: rgb(10, 132, 10); border: none; border-radius: 6px;">
+                                <a th:href="@{/admin/user-unblock/{id}(id=${user.id})}" style="color: #fff;">
+                                    <i class="fa-solid fa-unlock"></i>
+                                    Bỏ chặn
+                                </a>
+                            </button>
+                        </td>
+
                     </tr>
                     </tbody>
                 </table>

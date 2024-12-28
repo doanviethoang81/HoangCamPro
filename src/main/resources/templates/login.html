@@ -16,9 +16,9 @@
 
             <div>
                 <div class="form_login-name">
-                    <i class="fa-regular fa-user"></i>
+                    <i class="fa-solid fa-user"></i>
                     <input class="form_login-name-input" type="text" placeholder="Số điện thoại"
-                           name="name" value="0989706755">
+                           name="phone" value="0333756181">
                 </div>
                 <div class="form_login-password password-field">
                     <i class="fa-solid fa-key"></i>
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <!-- Hiển thị lỗi đăng nhập -->
-            <div th:if="${session.error}" style="color: red; text-align: center; margin-bottom: 10px;">
+            <div th:if="${session.error}" class="alert" style="color: red; text-align: center; margin-bottom: 10px;" role="alert">
                 <span th:text="${session.error}"></span>
             </div>
             <div class="">

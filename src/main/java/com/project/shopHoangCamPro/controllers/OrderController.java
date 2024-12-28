@@ -11,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("orders")
@@ -23,46 +20,6 @@ public class OrderController {
 
     private final OrderService orderService;
     private final OrderDetailService orderDetailService;
-
-//    @RequestMapping("")
-//    public String index(Model model) {
-//        try {
-//            // Lấy thông tin người dùng hiện tại
-//            CustomUserDetail userDetails = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            Integer userId = userDetails.getId();
-//
-//            // Kiểm tra nếu có đơn hàng của user
-//            if (orderService.isUserIdExists(userId)) {
-//                // Lấy danh sách Order dựa vào userId
-//                List<Order> orders = orderService.findOrdersByUserId(userId);
-//
-//                // Danh sách để lưu đơn hàng có nhiều mặt hàng
-//                List<Order> ordersWithMultipleItems = new ArrayList<>();
-//                Map<Integer, List<OrderDetail>> orderDetailsMap = new HashMap<>();
-//
-//                for (Order order : orders) {
-//                    List<OrderDetail> orderDetails = orderDetailService.findOrderDetailByOrderId(order.getId());
-//                    orderDetailsMap.put(order.getId(), orderDetails);
-//
-//                    // Kiểm tra nếu đơn hàng có nhiều mặt hàng
-//                    if (orderDetails.size() > 1) {
-//                        ordersWithMultipleItems.add(order);
-//                    }
-//                }
-//                // Gửi dữ liệu tới view
-//                model.addAttribute("orders", orders);
-//                model.addAttribute("ordersWithMultipleItems", ordersWithMultipleItems);
-//                model.addAttribute("orderDetailsMap", orderDetailsMap);
-//            } else {
-//                model.addAttribute("message", "Bạn chưa có đơn hàng nào.");
-//            }
-//        } catch (Exception e) {
-//            model.addAttribute("error", "Đã xảy ra lỗi khi xử lý dữ liệu: " + e.getMessage());
-//        }
-//
-//        return "order"; // Trả về view order.html
-//    }
-
 
     @RequestMapping("")
     public String index(Model model) {
@@ -76,14 +33,17 @@ public class OrderController {
                 // Lấy danh sách Order dựa vào userId
                 List<Order> orders = orderService.findOrdersByUserId(userId);
 
+                // Sắp xếp danh sách đơn hàng theo date mới nhất
+                orders.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+
                 // Danh sách để lưu các chi tiết đơn hàng (bao gồm nhiều mặt hàng)
-                Map<Order, List<OrderDetail>> orderDetailsMap = new HashMap<>();
+                LinkedHashMap<Order, List<OrderDetail>> orderDetailsMap = new LinkedHashMap<>();
+//               Map<Order, List<OrderDetail>> orderDetailsMap = new HashMap<>();
 
                 // Duyệt qua từng đơn hàng và lấy chi tiết của chúng
                 for (Order order : orders) {
                     // Lấy danh sách các OrderDetail của mỗi đơn hàng
                     List<OrderDetail> orderDetails = orderDetailService.findOrderDetailByOrderId(order.getId());
-
                     // Thêm vào Map để liên kết mỗi đơn hàng với các chi tiết của nó
                     orderDetailsMap.put(order, orderDetails);
                 }
@@ -103,7 +63,4 @@ public class OrderController {
 
         return "order"; // Trả về view order.html
     }
-
-
-
 }

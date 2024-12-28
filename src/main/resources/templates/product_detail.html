@@ -53,17 +53,18 @@
                                 <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
                             </div>
                             <div class="product-price m-1">
-                                    <span class="current-price" data-memory="none"
-                                          th:text="${#numbers.formatCurrency(variant.discount)}">
-                                    </span>
+                                <span class="current-price" data-memory="none"
+                                      th:text="${#numbers.formatInteger(variant.discount,3,'POINT')} + 'đ'">
+                                </span>
                                 <span class="old-price" data-memory="none"
-                                      th:text="${#numbers.formatCurrency(variant.price)}"></span>
-                                <span class="discount">-50%</span>
+                                      th:text="${#numbers.formatInteger(variant.price,3,'POINT')} + 'đ'">
+                                </span>
+                                <span class="discount" th:text="${#numbers.formatInteger(discountPercentage,1,'POINT') + '%'}"></span>
 
                             </div>
                             <p class="saving">
                                 <span>Tiết kiệm</span>
-                                <span>390.000đ</span>
+                                <span  th:text="${#numbers.formatInteger(economize,3,'POINT')} + 'đ'"></span>
                             </p>
                             <ul class="product-specs">
                                 <span th:utext="${product.description}"></span>
@@ -105,7 +106,6 @@
                                     </a>
                                 </div>
                                 <div>
-                                    <!--                                    th:href="@{/cart/{name}(name=${product.name})}"-->
                                     <a id="cart">
                                         <button class="add-to-cart fw-bold" id="add-to-cart-button"
                                                 th:attr="data-name=${product.name}, data-price-cart=${variant.discount}">

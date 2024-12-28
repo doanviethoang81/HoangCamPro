@@ -125,4 +125,31 @@ public class AdminCustomerController {
         }
     }
 
+    //khóa user
+    @GetMapping("/user-lock/{id}")
+    public String blockUser(
+            @PathVariable("id") Integer id,
+            RedirectAttributes redirectAttributes){
+        try {
+            userServiceImpl.lockUser(id);
+            redirectAttributes.addFlashAttribute("message", "Chặn người dùng thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Chặn người dùng thất bại! ");
+        }
+        return "redirect:/admin/user";
+    }
+
+    //mở khóa
+    @GetMapping("/user-unblock/{id}")
+    public String unblockUser(
+            @PathVariable("id") Integer id,
+            RedirectAttributes redirectAttributes){
+        try {
+            userServiceImpl.unblockUser(id);
+            redirectAttributes.addFlashAttribute("message", "Mở khóa người dùng thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Mở khóa người dùng thất bại! ");
+        }
+        return "redirect:/admin/user";
+    }
 }

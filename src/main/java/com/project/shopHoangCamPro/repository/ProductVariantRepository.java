@@ -13,12 +13,7 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
 
     List<ProductVariant> findByProductId(int productId);
 
-    @Transactional
+    @Transactional // nếu có lỗi ném lỗi k lưu dữ liệu
     void deleteByProductId(Integer productId);
-
-//    @Query("SELECT v FROM product_variant v ORDER BY v.id ASC")
-//    ProductVariant findTopByOrderByIdAsc();
-
-
 
 }

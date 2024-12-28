@@ -25,19 +25,22 @@
   <h4>Kết quả:</h4>
 </div>
 <div class="product_details-wrap">
-  <div class="product-list" th:if="${products}">
+  <div th:if="${error}" class="" role="alert">
+    <p th:text="${error}"></p>
+  </div>
+  <div class="product-list" th:if="${productsWithPrices}">
     <!-- Sản phẩm 1 -->
-    <div class="product-item" style="background-color: #fff !important;" th:each="product : ${products}">
-      <a href="/templates/product-detail.html">
+    <div class="product-item" style="background-color: #fff !important;" th:each="product : ${productsWithPrices}">
+      <a th:href="@{/product/product_detail/{name}(name=${product.name})}">
         <img th:src="@{${'/uploads/' + product.imageUrl}}" class="product-item-img" th:alt="${product.name}"  style="width: 150px; height: 150px;">
         <h3 th:text="${product.name}"></h3>
         <div class="rating">★★★★★</div>
         <p class="price">
-        <p class="current-price" style="margin: 0;">850.000₫</p>
-        <p class="old-price">1.700.000₫</p>
-        <span class="discount">-50%</span>
+        <p class="current-price"  th:text="${#numbers.formatInteger(product.discount,3,'POINT')} + 'đ'" ></p>
+        <p class="old-price"  th:text="${#numbers.formatInteger(product.price,3,'POINT')} + 'đ'"></p>
+        <span class="discount" th:text="${#numbers.formatInteger(product.discountPercentage,1,'POINT') + '%'}"></span>
         </p>
-        <a href="">
+        <a href="#">
           <i class="fa-solid fa-cart-shopping "></i>
         </a>
       </a>

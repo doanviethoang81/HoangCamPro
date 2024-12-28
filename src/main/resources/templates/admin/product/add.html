@@ -77,7 +77,10 @@
                 <label for="categoriesName" class="form-label">Chọn danh mục sản phẩm</label>
                 <select name="category" id="categoriesName" class="form-control" >
                     <option value="" disabled selected>-- Chọn danh mục --</option>
-                    <option th:each="category : ${listCategories}" th:value="${category.id}" th:text="${category.name}">
+                    <option th:each="category : ${listCategories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}"
+                            th:selected="${category.id == selectedCategoryId}">
                     </option>
                 </select>
             </div>
@@ -103,28 +106,57 @@
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Ảnh sản phẩm</label>
-                <input type="file" id="image"  name="image"  class="form-control" accept="image/*" required>
+                <input type="file" id="image"  name="image"  class="form-control" accept="image/*" >
+<!--                <div th:if="${image}">-->
+<!--                    <img th:src="@{${'/uploads/' + image}}" class="product-item-img" >-->
+<!--&lt;!&ndash;                    <img th:if="${product.imageUrl != null}" th:src="@{'/uploads/' + ${product.imageUrl}}" alt="Ảnh sản phẩm" width="150">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span th:if="${product.imageUrl == null}">Chưa có ảnh.</span>&ndash;&gt;-->
+<!--                </div>-->
             </div>
 
             <!-- Thông tin biến thể sản phẩm -->
             <h5>Biến Thể Sản Phẩm</h5>
             <div id="variantContainer">
-                <div class="variant row mb-3">
-                    <div class="col-md-5">
-                        <input type="text" name="variantSku[]" class="form-control"
-                               placeholder="Sku biến thể (VD: Hc1, Hc1-32, Hc1-64 ...)" required>
+                <div th:if="${variants != null && #lists.size(variants) > 0}">
+                    <div class="variant row mb-3"th:each="variant, stat : ${variants}">
+                        <hr>
+                        <div class="col-md-5">
+                            <input type="text" name="variantSku[]" class="form-control"
+                                   placeholder="Sku biến thể (VD: Hc1, Hc1-32, Hc1-64 ...)"  th:value="${variant.sku}" >
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" name="variantStorage[]" class="form-control"
+                                   placeholder="Tên biến thể (VD: Không thẻ, 64GB, 128GB, ...)"   th:value="${variant.storage}"  >
+                        </div>
+                        <div class="col-md-5">
+                            <input type="number" name="variantDiscount[]" class="form-control"
+                                   placeholder="Giá  giảm (VNĐ)"  oninput="this.value = this.value.replace(/[^0-9]/g, '');"   th:value="${variant.discount}">
+                        </div>
+                        <div class="col-md-5">
+                            <input type="number" name="variantPrice[]" class="form-control" placeholder="Giá gốc (VNĐ)"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" th:value="${variant.price}">
+                        </div>
                     </div>
-                    <div class="col-md-5">
-                        <input type="text" name="variantStorage[]" class="form-control"
-                               placeholder="Tên biến thể (VD: Không thẻ, 64GB, 128GB, ...)" required>
-                    </div>
-                    <div class="col-md-5">
-                        <input type="number" name="variantDiscount[]" class="form-control"
-                               placeholder="Giá  giảm (VNĐ)" required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-                    </div>
-                    <div class="col-md-5">
-                        <input type="number" name="variantPrice[]" class="form-control" placeholder="Giá gốc (VNĐ)"
-                               required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                </div>
+                <div th:unless="${variants != null}">
+                    <div class="variant row mb-3">
+                        <hr>
+                        <div class="col-md-5">
+                            <input type="text" name="variantSku[]" class="form-control"
+                                   placeholder="Sku biến thể (VD: Hc1, Hc1-32, Hc1-64 ...)" >
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" name="variantStorage[]" class="form-control"
+                                   placeholder="Tên biến thể (VD: Không thẻ, 64GB, 128GB, ...)"  >
+                        </div>
+                        <div class="col-md-5">
+                            <input type="number" name="variantDiscount[]" class="form-control"
+                                   placeholder="Giá  giảm (VNĐ)"  oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                        </div>
+                        <div class="col-md-5">
+                            <input type="number" name="variantPrice[]" class="form-control" placeholder="Giá gốc (VNĐ)"
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                        </div>
                     </div>
                 </div>
             </div>

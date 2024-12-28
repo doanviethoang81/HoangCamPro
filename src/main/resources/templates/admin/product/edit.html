@@ -81,7 +81,6 @@
                 <label for="name"><strong>Tên sản phẩm</strong></label>
                 <input type="text" id="name" name="name" class="form-control"  th:value="${product.name}" >
                 <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
-
             </div>
 
             <div class="form-group">
@@ -94,8 +93,9 @@
 
             <div class="form-group">
                 <label for="image"><strong>Ảnh</strong></label>
-<!--                <img th:src="@{${'/uploads/' + product.imageUrl}}" class="product-item-img" th:alt="${product.name}">-->
-                <input type="file" id="image" name="image" class="form-control" required>
+                <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                <img th:src="@{${'/uploads/' + product.imageUrl}}" class="product-item-img" th:alt="${product.name}">
+
             </div>
 
             <div class="form-group">

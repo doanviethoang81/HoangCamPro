@@ -107,4 +107,18 @@ public class UserServiceImpl implements IUserService {
         }
         userRepository.save(existingUser);
     }
+
+    public void lockUser(Integer id){
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("User không tồn tại với id: "+ id));
+        existingUser.setIsActive(false);
+        userRepository.save(existingUser);
+    }
+
+    public void unblockUser(Integer id){
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("User không tồn tại với id: "+ id));
+        existingUser.setIsActive(true);
+        userRepository.save(existingUser);
+    }
 }

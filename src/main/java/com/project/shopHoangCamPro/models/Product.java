@@ -33,7 +33,6 @@ public class Product {
         @Column(name="image_url", length = 300)
         private String imageUrl;
 
-//        private Float price;
         @NotBlank(message = "Mô tả không được để trống! ")
         @Column(name = "description",columnDefinition = "TEXT")
         private String description;

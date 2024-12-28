@@ -26,34 +26,28 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable()) // Tắt CSRF để xử lý đơn giản hơn
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register").permitAll() // Cho phép truy cập trang đăng nhập
-                        .requestMatchers("/").permitAll() // Cho phép truy cập trang đăng nhập
-                        .requestMatchers("/login").permitAll() // Cho phép truy cập trang đăng nhập
-                        .requestMatchers("/product").permitAll() // Cho phép truy cập trang đăng nhập
-                        .requestMatchers("/categories").permitAll() // Cho phép truy cập trang đăng nhập
-                        .requestMatchers("/category_security").permitAll() // Cho phép truy cập trang đăng nhập
-                        .requestMatchers("/category_smart_home").permitAll() // Cho phép truy cập trang đăng nhập
-                        .requestMatchers("/product/product_security_home").permitAll() // Cho phép truy cập trang đăng nhập
-                        .requestMatchers("/product_detail").permitAll() // Cho phép truy cập trang đăng nhập
-                        .requestMatchers("/admin/add-product").permitAll() // Cho phép truy cập trang đăng nhập
-
+                        .requestMatchers("/register", "/", "/login")
+//                                "/product/get-price/**",
+//                                "/product/product_security_home/**",
+//                                "/product/product_detail/**")
+                        .permitAll() // Cho phép truy cập các trang này
 
                         .requestMatchers("/admin/**").hasAuthority("admin") // ADMIN mới được vào /admin/**
-//                        .requestMatchers("/product/**").hasAuthority("user") // USER mới được vào /product/**
+//                        .requestMatchers("/cart/**").hasAuthority("user") // USER mới được vào /product/**
                         .anyRequest().authenticated()) // Các trang khác yêu cầu đăng nhập
                 .formLogin(login -> login
                         .loginPage("/login") // Trang đăng nhập
                         .loginProcessingUrl("/login") // Xử lý logic đăng nhập
-                        .usernameParameter("name") // Input tên người dùng
+                        .usernameParameter("phone") // Input phone người dùng
                         .passwordParameter("password") // Input mật khẩu
                         .successHandler((request, response, authentication) -> { // Xử lý đăng nhập thành công
 
-                            //Lấy thông tin người dùng từ authentication
-//                            CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
-
-                            // Lưu ID vào session nếu cần
-//                            request.getSession().setAttribute("userId", userDetails.getName());
-
+                            CustomUserDetail user = (CustomUserDetail) authentication.getPrincipal();
+                            if (!user.getIsActive()) {
+                                request.getSession().setAttribute("error", "Tài khoản của bạn đã bị khóa.");
+                                response.sendRedirect("/login");
+                                return;
+                            }
                             String role = authentication.getAuthorities().iterator().next().getAuthority();
                             if ("admin".equals(role)) {
                                 response.sendRedirect("/admin"); // Điều hướng ADMIN

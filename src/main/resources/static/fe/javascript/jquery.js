@@ -379,94 +379,95 @@ $(function () {
         });
         activeButton.classList.add('memory-options-button-active');
     }
-
-
 });
 
 // lấy id của biến thể vá số lượng sp để thanh toán
 document.addEventListener('DOMContentLoaded', function () {
-    const memoryButtons = document.querySelectorAll('.memory-options-button');
-    const buyNowLink = document.getElementById('buy-now-link');
-    const quantityInput = document.querySelector('.product_quantity');
-    const incrementButton = document.querySelector('.increment');
-    const decrementButton = document.querySelector('.decrement');
+        const memoryButtons = document.querySelectorAll('.memory-options-button');
+        const buyNowLink = document.getElementById('buy-now-link');
+        const quantityInput = document.querySelector('.product_quantity');
+        const incrementButton = document.querySelector('.increment');
+        const decrementButton = document.querySelector('.decrement');
 
-    // Lấy giá trị nút mặc định "Không thẻ"
-    const defaultVariant = document.querySelector('.memory-options-button-active');
-    let selectedVariantId = defaultVariant.getAttribute('data-id');
-    let selectedQuantity = parseInt(quantityInput.value);
+        // Lấy giá trị nút mặc định "Không thẻ"
+        const defaultVariant = document.querySelector('.memory-options-button-active');
+        let selectedVariantId = defaultVariant.getAttribute('data-id');
+        let selectedQuantity = parseInt(quantityInput.value);
 
-    // Cập nhật URL khi người dùng chọn biến thể khác
-    memoryButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            memoryButtons.forEach(btn => btn.classList.remove('memory-options-button-active'));
-            this.classList.add('memory-options-button-active');
-
-            // Cập nhật ID và số lượng khi người dùng chọn biến thể
-            selectedVariantId = this.getAttribute('data-id');
-            selectedQuantity = parseInt(quantityInput.value);
-            updateBuyNowLink(selectedVariantId, selectedQuantity);
-        });
-    });
-
-    // Cập nhật khi người dùng thay đổi số lượng
-    quantityInput.addEventListener('input', function () {
-        selectedQuantity = parseInt(this.value);
+//        gọi hàm nếu người dùng chọn biến thể mặc định
         updateBuyNowLink(selectedVariantId, selectedQuantity);
-    });
 
-    incrementButton.addEventListener('click', function () {
-        selectedQuantity++;
-        quantityInput.value = selectedQuantity;
-        updateBuyNowLink(selectedVariantId, selectedQuantity);
-    });
-
-    decrementButton.addEventListener('click', function () {
-        if (selectedQuantity > 1) {
-            selectedQuantity--;
-            quantityInput.value = selectedQuantity;
-            updateBuyNowLink(selectedVariantId, selectedQuantity);
-        }
-    });
-
-    function updateBuyNowLink(variantId, quantity) {
-        if (variantId && quantity) {
-            const baseUrl = buyNowLink.getAttribute('href').split('?')[0];
-            buyNowLink.setAttribute('href', `${baseUrl}?variantId=${variantId}&quantity=${quantity}`);
-        }
-    }
-
-// nee
-    // Lấy thông tin từ các thuộc tính data-* của nút
-    const addToCartButton = document.getElementById('add-to-cart-button');
-    let variantId = defaultVariant.getAttribute('data-id');
-    let price = document.querySelector('data-discount'); // Lấy số lượng sản phẩm
-    let quantity = document.querySelector('.product_quantity').value; // Số lượng sản phẩm
-
-    // Kiểm tra nếu nút "Thêm vào giỏ hàng" tồn tại
-    if (addToCartButton) {
-        // Cập nhật giá trị ID và giá ban đầu (giá trị mặc định)
-        const defaultVariant = document.querySelector('.memory-options-button-active');  // Lấy nút được chọn mặc định
-        if (defaultVariant) {
-            variantId = defaultVariant.getAttribute('data-id');
-            price = defaultVariant.getAttribute('data-discount');
-        }
-
-        // Lắng nghe sự kiện click khi người dùng chọn biến thể
+        // Cập nhật URL khi người dùng chọn biến thể khác
         memoryButtons.forEach(button => {
             button.addEventListener('click', function () {
-                // Cập nhật lớp active khi người dùng chọn biến thể
                 memoryButtons.forEach(btn => btn.classList.remove('memory-options-button-active'));
                 this.classList.add('memory-options-button-active');
 
-                // Cập nhật lại giá trị ID và giá của biến thể được chọn
-                variantId = this.getAttribute('data-id');
-                price = this.getAttribute('data-discount');
+                // Cập nhật ID và số lượng khi người dùng chọn biến thể
+                selectedVariantId = this.getAttribute('data-id');
+                selectedQuantity = parseInt(quantityInput.value);
+                updateBuyNowLink(selectedVariantId, selectedQuantity);
             });
         });
 
-        // Lắng nghe sự kiện click khi người dùng nhấn nút "Thêm vào giỏ hàng"
-        addToCartButton.addEventListener('click', function () {
+        // Cập nhật khi người dùng thay đổi số lượng
+        quantityInput.addEventListener('input', function () {
+            selectedQuantity = parseInt(this.value);
+            updateBuyNowLink(selectedVariantId, selectedQuantity);
+        });
+
+        incrementButton.addEventListener('click', function () {
+            selectedQuantity++;
+            quantityInput.value = selectedQuantity;
+            updateBuyNowLink(selectedVariantId, selectedQuantity);
+        });
+
+        decrementButton.addEventListener('click', function () {
+            if (selectedQuantity > 1) {
+                selectedQuantity--;
+                quantityInput.value = selectedQuantity;
+                updateBuyNowLink(selectedVariantId, selectedQuantity);
+            }
+        });
+
+        function updateBuyNowLink(variantId, quantity) {
+            if (variantId && quantity) {
+                const baseUrl = buyNowLink.getAttribute('href').split('?')[0];
+                buyNowLink.setAttribute('href', `${baseUrl}?variantId=${variantId}&quantity=${quantity}`);
+            }
+        }
+
+    // nee
+        // Lấy thông tin từ các thuộc tính data-* của nút
+        const addToCartButton = document.getElementById('add-to-cart-button');
+        let variantId = defaultVariant.getAttribute('data-id');
+        let price = document.querySelector('data-discount'); // Lấy số lượng sản phẩm
+        let quantity = document.querySelector('.product_quantity').value; // Số lượng sản phẩm
+
+        // Kiểm tra nếu nút "Thêm vào giỏ hàng" tồn tại
+        if (addToCartButton) {
+            // Cập nhật giá trị ID và giá ban đầu (giá trị mặc định)
+            const defaultVariant = document.querySelector('.memory-options-button-active');  // Lấy nút được chọn mặc định
+            if (defaultVariant) {
+                variantId = defaultVariant.getAttribute('data-id');
+                price = defaultVariant.getAttribute('data-discount');
+            }
+
+            // Lắng nghe sự kiện click khi người dùng chọn biến thể
+            memoryButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Cập nhật lớp active khi người dùng chọn biến thể
+                    memoryButtons.forEach(btn => btn.classList.remove('memory-options-button-active'));
+                    this.classList.add('memory-options-button-active');
+
+                    // Cập nhật lại giá trị ID và giá của biến thể được chọn
+                    variantId = this.getAttribute('data-id');
+                    price = this.getAttribute('data-discount');
+                });
+            });
+
+            // Lắng nghe sự kiện click khi người dùng nhấn nút "Thêm vào giỏ hàng"
+            addToCartButton.addEventListener('click', function () {
             // Lấy thông tin từ các thuộc tính và giá trị input
             const productName = addToCartButton.getAttribute('data-name');
             quantity = document.querySelector('.product_quantity').value; // Số lượng sản phẩm
@@ -495,11 +496,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
-                    alert('Có lỗi xảy ra khi thêm vào giỏ hàng.');
+                    alert('Vui lòng đăng nhập trước!.');
                 });
-        });
-    }
+            });
+        }
 });
 
 // hiển thị tiền khi click chọn sản phẩm cần mua trong giỏ hàng
@@ -516,41 +516,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         document.getElementById('total-price').innerText = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total);
     }
-
-//function submitSelectedProducts() {
-//    var selectedProducts = [];
-//    var checkboxes = document.querySelectorAll('.product-checkbox:checked');
-//
-//    checkboxes.forEach(function(checkbox) {
-//        var product = {
-//            id: checkbox.getAttribute('data-product-id'),
-//            price: checkbox.getAttribute('data-price')
-//        };
-//        selectedProducts.push(product);
-//    });
-//
-//    if (selectedProducts.length > 0) {
-//        // Gửi mảng sản phẩm đã chọn qua AJAX
-//        fetch('/cart/checkout', {
-//            method: 'POST',
-//            headers: {
-//                'Content-Type': 'application/json',
-//            },
-//            body: JSON.stringify(selectedProducts) // Gửi mảng sản phẩm dưới dạng JSON
-//        })
-//        .then(response => response.json())
-//        .then(data => {
-//            console.log('Success:', data);
-//            // Có thể chuyển hướng đến trang thanh toán hoặc cập nhật giao diện
-//            window.location.href = "/payment/cart"; // Chuyển đến trang thanh toán
-//        })
-//        .catch((error) => {
-//            console.error('Error:', error);
-//        });
-//    } else {
-//        alert("Vui lòng chọn sản phẩm trước khi thanh toán.");
-//    }
-//}
 
 function submitSelectedProducts() {
     var selectedProducts = [];

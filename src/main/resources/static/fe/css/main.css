@@ -1394,7 +1394,7 @@ hr {
     font-size: 24px;
     color: var(--price-color);
     font-weight: bold;
-    margin-right: 10px;
+    margin: 0;
 }
 
 .old-price {
