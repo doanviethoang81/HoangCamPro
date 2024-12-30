@@ -158,7 +158,6 @@ public class AdminProductController {
                 model.addAttribute("image",fileName );
 
             } else {
-//                product.setImageUrl("default.png");
                 List<Category> categories = categoryService.getAllCategorys();
                 model.addAttribute("listCategories", categories);
                 model.addAttribute("error", "Sản phẩm chưa có ảnh ");
@@ -253,6 +252,32 @@ public class AdminProductController {
             Model model,
             RedirectAttributes redirectAttributes)
     {
+        // Kiểm tra các mảng đầu vào không được để trống
+        if ( variantSkus.isEmpty() || variantStorages.isEmpty() ||
+                variantDiscounts.isEmpty() || variantPrices.isEmpty()) {
+            model.addAttribute("error", "Vui lòng nhập đầy đủ thông tin cho các biến thể sản phẩm!");
+            List<Category> categories = categoryService.getAllCategorys();
+            model.addAttribute("listCategories", categories);
+            return "admin/product/add";
+        }
+
+        // Kiểm tra nếu giá = 0
+        for (String price : variantPrices) {
+            if (Double.parseDouble(price) == 0) {
+                model.addAttribute("error", "Giá sản phẩm không được bằng 0!");
+                List<Category> categories = categoryService.getAllCategorys();
+                model.addAttribute("listCategories", categories);
+                return "admin/product/add";
+            }
+        }
+        for (String discount : variantDiscounts) {
+            if (Double.parseDouble(discount) == 0) {
+                model.addAttribute("error", "Giá bán ra không được bằng 0!");
+                List<Category> categories = categoryService.getAllCategorys();
+                model.addAttribute("listCategories", categories);
+                return "admin/product/add";
+            }
+        }
         if (updatedProduct.getCategory() == null) {
             redirectAttributes.addFlashAttribute("error", "Vui lòng chọn danh mục sản phẩm.");
             List<Category> categories = categoryService.getAllCategorys();

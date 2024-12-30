@@ -114,10 +114,10 @@ $(document).ready(function () {
 	$('#addVariant_editProduct').on('click', function () {
 		let newRow = `
             <tr>
-                <td><input type="text" name="variantSku[]" class="form-control" placeholder="Mã biến thể" required></td>
-                <td><input type="text"  name="variantStorage[]" class="form-control" placeholder="Dung lượng" required></td>
-                <td><input type="number" name="variantDiscount[]" class="form-control" placeholder="Giá giảm" required oninput="this.value = this.value.replace(/[^0-9]/g, '');"></td>
-                <td><input type="number" name="variantPrice[]" class="form-control" placeholder="Giá gốc" required oninput="this.value = this.value.replace(/[^0-9]/g, '');"></td>
+                <td><input type="text" name="variantSku[]" class="form-control" placeholder="Mã biến thể" ></td>
+                <td><input type="text"  name="variantStorage[]" class="form-control" placeholder="Dung lượng" ></td>
+                <td><input type="number" name="variantDiscount[]" class="form-control" placeholder="Giá giảm"  oninput="this.value = this.value.replace(/[^0-9]/g, '');"></td>
+                <td><input type="number" name="variantPrice[]" class="form-control" placeholder="Giá gốc"  oninput="this.value = this.value.replace(/[^0-9]/g, '');"></td>
                 <td>
                     <button type="button" id="btn-remove-edit-variant" class="form-control">Xóa</button>
                 </td>

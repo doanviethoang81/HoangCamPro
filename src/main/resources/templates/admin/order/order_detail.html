@@ -101,6 +101,7 @@
       <table class="custom-table custom-table-striped custom-table-hover custom-table-bordered">
         <thead class="custom-table-header">
           <tr>
+            <th scope="col">Id biến thể</th>
             <th scope="col">Tên sản phẩm</th>
             <th scope="col">Mã sản phẩm</th>
             <th scope="col">Loại sản phẩm</th>
@@ -111,6 +112,7 @@
         </thead>
         <tbody  th:each="orderDetail : ${listOrderDetail}">
           <tr>
+            <td th:text="${orderDetail.product.id}"></td>
             <td th:text="${orderDetail.product.product.name}"></td>
             <td th:text="${orderDetail.product.sku}"></td>
             <td th:text="${orderDetail.product.storage}"></td>

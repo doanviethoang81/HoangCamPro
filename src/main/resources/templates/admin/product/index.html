@@ -111,7 +111,9 @@
                   Sửa
                 </a>
               </button>
-              <button style="background-color: rgb(237, 38, 38); border: none; border-radius: 6px;">
+
+              <button style="background-color: rgb(237, 38, 38); border: none; border-radius: 6px;"
+                      th:if="${#lists.contains(productsFromVariants, product)} == false">
                 <a th:href="@{/admin/product-remove/{id}(id=${product.id})}" style=" color: #fff;">
                   <i class="fa-solid fa-trash"></i>
                   Xóa

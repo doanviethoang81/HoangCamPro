@@ -145,6 +145,24 @@
 <script>
     CKEDITOR.replace('product-description');
 </script>
+<script>
+    document.querySelector('.form-edit-product').addEventListener('submit', function (event) {
+        const variantRows = document.querySelectorAll('.table-edit-product tbody tr');
+        if (variantRows.length === 0) {
+            event.preventDefault(); // Ngăn không cho gửi form
+            alert('Không có biến thể sản phẩm để lưu. Vui lòng thêm ít nhất một biến thể.');
+        }
+    });
+
+    // Xử lý nút "Xóa" biến thể
+    document.querySelectorAll('#btn-remove-edit-variant').forEach(button => {
+        button.addEventListener('click', function () {
+            const row = this.closest('tr');
+            row.parentNode.removeChild(row); // Xóa hàng biến thể
+        });
+    });
+
+</script>
 
 <script th:src="@{/assets/js/script.js}"></script>
 </body>

@@ -1,6 +1,5 @@
 package com.project.shopHoangCamPro.controllers;
 
-import com.project.shopHoangCamPro.dtos.CategoryDTO;
 import com.project.shopHoangCamPro.models.Category;
 import com.project.shopHoangCamPro.models.Product;
 import com.project.shopHoangCamPro.services.CategoryService;

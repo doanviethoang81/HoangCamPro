@@ -2,10 +2,7 @@ package com.project.shopHoangCamPro.controllers.admin;
 
 import com.project.shopHoangCamPro.models.*;
 import com.project.shopHoangCamPro.repository.UserRepository;
-import com.project.shopHoangCamPro.services.OrderService;
-import com.project.shopHoangCamPro.services.ProductService;
-import com.project.shopHoangCamPro.services.RoleService;
-import com.project.shopHoangCamPro.services.UserServiceImpl;
+import com.project.shopHoangCamPro.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller("productControllerAdmin")
 @RequiredArgsConstructor
@@ -30,6 +28,8 @@ public class AdminController {
     private final RoleService roleService;
     private final UserRepository userRepository;
     private final OrderService orderService;
+    private final OrderDetailService orderDetailService;
+    private final ProductVariantService productVariantService;
 
 //    @RequestMapping("/admin")
 //    public String index(){
@@ -51,7 +51,24 @@ public class AdminController {
     @RequestMapping("/admin/product")
     public String product(Model model){
         List<Product> list = this.productService.getAll();
+        List<OrderDetail> orderDetails = this.orderDetailService.getAll();
+
+        List<Integer> productIds = orderDetails.stream()
+                .map(orderDetail -> orderDetail.getProduct().getId()) // Lấy ID từ Product
+                .collect(Collectors.toList());
+        List<ProductVariant> productVariants = productVariantService.getProductsByIds(productIds);
+
+        List<Product> productsFromVariants = productVariants.stream()
+                .map(ProductVariant::getProduct) // Lấy Product từ ProductVariant
+                .distinct() // Loại bỏ các giá trị trùng lặp
+                .collect(Collectors.toList());
+
+        model.addAttribute("productsFromVariants", productsFromVariants);
+
         model.addAttribute("list", list);
+
+        model.addAttribute("orderDetails", orderDetails);
+
         return "/admin/product/index";
     }
 
