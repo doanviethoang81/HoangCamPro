@@ -25,7 +25,7 @@ public class User {
     private String name;
 
     @Pattern(regexp = "\\d{10}", message = "Số điện thoại phải bao gồm đúng 10 chữ số!")
-    @Pattern(regexp = "^[0-9]*$", message = "Mật khẩu chỉ được chứa các ký tự số!")
+    @Pattern(regexp = "^[0-9]*$", message = "Số điện thoại chỉ được chứa các ký tự số!")
     @Column(name = "phone",length = 10, nullable = false)
     private String phone;
 
@@ -43,7 +43,7 @@ public class User {
     private Boolean isActive;
 
 //    @NotBlank(message = "Mật khẩu không được để trống! ")
-    @Size(min = 3, message = "Mật khẩu phải chứa ít nhất 3 ký tự!")
+    @Size(min = 8, message = "Mật khẩu phải chứa ít nhất 8 ký tự!")
     @Column(name = "password",length = 100,nullable = false)
     private String password;
 

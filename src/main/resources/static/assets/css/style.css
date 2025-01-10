@@ -13,6 +13,13 @@ a {
 li {
 	list-style: none;
 }
+.active{
+	background-color: var(--blue);
+}
+
+.active a{
+	color: #fff;
+}
 
 :root {
 	--poppins: 'Poppins', sans-serif;
@@ -778,4 +785,31 @@ body {
 
 .suggestions-list li:hover {
     background-color: #f0f0f0;
+}
+
+/* PAGE */
+.pagination-wrap{
+}
+.pagination{
+	display: flex;
+	/* padding: auto; */
+	justify-content: center;
+	margin-top: 25px ;
+}
+.page-item{
+	padding: 4px;
+	min-width: 30px;
+	border: 1px solid #aba9a9;
+	display: flex;
+	justify-content: center;
+}
+
+.page-item:first-child{
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.page-item:last-child{
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
 }

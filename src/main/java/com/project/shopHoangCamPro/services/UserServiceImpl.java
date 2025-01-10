@@ -7,6 +7,9 @@ import com.project.shopHoangCamPro.models.User;
 import com.project.shopHoangCamPro.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +70,12 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User getByUserName(String name) {
         return userRepository.getUserByName(name);
+    }
+
+    @Override
+    public Page<User> getAll(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo -1,5);
+        return this.userRepository.findAll(pageable);
     }
 
     public boolean isPhoneExists(String phone) {

@@ -8,6 +8,10 @@ import com.project.shopHoangCamPro.models.Product;
 import com.project.shopHoangCamPro.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -64,6 +68,12 @@ public class OrderService implements IOrderService{
     @Override
     public Order save(Order order) {
         return orderRepository.save(order);//7
+    }
+
+    @Override
+    public Page<Order> getAll(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo-1 ,10, Sort.by(Sort.Direction.DESC, "date"));//Spring Data JPA, chỉ số trang bắt đầu từ 0
+        return orderRepository.findAll(pageable);
     }
 
     public Order getById(Integer id){

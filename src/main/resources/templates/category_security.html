@@ -159,22 +159,24 @@
             </div>
           </div>
           <!-- next sản phẩm  -->
-          <div class="pagination-wrap">
+          <div class="pagination-wrap" th:if ="${totalProducts}">
             <nav aria-label="Page navigation example ">
               <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
+                <li class="page-item" th:if="${currentPage > 0}">
+                  <a class="page-link" th:href="@{'?page='+ ${currentPage - 1}+ '&size=8'}" aria-label="Previous">
                     <span aria-hidden="true">
                        <i class="fa-solid fa-angle-left"
                           style="color: #0d6efd; width: 100%;"></i>
                     </span>
                   </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                  <a class="page-link"th:href="@{'?page=' + ${i} + '&size=8'}"
+                     th:text="${i + 1}" th:classappend="${currentPage == i ? 'active' : ''}">
+                  </a>
+                </li>
+                <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                  <a class="page-link" th:href="@{'?page='+ ${currentPage + 1}+ '&size=8'}" aria-label="Next">
                     <span aria-hidden="true">
                        <i class="fa-solid fa-angle-right"
                           style="color: #0d6efd; width: 100%;"></i>

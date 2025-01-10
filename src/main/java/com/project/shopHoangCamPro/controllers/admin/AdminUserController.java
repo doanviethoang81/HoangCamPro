@@ -11,22 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("admin/")
 @RequiredArgsConstructor
-public class AdminCustomerController {
+public class AdminUserController {
     private final UserServiceImpl userService;
     private final RoleService roleService;
 
@@ -38,13 +30,10 @@ public class AdminCustomerController {
 
     @RequestMapping("/user/add")
     public String add(Model model){
-//        User user = new User();
-        // Thiết lập giá trị mặc định cho isActive và role_id
-//        user.setIsActive(true); // Trạng thái mặc định là true
-//        user.setId(1); // Role mặc định là 1
+        model.addAttribute("bodyContent", "admin/user/add");
         model.addAttribute("USER", new User());
         model.addAttribute("ROLE", roleService.findAll());
-        return "admin/user/add";
+        return "admin/layout";
     }
 
     @PostMapping("/add-user")
@@ -55,21 +44,22 @@ public class AdminCustomerController {
             Model model,
             @RequestParam("confirm-password") String confirmPassword,//lấy confirm passwprd
             RedirectAttributes redirectAttributes) {
+        model.addAttribute("bodyContent", "admin/user/add");
         if(result.hasErrors()){
-            return "admin/user/add";
+            return "admin/layout";
         }
         if (userService.isPhoneExists(user.getPhone())) {
             model.addAttribute("error", "Số điện thoại đã được đăng ký!");
-            return "admin/user/add";
+            return "admin/layout";
         }
         // Kiểm tra confirmPassword bị trống
         if (confirmPassword == null || confirmPassword.isEmpty()) {
             model.addAttribute("error", "Vui lòng nhập lại mật khẩu!");
-            return "admin/user/add";
+            return "admin/layout";
         }
         if (!user.getPassword().equals(confirmPassword)) {
             model.addAttribute("error",  "Mật khẩu và Nhập lại mật khẩu không khớp!");
-            return "admin/user/add";
+            return "admin/layout";
         }
         try {
             if (user.getIsActive() == null) {
@@ -89,6 +79,7 @@ public class AdminCustomerController {
     @RequestMapping("/user-edit/{id}")
     public String getEditUser(@PathVariable("id") Integer id, Model model) {
         try {
+            model.addAttribute("bodyContent", "admin/user/edit");
             List<Role> roles = roleService.findAll();
             model.addAttribute("listRoles", roles);
             User user = userServiceImpl.getUserById(id);
@@ -96,7 +87,7 @@ public class AdminCustomerController {
                 throw new RuntimeException("User không tồn tại");
             }
             model.addAttribute("USER", user);
-            return "admin/user/edit";
+            return "admin/layout";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error"; // Tên file HTML để hiển thị lỗi
@@ -109,8 +100,8 @@ public class AdminCustomerController {
             @PathVariable("id") Integer id,
             @ModelAttribute("USER") User updateRoleUser,
             Model model,
-            RedirectAttributes redirectAttributes)
-    {
+            RedirectAttributes redirectAttributes){
+        model.addAttribute("bodyContent", "admin/user/edit");
         if(updateRoleUser.getRole_id() == null){
             redirectAttributes.addFlashAttribute("error","Chưa nhập quyền người dùng!");
             return "redirect:/admin/user-edit/" + updateRoleUser.getId();
@@ -145,6 +136,7 @@ public class AdminCustomerController {
             @PathVariable("id") Integer id,
             RedirectAttributes redirectAttributes){
         try {
+
             userServiceImpl.unblockUser(id);
             redirectAttributes.addFlashAttribute("message", "Mở khóa người dùng thành công!");
         } catch (Exception e) {

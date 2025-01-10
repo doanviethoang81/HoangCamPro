@@ -34,13 +34,14 @@ public class AdminProfileController {
 
     @RequestMapping("/profile/edit")
     public String editProfile(Model model) {
+        model.addAttribute("bodyContent", "admin/profile/edit");
         CustomUserDetail userDetails = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //định dạng ngày sinh (chỉ lấy ngày, tháng, năm)
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDateOfBirth = dateFormat.format(userDetails.getDateOfBirth());
         model.addAttribute("user", userDetails);
         model.addAttribute("formattedDateOfBirth", formattedDateOfBirth);
-        return  "admin/profile/edit";
+        return  "admin/layout";
     }
 
     @PostMapping("/profile-edit/{id}")
@@ -51,16 +52,16 @@ public class AdminProfileController {
             BindingResult result,
             Model model,
             @RequestParam("confirm-password") String confirmPassword,//lấy confirm passwprd
-            RedirectAttributes redirectAttributes)
-    {
+            RedirectAttributes redirectAttributes){
+        model.addAttribute("bodyContent", "admin/profile/edit");
         if (confirmPassword == null || confirmPassword.isEmpty()) {
             model.addAttribute("error", "Vui lòng nhập lại mật khẩu!");
-            return "admin/profile/edit";
+            return "admin/layout";
         }
         //kiểm tra mật khẩu mới và mật khẩu nhập lại có giống nhau không
         if (!updateProfile.getPassword().equals(confirmPassword)) {
             model.addAttribute("error", "Mật khẩu mới và mật khẩu nhập lại không khớp!");
-            return "admin/profile/edit";
+            return "admin/layout";
         }
         if (userService.isPhoneExistsEdit(updateProfile.getPhone(), updateProfile.getId())) {
             redirectAttributes.addFlashAttribute("error", "Số điện thoại đã được đăng ký!");

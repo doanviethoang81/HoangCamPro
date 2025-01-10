@@ -6,28 +6,18 @@ import com.project.shopHoangCamPro.models.Product;
 //import com.project.shopHoangCamPro.responses.ProductResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 //import com.project.shopHoangCamPro.repository.ProductRepository;
 
 public interface IProductService {
-//    Product createProduct(ProductDTO productDTO) throws Exception;
-//
     Product getProductById(int id) throws Exception;
 
     Product getProductByName(String name) throws Exception;
-//
-////    Page<ProductResponse> getAllProducts(PageRequest pageRequest);
-//
-//    Product updateProduct(long id, ProductDTO productDTO) throws Exception;
-//
-//    boolean existsByName(String name);
 
     List<Product> getAll();
-//    ProductImage createProductImage(
-//            Long productId,
-//            ProductImageDTO productImageDTO) throws Exception;
 
     void delete(Product product);
 
@@ -45,6 +35,10 @@ public interface IProductService {
 
 
     Product save(Product product);
+
+    Page<Product> getAll(Integer pageNo);
+
+    Page<Product> getProductsByCategoryId(Long categoryId, Integer pageNo);
 
 
 }

@@ -45,7 +45,11 @@ public class ProductController {
     private  final ProductVariantRepository productVariantRepository;
 
     @GetMapping("/product_security/{categoryName}")
-    public String getProductSecurity(@PathVariable("categoryName") String categoryName, Model model) {
+    public String getProductSecurity(
+            @PathVariable("categoryName") String categoryName,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "8") int size,
+            Model model) {
         try {
             // Lấy category ID từ tên
             Category category = categoryService.getCategoryByName(categoryName);
@@ -78,7 +82,23 @@ public class ProductController {
                         productsWithFirstVariant.add(productData);
                     }
                 }
-                model.addAttribute("productsWithPrices", productsWithFirstVariant);
+                // Áp dụng phân trang
+                int totalProducts = productsWithFirstVariant.size();
+                int startIndex = page * size;
+                int endIndex = Math.min(startIndex + size, totalProducts);
+
+                if (startIndex > totalProducts) {
+                    model.addAttribute("message", "Trang không hợp lệ.");
+                } else {
+                    List<Map<String, Object>> paginatedProducts = productsWithFirstVariant.subList(startIndex, endIndex);
+                    if(totalProducts > 8){
+                            model.addAttribute("totalProducts", totalProducts);
+                    }
+                    model.addAttribute("productsWithPrices", paginatedProducts);
+                    model.addAttribute("currentPage", page);
+                    model.addAttribute("totalPages", (int) Math.ceil((double) totalProducts / size));
+                }
+//                model.addAttribute("productsWithPrices", productsWithFirstVariant);
             }
             model.addAttribute("category", category);
             return "category_security"; // Tên file HTML để hiển thị danh sách sản phẩm
@@ -89,7 +109,11 @@ public class ProductController {
     }
 
     @GetMapping("/product_smart_home/{categoryName}")
-    public String getProductSmartHome(@PathVariable("categoryName") String categoryName, Model model) {
+    public String getProductSmartHome(
+            @PathVariable("categoryName") String categoryName,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "8") int size,
+            Model model) {
         try {
             // Lấy category ID từ tên
             Category category = categoryService.getCategoryByName(categoryName);
@@ -122,7 +146,23 @@ public class ProductController {
                         productsWithFirstVariant.add(productData);
                     }
                 }
-                model.addAttribute("productsWithPrices", productsWithFirstVariant);
+                // Áp dụng phân trang
+                int totalProducts = productsWithFirstVariant.size();
+                int startIndex = page * size;
+                int endIndex = Math.min(startIndex + size, totalProducts);
+
+                if (startIndex > totalProducts) {
+                    model.addAttribute("message", "Trang không hợp lệ.");
+                } else {
+                    List<Map<String, Object>> paginatedProducts = productsWithFirstVariant.subList(startIndex, endIndex);
+                    if(totalProducts > 8){
+                        model.addAttribute("totalProducts", totalProducts);
+                    }
+                    model.addAttribute("productsWithPrices", paginatedProducts);
+                    model.addAttribute("currentPage", page);
+                    model.addAttribute("totalPages", (int) Math.ceil((double) totalProducts / size));
+                }
+//                model.addAttribute("productsWithPrices", productsWithFirstVariant);
             }
             model.addAttribute("category", category);
             return "category_smart_home"; // Tên file HTML để hiển thị danh sách sản phẩm

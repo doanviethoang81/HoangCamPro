@@ -8,20 +8,7 @@ import java.util.Optional;
 
 public interface IOrderDetailService {
 
-//     getProductById(int id) throws Exception;
-
-//     getProductByName(String name) throws Exception;
-//
-////    Page<ProductResponse> getAllProducts(PageRequest pageRequest);
-//
-//     updateProduct(long id, ProductDTO productDTO) throws Exception;
-//
-//    boolean existsByName(String name);
-
     List<OrderDetail> getAll();
-//    ProductImage createProductImage(
-//            Long productId,
-//            ProductImageDTO productImageDTO) throws Exception;
 
     void delete(OrderDetail order);
 

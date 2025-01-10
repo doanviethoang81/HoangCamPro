@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head::head"></head>
+<body>
+
+<!-- SIDEBAR -->
+<section th:replace="admin/fragments/sidebar::sidebar"></section>
+
+<!-- CONTENT -->
+<section id="content">
+    <!--    header -->
+    <nav th:replace="admin/fragments/header::header"> </nav>
+    <!-- MAIN -->
+    <main th:insert="${bodyContent}"></main>
+
+</section>
+
+<script>
+    CKEDITOR.replace('description');
+</script>
+<script th:src="@{/assets/js/script.js}"></script>
+</body>
+
+</html>

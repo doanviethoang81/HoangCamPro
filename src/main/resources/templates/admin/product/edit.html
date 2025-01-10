@@ -1,58 +1,4 @@
-<!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
-<head th:replace="admin/fragments/head::head"></head>
-<body>
-
-<!-- SIDEBAR -->
-<section id="sidebar" >
-    <a href="#" class="brand ">
-        <i class='bx bxs-smile'></i>
-        <span class="text">ADMIN</span>
-    </a>
-    <ul class="side-menu top">
-        <li class="active">
-            <a th:href="@{/admin/product}">
-                <i class='bx bxs-dashboard'></i>
-                <span class="text">Quản lý sản phẩm</span>
-            </a>
-        </li>
-        <li>
-            <a th:href="@{/admin/order}">
-                <i class='bx bxs-shopping-bag-alt'></i>
-                <span class="text">Quản lý đơn hàng</span>
-            </a>
-        </li>
-        <li>
-            <a th:href="@{/admin/user}">
-                <i class='bx bxs-doughnut-chart'></i>
-                <span class="text">Quản lý người dùng</span>
-            </a>
-        </li>
-        <li>
-            <a th:href="@{/admin/profile}">
-                <i class='bx bxs-group'></i>
-                <span class="text">Hồ sơ</span>
-            </a>
-        </li>
-    </ul>
-    <ul class="side-menu">
-        <li>
-            <a th:href="@{/logout}" class="logout">
-                <i class='bx bxs-log-out-circle'></i>
-                <span class="text">Đăng xuất</span>
-            </a>
-        </li>
-    </ul>
-
-
-</section>
-
-<!-- CONTENT -->
-<section id="content">
-    <!--    header -->
-    <nav th:replace="admin/fragments/header::header"> </nav>
-    <!-- MAIN -->
-    <main>
+<span xmlns:th="http://www.w3.org/1999/xhtml">
         <div class="head-title">
             <div class="left">
                 <h1>Sửa sản phẩm</h1>
@@ -138,33 +84,4 @@
                 <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
             </div>
         </form>
-    </main>
-
-</section>
-
-<script>
-    CKEDITOR.replace('product-description');
-</script>
-<script>
-    document.querySelector('.form-edit-product').addEventListener('submit', function (event) {
-        const variantRows = document.querySelectorAll('.table-edit-product tbody tr');
-        if (variantRows.length === 0) {
-            event.preventDefault(); // Ngăn không cho gửi form
-            alert('Không có biến thể sản phẩm để lưu. Vui lòng thêm ít nhất một biến thể.');
-        }
-    });
-
-    // Xử lý nút "Xóa" biến thể
-    document.querySelectorAll('#btn-remove-edit-variant').forEach(button => {
-        button.addEventListener('click', function () {
-            const row = this.closest('tr');
-            row.parentNode.removeChild(row); // Xóa hàng biến thể
-        });
-    });
-
-</script>
-
-<script th:src="@{/assets/js/script.js}"></script>
-</body>
-
-</html>
+    </span>

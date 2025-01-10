@@ -95,12 +95,31 @@ document.querySelectorAll('.btn-remove-variant').forEach(button => {
 
 // Bắt sự kiện click trên thẻ <a> bên trong thẻ <li>
 $("#sidebar .side-menu li a").click(function (e) {
-	// Xóa class active khỏi tất cả các thẻ <li>
-	$("#sidebar .side-menu li").removeClass("active");
+    // Lấy ID hoặc chỉ số của thẻ <li> chứa <a> được click
+    const activeMenuId = $(this).parent("li").index();
 
-	// Thêm class active vào thẻ <li> chứa <a> được click
-	$(this).parent("li").addClass("active");
+    // Lưu ID này vào localStorage
+    localStorage.setItem("activeMenu", activeMenuId);
+
+    // Xóa class active khỏi tất cả các thẻ <li>
+    $("#sidebar .side-menu li").removeClass("active");
+
+    // Thêm class active vào thẻ <li> chứa <a> được click
+    $(this).parent("li").addClass("active");
 });
+
+// Khi tải lại trang, khôi phục trạng thái active từ localStorage
+$(document).ready(function () {
+    const activeMenuId = localStorage.getItem("activeMenu");
+    if (activeMenuId !== null) {
+        // Xóa class active khỏi tất cả các thẻ <li>
+        $("#sidebar .side-menu li").removeClass("active");
+
+        // Thêm class active vào thẻ <li> tương ứng
+        $("#sidebar .side-menu li").eq(activeMenuId).addClass("active");
+    }
+});
+
 
 $(document).ready(function () {
 
@@ -132,5 +151,32 @@ $(document).ready(function () {
         alert("dc");
         console.log(textareaValue); // In ra giá trị nhập vào của người dùng
     }
+// đổi màu nền đen trắng
+const switchMode = document.getElementById('switch-mode');
+
+switchMode.addEventListener('change', function () {
+	if(this.checked) {
+		document.body.classList.add('dark');
+	} else {
+		document.body.classList.remove('dark');
+	}
+})
+
+//xóa biến thể sp
+    document.querySelector('.form-edit-product').addEventListener('submit', function (event) {
+        const variantRows = document.querySelectorAll('.table-edit-product tbody tr');
+        if (variantRows.length === 0) {
+            event.preventDefault(); // Ngăn không cho gửi form
+            alert('Không có biến thể sản phẩm để lưu. Vui lòng thêm ít nhất một biến thể.');
+        }
+    });
+
+//    // Xử lý nút "Xóa" biến thể
+//    document.querySelectorAll('#btn-remove-edit-variant').forEach(button => {
+//        button.addEventListener('click', function () {
+//            const row = this.closest('tr');
+//            row.parentNode.removeChild(row); // Xóa hàng biến thể
+//        });
+//    });
 
 

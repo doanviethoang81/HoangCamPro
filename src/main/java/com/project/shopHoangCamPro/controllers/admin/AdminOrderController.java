@@ -24,12 +24,13 @@ public class AdminOrderController {
     @RequestMapping("/order/{id}")
     public String getOrderId(@PathVariable("id") Integer id, Model model) {
         try {
+            model.addAttribute("bodyContent", "admin/order/order_detail");
             Order order = orderService.getById(id);
             List<OrderDetail> listOrderDetail = orderDetailService.getOrderDetailByOrderId(id);
             model.addAttribute("order", order);
             model.addAttribute("listOrderDetail", listOrderDetail);
 
-            return "admin/order/order_detail";
+            return "admin/layout";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";

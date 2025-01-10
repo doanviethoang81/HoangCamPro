@@ -7,6 +7,9 @@ import com.project.shopHoangCamPro.repository.CategoryRepository;
 import com.project.shopHoangCamPro.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +68,18 @@ public class ProductService implements IProductService{
     @Override
     public Product save(Product product) {
         return productRepository.save(product);//11
+    }
+
+    @Override
+    public Page<Product> getAll(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo-1,10);
+        return this.productRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Product> getProductsByCategoryId(Long categoryId, Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo-1 ,10);
+        return productRepository.findByCategoryId(categoryId, pageable);
     }
 
     @Override

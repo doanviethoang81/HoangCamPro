@@ -33,7 +33,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AdminProductController {
 
-
     private final ProductService productService;
     private final ProductVariantService productVariantService;
     private  final CategoryService categoryService;
@@ -41,10 +40,11 @@ public class AdminProductController {
     @RequestMapping("/product/add")
     public String add( Model model){
         try {
+            model.addAttribute("bodyContent", "admin/product/add");
             model.addAttribute("PRODUCT", new Product());
             List<Category> categorys = categoryService.getAllCategorys();
             model.addAttribute("listCategories", categorys);
-            return "admin/product/add";
+            return "admin/layout";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error"; // Tên file HTML để hiển thị lỗi
@@ -64,13 +64,14 @@ public class AdminProductController {
             @RequestParam("variantPrice[]") List<String> variantPrices,
             Model model,
             RedirectAttributes redirectAttributes) {
+        model.addAttribute("bodyContent", "admin/product/add");
         if (product.getCategory() != null) {
             model.addAttribute("selectedCategoryId", product.getCategory().getId());
         }
         if(result.hasErrors()){
             List<Category> categories = categoryService.getAllCategorys();
             model.addAttribute("listCategories", categories);
-            return "admin/product/add";
+            return "admin/layout";
         }
         if (variantSkus != null && !variantSkus.isEmpty()) {
             List<ProductVariant> variants = new ArrayList<>();
@@ -84,7 +85,7 @@ public class AdminProductController {
                     model.addAttribute("error", "Vui lòng nhập đầy đủ thông tin cho các biến thể sản phẩm!");
                     List<Category> categories = categoryService.getAllCategorys();
                     model.addAttribute("listCategories", categories);
-                    return "admin/product/add";
+                    return "admin/layout";
                 }
                 variant.setSku(sku);
                 variant.setStorage(storage);
@@ -94,32 +95,22 @@ public class AdminProductController {
                 variants.add(variant);
                 model.addAttribute("variants", variants);
             }
-//            model.addAttribute("variants", variants);
         }
         //kiểm tra danh mục sản phẩm
         if (product.getCategory() == null) {
             model.addAttribute("error", "Vui lòng chọn danh mục sản phẩm!");
             List<Category> categories = categoryService.getAllCategorys();
             model.addAttribute("listCategories", categories);
-            return "admin/product/add";// trả về url
+            return "admin/layout";// trả về url
         }
         try {
-            // Kiểm tra các mảng đầu vào không được để trống
-            if ( variantSkus.isEmpty() || variantStorages.isEmpty() ||
-                    variantDiscounts.isEmpty() || variantPrices.isEmpty()) {
-                model.addAttribute("error", "Vui lòng nhập đầy đủ thông tin cho các biến thể sản phẩm!");
-                List<Category> categories = categoryService.getAllCategorys();
-                model.addAttribute("listCategories", categories);
-                return "admin/product/add";
-            }
-
             // Kiểm tra nếu giá = 0
             for (String price : variantPrices) {
                 if (Double.parseDouble(price) == 0) {
                     model.addAttribute("error", "Giá sản phẩm không được bằng 0!");
                     List<Category> categories = categoryService.getAllCategorys();
                     model.addAttribute("listCategories", categories);
-                    return "admin/product/add";
+                    return "admin/layout";
                 }
             }
             for (String discount : variantDiscounts) {
@@ -127,7 +118,7 @@ public class AdminProductController {
                     model.addAttribute("error", "Giá bán ra không được bằng 0!");
                     List<Category> categories = categoryService.getAllCategorys();
                     model.addAttribute("listCategories", categories);
-                    return "admin/product/add";
+                    return "admin/layout";
                 }
             }
             // Xử lý ảnh
@@ -141,7 +132,7 @@ public class AdminProductController {
                     model.addAttribute("error", "Chỉ chấp nhận các định dạng ảnh: .jpg, .png, .webp");
                     List<Category> categories = categoryService.getAllCategorys();
                     model.addAttribute("listCategories", categories);
-                    return "admin/product/add";
+                    return "admin/layout";
                 }
 
                 String uploadDir = "uploads";// đường dẫn
@@ -161,7 +152,7 @@ public class AdminProductController {
                 List<Category> categories = categoryService.getAllCategorys();
                 model.addAttribute("listCategories", categories);
                 model.addAttribute("error", "Sản phẩm chưa có ảnh ");
-                return "/admin/product/add";
+                return "admin/layout";
             }
             //các biến thể sản phẩm
             List<ProductVariant> variants = new ArrayList<>();
@@ -174,7 +165,7 @@ public class AdminProductController {
                     model.addAttribute("error","Giá giảm phải nhỏ hơn giá gốc!");
                     List<Category> categories = categoryService.getAllCategorys();
                     model.addAttribute("listCategories", categories);
-                    return "/admin/product/add";
+                    return "admin/layout";
                 }
                 ProductVariant variant = new ProductVariant();
                 variant.setSku(variantSkus.get(i));
@@ -195,12 +186,13 @@ public class AdminProductController {
             model.addAttribute("error", "Có lỗi xảy ra khi thêm sản phẩm.");
             List<Category> categories = categoryService.getAllCategorys();
             model.addAttribute("listCategories", categories);
-            return "admin/product/add";
+            return "admin/layout";
         }
     }
 
     @RequestMapping("/product-detail/{id}")
     public String getProductsDetailByProductName(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("bodyContent", "admin/product/product_detail");
         try {
             List<Category> categorys = categoryService.getAllCategorys();
             Product product = productService.getProductById(id);
@@ -212,7 +204,7 @@ public class AdminProductController {
             model.addAttribute("listProducts", product);
             model.addAttribute("listVariants", variants);
 
-            return "admin/product/product_detail"; // Tên file HTML để hiển thị danh sách sản phẩm
+            return "admin/layout"; // Tên file HTML để hiển thị danh sách sản phẩm
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error"; // Tên file HTML để hiển thị lỗi
@@ -221,6 +213,7 @@ public class AdminProductController {
 
     @RequestMapping("/product-Edit/{id}")
     public String getProductEditAdmin(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("bodyContent", "admin/product/edit");
         try {
             model.addAttribute("PRODUCT", new Product());
             Product product = productService.getProductById(id);
@@ -233,7 +226,7 @@ public class AdminProductController {
             model.addAttribute("listProducts", product);
             model.addAttribute("listVariants", variants);
 
-            return "admin/product/edit";
+            return "admin/layout";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error"; // Tên file HTML để hiển thị lỗi
@@ -250,48 +243,79 @@ public class AdminProductController {
             @RequestParam("variantDiscount[]") List<String> variantDiscounts,
             @RequestParam("variantPrice[]") List<String> variantPrices,
             Model model,
-            RedirectAttributes redirectAttributes)
-    {
-        // Kiểm tra các mảng đầu vào không được để trống
-        if ( variantSkus.isEmpty() || variantStorages.isEmpty() ||
-                variantDiscounts.isEmpty() || variantPrices.isEmpty()) {
-            model.addAttribute("error", "Vui lòng nhập đầy đủ thông tin cho các biến thể sản phẩm!");
+            RedirectAttributes redirectAttributes){
+        model.addAttribute("bodyContent", "admin/product/edit");
+        if(updatedProduct.getName().isEmpty()){
+            redirectAttributes.addFlashAttribute("error", "Vui lòng nhập tên sản phẩm!");
             List<Category> categories = categoryService.getAllCategorys();
             model.addAttribute("listCategories", categories);
-            return "admin/product/add";
+            return "redirect:/admin/product-Edit/" + updatedProduct.getId();
         }
+        if( updatedProduct.getBrand().isEmpty()){
+            redirectAttributes.addFlashAttribute("error", "Vui lòng nhập thương hiệu sản phẩm!");
+            List<Category> categories = categoryService.getAllCategorys();
+            model.addAttribute("listCategories", categories);
+            return "redirect:/admin/product-Edit/" + updatedProduct.getId();
+        }
+        if(updatedProduct.getDescription().isEmpty()){
+            redirectAttributes.addFlashAttribute("error", "Vui lòng nhập mô tả sản phẩm!");
+            List<Category> categories = categoryService.getAllCategorys();
+            model.addAttribute("listCategories", categories);
+            return "redirect:/admin/product-Edit/" + updatedProduct.getId();
+        }
+        if (variantSkus != null && !variantSkus.isEmpty()) {
+            List<ProductVariant> variants = new ArrayList<>();
+            for (int i = 0; i < variantSkus.size(); i++) {
+                ProductVariant variant = new ProductVariant();
+                String sku = (variantSkus.get(i));
+                String storage =(i < variantStorages.size() ? variantStorages.get(i) : "");
+                String discount= (i < variantDiscounts.size() ? variantDiscounts.get(i) : "");
+                String price = (i < variantPrices.size() ? variantPrices.get(i) : "");
+                if (price.isEmpty() || sku.isEmpty() || storage.isEmpty() || discount.isEmpty()) {
+                    redirectAttributes.addFlashAttribute("error", "Vui lòng nhập đầy đủ thông tin cho các biến thể sản phẩm!");
+                    List<Category> categories = categoryService.getAllCategorys();
+                    model.addAttribute("listCategories", categories);
+                    return "redirect:/admin/product-Edit/" + updatedProduct.getId();
+                }
+                variant.setSku(sku);
+                variant.setStorage(storage);
+                variant.setDiscount(discount);
+                variant.setPrice(price);
 
+                variants.add(variant);
+                model.addAttribute("variants", variants);
+            }
+        }
         // Kiểm tra nếu giá = 0
         for (String price : variantPrices) {
             if (Double.parseDouble(price) == 0) {
-                model.addAttribute("error", "Giá sản phẩm không được bằng 0!");
+                redirectAttributes.addFlashAttribute("error", "Giá sản phẩm không được bằng 0!");
                 List<Category> categories = categoryService.getAllCategorys();
                 model.addAttribute("listCategories", categories);
-                return "admin/product/add";
+                return "redirect:/admin/product-Edit/" + updatedProduct.getId();
             }
         }
         for (String discount : variantDiscounts) {
             if (Double.parseDouble(discount) == 0) {
-                model.addAttribute("error", "Giá bán ra không được bằng 0!");
+                redirectAttributes.addFlashAttribute("error", "Giá bán ra không được bằng 0!");
                 List<Category> categories = categoryService.getAllCategorys();
                 model.addAttribute("listCategories", categories);
-                return "admin/product/add";
+                return "redirect:/admin/product-Edit/" + updatedProduct.getId();
             }
         }
         if (updatedProduct.getCategory() == null) {
             redirectAttributes.addFlashAttribute("error", "Vui lòng chọn danh mục sản phẩm.");
             List<Category> categories = categoryService.getAllCategorys();
             model.addAttribute("listCategories", categories);
-            return "redirect:/admin/product/add";
+            return "redirect:/admin/product-Edit/" + updatedProduct.getId();
         }
         try {
             // Lấy sản phẩm gốc từ database để giữ lại thông tin ảnh cũ nếu không upload ảnh mới
             Product existingProduct = productService.getProductById(id);
             if (existingProduct == null) {
                 redirectAttributes.addFlashAttribute("error", "Sản phẩm không tồn tại!");
-                return "redirect:/admin/product-edit/" + id;
+                return "redirect:/admin/product-Edit/" + id;
             }
-
 
             // Xử lý ảnh
             if (!productImage.isEmpty()) {
@@ -349,9 +373,6 @@ public class AdminProductController {
         }
     }
 
-
-
-
     @GetMapping("/product-remove/{id}")
     public String deleteProduct(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
@@ -363,6 +384,4 @@ public class AdminProductController {
         }
         return "redirect:/admin/product"; // Đường dẫn quay về danh sách sản phẩm
     }
-
-
 }

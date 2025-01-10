@@ -2,6 +2,7 @@ package com.project.shopHoangCamPro.services;
 
 import com.project.shopHoangCamPro.models.Product;
 import com.project.shopHoangCamPro.models.User;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,5 +24,7 @@ public interface IUserService {
     User save(User user);
 
     User getByUserName(String name);
+
+    Page<User> getAll(Integer pageNo);
 
 }
