@@ -20,8 +20,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class OrderService implements IOrderService{
-    @Autowired
-    OrderDAO orderDAO;
 
     private final OrderRepository orderRepository;
 
@@ -86,5 +84,14 @@ public class OrderService implements IOrderService{
 
     public List<Order> findOrdersByUserId(Integer userId) {
         return orderRepository.findByUserId(userId);
+    }
+
+    public void updatePaymentStatus(Integer id, String stauts){
+        Optional<Order> existingOrder = orderRepository.findById(id);
+        if(existingOrder.isPresent()){
+            Order order = existingOrder.get();
+            order.setPaymentStatus(stauts);
+            orderRepository.save(order);
+        }
     }
 }

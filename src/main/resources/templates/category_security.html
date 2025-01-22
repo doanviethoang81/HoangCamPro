@@ -135,7 +135,7 @@
               </div>
             </div>
           </div>
-
+          aa
           <div class="product-list">
             <p th:if="${message}" th:text="${message}"></p>
             <!-- Sản phẩm 1 -->
@@ -170,12 +170,12 @@
                     </span>
                   </a>
                 </li>
-                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages-1)}">
                   <a class="page-link"th:href="@{'?page=' + ${i} + '&size=8'}"
-                     th:text="${i + 1}" th:classappend="${currentPage == i ? 'active' : ''}">
+                     th:text="${i+1}" th:classappend="${currentPage == i ? 'active' : ''}">
                   </a>
                 </li>
-                <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                <li class="page-item" th:if="${currentPage < totalPages-1}">
                   <a class="page-link" th:href="@{'?page='+ ${currentPage + 1}+ '&size=8'}" aria-label="Next">
                     <span aria-hidden="true">
                        <i class="fa-solid fa-angle-right"

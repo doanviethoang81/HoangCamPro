@@ -86,7 +86,9 @@
                     </span>
                 </a>
               </li>
-              <li class="page-item" th:each="i:${#numbers.sequence(1,totalPage)}" th:classappend="${currentPage == i ? 'active' : ''}"><a th:text="${i}" class="page-link" th:href="@{'?pageNo='+ ${i}}">1</a></li>
+              <li class="page-item" th:each="i:${#numbers.sequence(1,totalPage)}" th:classappend="${currentPage == i ? 'active' : ''}">
+                <a th:text="${i}" class="page-link" th:href="@{'?pageNo='+ ${i}}">1</a>
+              </li>
               <li th:if="${currentPage < totalPage}" class="page-item">
                 <a class="page-link" th:href="@{'?pageNo=' + ${currentPage+1}}" aria-label="Next">
                     <span aria-hidden="true">

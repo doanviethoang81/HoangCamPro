@@ -1724,6 +1724,7 @@ input[type=number] {
 .name-title{
     font-weight: 600;
     font-size: 16px;
+    margin: 0;
 }
 
 .payment_wrap-name{
@@ -1783,6 +1784,7 @@ input[type=number] {
     padding:8px 10px;
     justify-content: flex-start;
     align-items: center;
+    margin-top: 10px;
 
 }
 
@@ -2180,3 +2182,21 @@ input[type=number] {
     font-size: 14px;
     color: #909092;
   }
+
+
+/* SUCCESS */
+.success{
+    margin-top: 120px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.success p{
+    margin: 0;
+    padding-left: 10px;
+}
+
+.icon-success{
+    font-size: 50px ;
+}

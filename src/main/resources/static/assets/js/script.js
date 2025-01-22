@@ -120,9 +120,14 @@ $(document).ready(function () {
     }
 });
 
+// Xóa trạng thái menu khi nhấn đăng xuất
+$(".logout").click(function () {
+    localStorage.removeItem("activeMenu");
+    localStorage.removeItem('theme');
+});
+
 
 $(document).ready(function () {
-
 	// Xóa một dòng biến thể
 	$(document).on('click', '#btn-remove-edit-variant', function () {
 		$(this).closest('tr').remove(); // Xóa dòng chứa nút "Xóa" được click
@@ -154,13 +159,25 @@ $(document).ready(function () {
 // đổi màu nền đen trắng
 const switchMode = document.getElementById('switch-mode');
 
+// Kiểm tra trạng thái lưu trong localStorage khi tải trang
+document.addEventListener("DOMContentLoaded", function () {
+    const theme = localStorage.getItem('theme');
+    if (theme === 'dark') {
+        document.body.classList.add('dark');
+        switchMode.checked = true; // Đảm bảo checkbox phản ánh đúng trạng thái
+    }
+});
+
+// Lưu trạng thái khi thay đổi chế độ
 switchMode.addEventListener('change', function () {
-	if(this.checked) {
-		document.body.classList.add('dark');
-	} else {
-		document.body.classList.remove('dark');
-	}
-})
+    if (this.checked) {
+        document.body.classList.add('dark');
+        localStorage.setItem('theme', 'dark'); // Lưu trạng thái vào localStorage
+    } else {
+        document.body.classList.remove('dark');
+        localStorage.setItem('theme', 'light'); // Lưu trạng thái vào localStorage
+    }
+});
 
 //xóa biến thể sp
     document.querySelector('.form-edit-product').addEventListener('submit', function (event) {
@@ -178,5 +195,36 @@ switchMode.addEventListener('change', function () {
 //            row.parentNode.removeChild(row); // Xóa hàng biến thể
 //        });
 //    });
+
+
+//$(document).ready(function () {
+//  // Bắt sự kiện thay đổi trên các input
+//  $('.filter-input').on('change', function () {
+//    // Thu thập tất cả các tiêu chí lọc
+//    const filters = {};
+//    $('#filters input:checked').each(function () {
+//      const name = $(this).attr('name'); // Tên tiêu chí (e.g., resolution, price)
+//      if (!filters[name]) {
+//        filters[name] = [];
+//      }
+//      filters[name].push($(this).val()); // Giá trị được chọn
+//    });
+//
+//    // Gửi yêu cầu AJAX
+//    $.ajax({
+//      url: '/filter', // Đường dẫn tới API xử lý lọc
+//      method: 'GET',
+//      data: filters, // Dữ liệu gửi tới server
+//      success: function (response) {
+//        // Cập nhật vùng hiển thị sản phẩm với dữ liệu trả về
+//        $('#product-list').html(response);
+//      },
+//      error: function () {
+//        alert('Lỗi khi lọc sản phẩm!');
+//      }
+//    });
+//  });
+//});
+
 
 

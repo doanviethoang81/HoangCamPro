@@ -48,11 +48,14 @@ public class Order {
     @Column(name = "status")
     private  String status;
 
-    @Column(name = "active")
-    private  Boolean active;
+    @Column(name = "payment_status")
+    private String paymentStatus;
 
     @Column(name = "total_money")
     private  Float totalMoney;
+
+    @Column(name = "active")
+    private  Boolean active;
 
 
 //    @Column(name = "payment_status")
