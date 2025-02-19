@@ -35,9 +35,9 @@
                             </span>
                         </div>
                     </div>
-                    <span class="ms-3 payment_product-details-price-cart strikethrough" th:text="${#numbers.formatCurrency(cartDetail.productVariant.price)}"></span>
-                    <span class="ms-2 payment_product-details-price-cart" th:text="${#numbers.formatCurrency(cartDetail.price)}"></span>
-                    <span class="ms-4 payment_product-details-price-cart-sum" th:text="${#numbers.formatCurrency(cartDetail.price * cartDetail.quantity)}"></span>
+                    <span class="ms-3 payment_product-details-price-cart strikethrough" th:text="${#numbers.formatInteger(cartDetail.productVariant.price,3,'POINT')} + 'đ'"></span>
+                    <span class="ms-2 payment_product-details-price-cart" th:text="${#numbers.formatInteger(cartDetail.price,3,'POINT')} + 'đ'"></span>
+                    <span class="ms-4 payment_product-details-price-cart-sum" th:text="${#numbers.formatInteger((cartDetail.price * cartDetail.quantity),3,'POINT')} + 'đ'"></span>
 <!--                    <div class="quantity" style="margin-top: 0;">-->
 <!--                        <button class="decrement">-</button>-->
 <!--                        <input class="product_quantity" type="number" value="1" min="1">-->

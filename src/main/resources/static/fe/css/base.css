@@ -23,6 +23,11 @@ a {
 .text-white{
     color: #fff;
 }
+
+.text-warning { color: orange; }
+.text-success { color: green; }
+.text-danger { color: red; }
+
 .strikethrough {
     text-decoration: line-through; /* Gạch ngang */
 }

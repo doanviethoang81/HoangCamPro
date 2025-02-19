@@ -86,12 +86,30 @@ public class OrderService implements IOrderService{
         return orderRepository.findByUserId(userId);
     }
 
-    public void updatePaymentStatus(Integer id, String stauts){
+    public void updatePaymentStatus(Integer id, String paymentStauts, String status ){
         Optional<Order> existingOrder = orderRepository.findById(id);
         if(existingOrder.isPresent()){
             Order order = existingOrder.get();
-            order.setPaymentStatus(stauts);
+            order.setPaymentStatus(paymentStauts);
+            order.setStatus(status);
             orderRepository.save(order);
         }
+    }
+
+    private static final String SHIPPING = "Đang giao hàng";
+    private static final String  SUCCESS_STATUS ="Giao thành công";
+
+    public void updateApproveOrder(Integer id){
+        Order existingOrder = orderRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Đơn hàng không tồn tại với id: "+ id));
+        existingOrder.setStatus(SHIPPING);
+        orderRepository.save(existingOrder);
+    }
+
+    public void updateReceived(Integer id){
+        Order existingOrder = orderRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Đơn hàng không tồn tại với id: "+ id));
+        existingOrder.setStatus(SUCCESS_STATUS);
+        orderRepository.save(existingOrder);
     }
 }

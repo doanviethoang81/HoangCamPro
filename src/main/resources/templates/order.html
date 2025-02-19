@@ -7,6 +7,12 @@
 <div th:replace="layout/header::header"></div>
 <!--MAIN -->
 <div class="order-container">
+    <div th:if="${message}" class="alert alert-success" role="alert">
+        <p th:text="${message}"></p>
+    </div>
+    <div th:if="${error}" class="alert alert-danger" role="alert">
+        <p th:text="${error}"></p>
+    </div>
     <div class="order-tabs">
         <button class="order-tab active">Tất cả</button>
         <button class="order-tab">Chờ thanh toán</button>
@@ -21,8 +27,16 @@
     <div  th:if="${orderDetailsMap}" >
         <div class="order-item" th:each="order : ${orderDetailsMap}">
             <div class="order-shop-info">
-                <p class="order-chat-btn" th:text="${order.key.status}"></p>
-                <p class="order-view-shop-btn">CHỜ GIAO HÀNG</p>
+                <div>
+                    <i class="fa-solid fa-truck" style="color: #22980b;"></i>
+                    <span class="order-chat-btn" th:text="${order.key.status}"></span>
+                </div>
+                <div>
+                    <p class="order-view-shop-btn"
+                        th:text="${order.key.status eq 'Giao thành công' ? 'HOÀN THÀNH' : 'CHỜ GIAO HÀNG'}">
+                    </p>
+                </div>
+
             </div>
             <hr>
             <div th:each="orderDetail : ${order.value}">
@@ -51,10 +65,24 @@
 
             <div class="order-summary">
                 <div>
-                    <p class="order-summary-note">Vui lòng nhấn "Đã nhận được hàng" khi đơn hàng đã được giao.
+                    <p class="order-summary-note">
+                        Vui lòng nhấn "Đã nhận được hàng" khi đơn hàng đã được giao thành công.
                     </p>
-                    <button class="order-receive-btn disabled">Đã Nhận Hàng</button>
-                    <button class="order-contact-btn">Liên Hệ Người Bán</button>
+                    <a th:if="${order.key.status == 'Đang giao hàng'}"
+                       th:href="@{/orders/received/{id}(id=${order.key.id})}"
+                       class="order-primary-btn">
+                        Đã Nhận Hàng
+                    </a>
+
+                    <a th:if="${order.key.status == 'Giao thành công'}"
+                       class="order-primary-btn">
+                        Mua Lại
+                    </a>
+                    <a th:if="${order.key.status == 'Giao thành công'}"
+                       class="order-btn">
+                        Trả hàng/hoàn tiền
+                    </a>
+                    <a class="order-btn">Liên Hệ Người Bán</a>
                 </div>
                 <div>
                     <p class="order-total-price">Tổng tiền: <span orderDetail.price th:text="${#numbers.formatInteger(order.key.totalMoney,3,'POINT')} + 'đ'"></span></p>

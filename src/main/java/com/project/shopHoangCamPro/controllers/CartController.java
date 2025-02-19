@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 @Controller
@@ -229,34 +231,80 @@ public class CartController {
         try {
             // Lấy thông tin người dùng
             CustomUserDetail userDetails = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            order.setDate(new Date());
-            if(order.getNote() == null){
-                order.setNote("");
+            ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")); // Múi giờ Việt Nam
+            Date date = Date.from(zonedDateTime.toInstant()); // Chuyển đổi thành Date
+
+            if ("COD".equals(paymentMethod)) {
+                order.setDate(date);
+                if(order.getNote() == null){
+                    order.setNote("");
+                }
+                if(order.getStatus() == null){
+                    order.setStatus("Chờ duyệt đơn");
+                }
+                order.setUser(userDetails.getUser());
+                order.setPaymentStatus("Chưa thanh toán");
+                order.setPaymentMethod("COD");
+                order.setTotalMoney(totalMoney);
+                order.setActive(true);
+                orderService.save(order);
+
+                // Lặp qua cartDetails để tạo và lưu từng OrderDetail
+                for (CartDetail cartDetail : cartDetails) {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.setOrder(order);
+                    orderDetail.setProduct(cartDetail.getProductVariant());
+                    orderDetail.setNumberOfProducts(cartDetail.getQuantity());
+                    orderDetail.setPrice(cartDetail.getPrice());
+                    orderDetail.setTotalPrice(cartDetail.getPrice() * cartDetail.getQuantity());
+
+                    // Lưu OrderDetail vào cơ sở dữ liệu
+                    orderDetailService.save(orderDetail);
+                    Integer cartDetailId = cartDetail.getId();
+                    cartDetailService.deleteById(cartDetailId);
+                }
             }
-            if(order.getStatus() == null){
-                order.setStatus("Chờ duyệt đơn");
-            }
-            order.setUser(userDetails.getUser());
-            order.setTotalMoney(totalMoney);
-            order.setActive(true);
+            else if ("VN_PAY".equals(paymentMethod)) { // nếu thanh toán bằng vn pay
+                order.setDate(date);
+                if(order.getNote() == null){
+                    order.setNote("");
+                }
+                if(order.getStatus() == null){
+                    order.setStatus("");
+                }
+                order.setUser(userDetails.getUser());
+                order.setPaymentStatus("");// kiểm tra bên /vn-pay-callback
+                order.setPaymentMethod("VNPAY");
+                order.setTotalMoney(totalMoney);
+                order.setActive(true);
+                orderService.save(order);
 
-            // Lưu Order vào cơ sở dữ liệu
-            orderService.save(order);
+//                ProductVariant productVariant = productVariantService.getProductVariantById(variantId);
+//
+//                orderDetail.setOrder(order);
+//                orderDetail.setProduct(productVariant);
+//                orderDetail.setNumberOfProducts(quantity);
+//                Float priceValue = Float.parseFloat(productVariant.getDiscount()); // Chuyển đổi từ String sang Float
+//                orderDetail.setPrice(priceValue);
+//                Float totalPrice = priceValue * quantity; // Nhân giá với số lượng
+//                orderDetail.setTotalPrice(totalPrice);
+//                orderDetailService.save(orderDetail);
 
-            // Lặp qua cartDetails để tạo và lưu từng OrderDetail
-            for (CartDetail cartDetail : cartDetails) {
-                OrderDetail orderDetail = new OrderDetail();
-                orderDetail.setOrder(order);
-                orderDetail.setProduct(cartDetail.getProductVariant());
-                orderDetail.setNumberOfProducts(cartDetail.getQuantity());
-                orderDetail.setPrice(cartDetail.getPrice());
-                orderDetail.setTotalPrice(cartDetail.getPrice() * cartDetail.getQuantity());
+                // Lặp qua cartDetails để tạo và lưu từng OrderDetail
+                for (CartDetail cartDetail : cartDetails) {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.setOrder(order);
+                    orderDetail.setProduct(cartDetail.getProductVariant());
+                    orderDetail.setNumberOfProducts(cartDetail.getQuantity());
+                    orderDetail.setPrice(cartDetail.getPrice());
+                    orderDetail.setTotalPrice(cartDetail.getPrice() * cartDetail.getQuantity());
 
-                // Lưu OrderDetail vào cơ sở dữ liệu
-                orderDetailService.save(orderDetail);
-
-                Integer cartDetailId = cartDetail.getId();
-                cartDetailService.deleteById(cartDetailId);
+                    // Lưu OrderDetail vào cơ sở dữ liệu
+                    orderDetailService.save(orderDetail);
+                    Integer cartDetailId = cartDetail.getId();
+                    cartDetailService.deleteById(cartDetailId);
+                }
+                return "redirect:/payment/vn-pay?amount=" + (long)(totalMoney *100L) + "&orderId=" + order.getId();
             }
 
             // Xóa cartDetails khỏi session sau khi lưu xong

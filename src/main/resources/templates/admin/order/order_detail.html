@@ -1,4 +1,10 @@
 <span xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:if="${message}" class="alert alert-success" role="alert">
+      <p th:text="${message}"></p>
+    </div>
+    <div th:if="${error}" class="alert alert-danger" role="alert">
+      <p th:text="${error}"></p>
+    </div>
     <div class="head-title">
       <div class="left">
         <h1>Chi tiết đơn hàng</h1>
@@ -31,6 +37,14 @@
         <strong>Trạng thái đơn hàng</strong>
       </p>
       <p class="pd-value" th:text="${order.status}"></p>
+      <p class="pd-title">
+        <strong>Trạng thái thanh toán</strong>
+      </p>
+      <p class="pd-value" th:text="${order.paymentStatus}"></p>
+      <p class="pd-title">
+        <strong>Phương thức thanh toán</strong>
+      </p>
+      <p class="pd-value" th:text="${order.paymentMethod}"></p>
       <p class="pd-title">
         <strong>Ghi chú của khách</strong>
       </p>
@@ -68,5 +82,12 @@
           </tr>
         </tbody>
       </table>
+      <div class="form-group" th:if="${order.status == 'Chờ duyệt đơn'}">
+<!--        cũng có thể dùng th:unless-->
+          <a th:href="@{/admin/order/approveOrder/{id}(id=${order.id})}" class="btn btn-primary">
+              Duyệt đơn
+          </a>
+      </div>
+
     </div>
   </span>

@@ -151,11 +151,56 @@ $(document).ready(function () {
 	});
 });
 
- function getTextareaValue() {
-        const textareaValue = document.getElementById('product-description').value;
-        alert("dc");
-        console.log(textareaValue); // In ra giá trị nhập vào của người dùng
-    }
+//function getTextareaValue() {
+//        const textareaValue = document.getElementById('product-description').value;
+//        alert("dc");
+//        console.log(textareaValue); // In ra giá trị nhập vào của người dùng
+//}
+//
+//    const $icon = $(".task_order_admin");
+//    const $menu = $(".task_order_wrap");
+//
+//    // Toggle hiển thị menu khi click vào icon
+//    $icon.on("click", function (event) {
+//        $menu.toggleClass("show");
+////        alert("mọe đc r");
+//    });
+//
+//    // Ẩn menu nếu click ra ngoài
+//    $(document).on("click", function (event) {
+//        if (!$icon.is(event.target) && !$menu.is(event.target) && $menu.has(event.target).length === 0) {
+//            $menu.removeClass("show");
+////            alert("mọe");
+//        }
+//    });
+
+//document.addEventListener("DOMContentLoaded", function () {
+//// Lấy icon và menu
+//  const icon = document.querySelector(".task_order_admin");
+//  const menu = document.querySelector(".task_order_wrap");
+//
+//
+//
+//  // Toggle hiển thị menu khi click vào icon
+//  icon.addEventListener("click", function (event) {
+//      menu.classList.toggle("show");
+////      event.stopPropagation(); // Ngăn chặn click ra ngoài
+//      alert("mọe");
+//  });
+//}
+
+//  // Ẩn menu nếu click ra ngoài
+//  document.addEventListener("click", function (event) {
+//      if (!icon.contains(event.target) && !menu.contains(event.target)) {
+//          menu.classList.remove("show");
+//            alert("mọe");
+//      }
+//  });
+//}
+
+
+
+
 // đổi màu nền đen trắng
 const switchMode = document.getElementById('switch-mode');
 
@@ -225,6 +270,7 @@ switchMode.addEventListener('change', function () {
 //    });
 //  });
 //});
+
 
 
 

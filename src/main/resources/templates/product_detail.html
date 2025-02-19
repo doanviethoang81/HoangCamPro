@@ -9,7 +9,9 @@
 <div class="section_wrap-product-detail">
     <nav class="breadcrumbb">
         <a href="/" class="breadcrumb-link text-secondary">Trang chủ </a>
-        <span class="breadcrumb-item">/ Camera an ninh</span>
+        <span class="breadcrumb-item">/ Camera an ninh /</span>
+        <span class="" th:text="${nameCategory}"></span> /
+        <span th:text="${nameProduct}"></span>
     </nav>
     <div class="section_products">
         <div class="row">
@@ -64,7 +66,7 @@
                             </div>
                             <p class="saving">
                                 <span>Tiết kiệm</span>
-                                <span  th:text="${#numbers.formatInteger(economize,3,'POINT')} + 'đ'"></span>
+                                <span class="economize" th:text="${#numbers.formatInteger(economize,3,'POINT')} + 'đ'"></span>
                             </p>
                             <ul class="product-specs">
                                 <span th:utext="${product.description}"></span>

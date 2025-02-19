@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,5 +36,22 @@ public class AdminOrderController {
             model.addAttribute("error", e.getMessage());
             return "error";
         }
+    }
+
+
+    @RequestMapping("/order/approveOrder/{id}")
+    public String approveOrder(
+            @PathVariable("id") Integer id,Model model,
+            RedirectAttributes redirectAttributes
+    ){
+        try {
+            orderService.updateApproveOrder(id);
+            redirectAttributes.addFlashAttribute("message", "Duyệt đơn hàng thành công!");
+        }
+        catch (Exception e){
+            redirectAttributes.addFlashAttribute("error", "Duyệt đơn hàng thất bại!");
+        }
+        return "redirect:/admin/order/" + id;
+
     }
 }

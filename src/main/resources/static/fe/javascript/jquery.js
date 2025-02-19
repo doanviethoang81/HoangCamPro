@@ -329,7 +329,6 @@ $(function () {
             const price = this.getAttribute('data-price');
             const discount = this.getAttribute('data-discount');
 
-
             // Nếu ID tồn tại, gửi fetch đến server để lấy giá
             if (id) {
                 fetchPriceFromServer(id);
@@ -348,28 +347,35 @@ $(function () {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     }
 
-    // Hàm cập nhật giao diện với giá
-    function updatePriceOnUI(sku, price, discount) {
-        document.querySelector('.product_code').textContent = `${sku}`;
-
-        // Định dạng giá trước khi hiển thị
-        const formattedDiscount = formatPrice(discount);
-        const formattedPrice = formatPrice(price);
-
-        document.querySelector('.current-price').textContent = `${formattedDiscount} đ`;
-        document.querySelector('.old-price').textContent = `${formattedPrice} đ`;
-    }
-
-    // Hàm gửi yêu cầu fetch giá từ server
+    // Hàm gửi yêu cầu fetch giá từ server để thay đổi giá khi hiển thị biến thể khác của sp
     function fetchPriceFromServer(id) {
         fetch(`/product/get-price/${id}`)
             .then(response => response.json())
             .then(data => {
-//                console.log("Price from server:", data.price);
-                updatePriceOnUI(data.sku, data.price, data.discount);
-
+                updatePriceOnUI(data.sku, data.price, data.discount,data.economize, data.discountPercentage);
+//                console.log("Price from server:", data.economize);
             })
             .catch(error => console.error('Error fetching price:', error));
+    }
+
+    // Hàm cập nhật giao diện với giá
+    function updatePriceOnUI(sku, price, discount,economize,discountPercentage) {
+        document.querySelector('.product_code').textContent = `${sku}`;
+        document.querySelector('.discount').textContent = `${discountPercentage}%`;
+
+        // Định dạng giá trước khi hiển thị
+        const formattedDiscount = formatPrice(discount);
+        const formattedPrice = formatPrice(price);
+        const formattedEconomize = formatPrice(economize);
+        const formattedDiscountPercentage = formatPrice(discountPercentage);
+
+
+        document.querySelector('.current-price').textContent = `${formattedDiscount}đ`;
+        document.querySelector('.old-price').textContent = `${formattedPrice}đ`;
+        document.querySelector('.economize').textContent = `${formattedEconomize}đ`;
+//        document.querySelector('.discount').textContent = `${formattedDiscountPercentage}%`;
+
+
     }
 
     // Hàm thay đổi trạng thái active của nút
@@ -501,6 +507,10 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 });
+    // định dạng formatVND chỗ tổng tiền thanh toán
+    function formatVND(amount) {
+        return amount.toLocaleString('vi-VN').replace(/₫/, '') + 'đ';
+    }
 
 // hiển thị tiền khi click chọn sản phẩm cần mua trong giỏ hàng
     function updateTotal() {
@@ -514,7 +524,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         });
-        document.getElementById('total-price').innerText = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total);
+        document.getElementById('total-price').innerText = formatVND(total);
     }
 
 function submitSelectedProducts() {

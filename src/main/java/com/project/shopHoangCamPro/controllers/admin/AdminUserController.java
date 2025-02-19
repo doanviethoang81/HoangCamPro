@@ -136,7 +136,6 @@ public class AdminUserController {
             @PathVariable("id") Integer id,
             RedirectAttributes redirectAttributes){
         try {
-
             userServiceImpl.unblockUser(id);
             redirectAttributes.addFlashAttribute("message", "Mở khóa người dùng thành công!");
         } catch (Exception e) {

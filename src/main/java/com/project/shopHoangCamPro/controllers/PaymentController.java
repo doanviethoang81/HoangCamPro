@@ -114,7 +114,8 @@ public class PaymentController {
                     order.setStatus("Chờ duyệt đơn");
                 }
                 order.setUser(userDetails.getUser());
-                order.setPaymentStatus("Thanh toán khi nhận hàng");
+                order.setPaymentStatus("Chưa thanh toán");
+                order.setPaymentMethod("COD");
                 order.setTotalMoney(totalMoney);
                 order.setActive(true);
                 orderService.save(order);
@@ -136,10 +137,11 @@ public class PaymentController {
                     order.setNote("");
                 }
                 if(order.getStatus() == null){
-                    order.setStatus("Chờ duyệt đơn");
+                    order.setStatus("");
                 }
                 order.setUser(userDetails.getUser());
                 order.setPaymentStatus("");// kiểm tra bên /vn-pay-callback
+                order.setPaymentMethod("VNPAY");
                 order.setTotalMoney(totalMoney);
                 order.setActive(true);
                 orderService.save(order);
@@ -204,13 +206,13 @@ public class PaymentController {
         String orderId = request.getParameter("vnp_TxnRef");
         String message;
         if ("00".equals(status)) {
-            orderService.updatePaymentStatus(Integer.parseInt(orderId), "Đã thanh toán");
+            orderService.updatePaymentStatus(Integer.parseInt(orderId), "Đã thanh toán", "Chờ duyệt đơn");
             message = "Thanh toán thành công!";
         } else if ("24".equals(status)) {
-            orderService.updatePaymentStatus(Integer.parseInt(orderId), "Đã hủy");
+            orderService.updatePaymentStatus(Integer.parseInt(orderId), "Đã hủy đơn", "Đã hủy đơn");
             message = "Khách hàng đã hủy giao dịch.";
         } else {
-            orderService.updatePaymentStatus(Integer.parseInt(orderId), "Lỗi");
+            orderService.updatePaymentStatus(Integer.parseInt(orderId), "Lỗi khi thanh toán", "Lỗi");
             message = "Có lỗi xảy ra khi thanh toán.";
         }
         // Thêm thông điệp vào RedirectAttributes

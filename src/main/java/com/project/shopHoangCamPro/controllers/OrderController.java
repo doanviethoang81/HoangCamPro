@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 
@@ -63,4 +65,21 @@ public class OrderController {
 
         return "order"; // Trả về view order.html
     }
+
+    @RequestMapping("/received/{id}")
+    public String approveOrder(
+            @PathVariable("id") Integer id, Model model,
+            RedirectAttributes redirectAttributes
+    ){
+        try {
+            orderService.updateReceived(id);
+            orderService.updatePaymentStatus(id, "Đã thanh toán","Giao thành công");
+            redirectAttributes.addFlashAttribute("message", "Đã nhận hàng thành công");
+        }
+        catch (Exception e){
+            redirectAttributes.addFlashAttribute("error", "Xác nhận thất bại!");
+        }
+        return "redirect:/orders";
+    }
+
 }

@@ -53,6 +53,11 @@ body {
 	overflow-x: hidden;
 }
 
+.text-warning { color: orange; }
+.text-success { color: green; }
+.text-danger { color: red; }
+.text-primary {color: blue; }
+
 /* SIDEBAR */
 #sidebar {
 	position: fixed;
@@ -408,7 +413,9 @@ body {
 #content main .box-info li .text p {
 	color: var(--dark);
 }
-
+.table-data{
+    text-align: center;
+}
 #content main .table-data {
 	display: flex;
 	flex-wrap: wrap;
@@ -449,17 +456,15 @@ body {
 #content main .table-data .order table th {
 	padding-bottom: 12px;
 	font-size: 13px;
-	text-align: left;
 	border-bottom: 1px solid var(--grey);
 }
 #content main .table-data .order table td {
 	padding: 16px 0;
 }
 #content main .table-data .order table tr td:first-child {
-	display: flex;
 	align-items: center;
 	grid-gap: 12px;
-	padding-left: 6px;
+	text-align: center;
 }
 #content main .table-data .order table tr td:last-child {
 	align-items: center;
@@ -478,7 +483,6 @@ body {
 	vertical-align: top;
 	align-items: center;
 	grid-gap: 12px;
-	padding-left: 6px;
 }
 #content main .table-data .order table td img {
 	object-fit: cover;
@@ -812,4 +816,45 @@ body {
 .page-item:last-child{
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
+}
+
+.shipping_status{
+    font-size: 12px;
+}
+/*ORDER*/
+.task_order_admin {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.task_order_wrap {
+    position: absolute;
+    top: -13px; /* Xuất hiện ngay bên dưới */
+    right: -22px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: none; /* Ẩn mặc định */
+    width: 105px;
+    font-size: 14px;
+}
+
+.task_order_admin:hover .task_order_wrap {
+    display: block; /* Hiện khi hover */
+    z-index:100;
+}
+
+.task_order_admin_item {
+    padding: 2px;
+    cursor: pointer;
+    color: var(--dark);
+    display: flex;
+    justify-content: center;
+}
+
+.task_order_admin_item:hover {
+    background: #f0f0f0;
 }

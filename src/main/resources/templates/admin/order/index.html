@@ -9,15 +9,16 @@
 
     <div class="table-data">
       <div class="order">
-        <table>
+        <table style="text-align: center">
           <thead>
           <tr>
             <th>Tên người đặt </th>
             <th>SĐT</th>
             <th>Địa chỉ </th>
             <th>Ngày đặt</th>
-            <th>Trạng thái</th>
-            <th>Tác vụ</th>
+            <th>Thanh toán</th>
+            <th>Trạng thái giao hàng</th>
+<!--            <th>Tác vụ</th>-->
           </tr>
           </thead>
           <tbody>
@@ -30,15 +31,37 @@
             </td>
             <td th:text="${order.date}">
             </td >
-            <td th:text="${order.status}">
-            </td >
-            <td>
-              <button style="background-color: rgb(7, 128, 41); border: none; border-radius: 6px;">
-                <a th:href="@{/admin/order/{id}(id=${order.id})}" style=" color: #fff;">
-                  <i class="fa-solid fa-eye"></i>
-                  Chi tiết
-                </a>
-              </button>
+            <td th:text="${order.paymentStatus}"></td>
+           <td class="shipping_status"
+               th:text="${order.status}"
+               th:classappend="${
+                order.status == 'Chờ duyệt đơn' ? 'text-warning' :
+                order.status == 'Đang giao hàng' ? 'text-primary' :
+                order.status == 'Giao thành công' ? 'text-success' :
+                order.status == 'Đã hủy đơn' ? 'text-danger' : ''
+                }">
+            </td>
+
+            <td class="task_order_admin" style="display: flex; align-items: center">
+<!--                style="background-color: rgb(7, 128, 41); border: none; border-radius: 6px;"-->
+<!--              <button >-->
+                  <i class=" fa-solid fa-ellipsis-vertical "></i>
+                <div class="task_order_wrap">
+                    <a class="task_order_admin_item"
+                       th:href="@{/admin/order/{id}(id=${order.id})}"> Chi tiết
+                    </a>
+                    <a class="task_order_admin_item" th:if="${order.status == 'Chờ duyệt đơn'}"
+                       th:href="@{/admin/order/approveOrder/{id}(id=${order.id})}"> Duyệt đơn
+                    </a>
+                </div>
+
+<!--                nếu thanh toán bằng vn pay thất bại thì k đc duyệt đơn-->
+
+<!--                <a th:href="@{/admin/order/{id}(id=${order.id})}" style=" color: #fff;">-->
+<!--                  <i class="fa-solid fa-eye"></i>-->
+<!--                  Chi tiết-->
+<!--                </a>-->
+<!--              </button>-->
             </td>
           </tr>
           </tbody>
@@ -49,10 +72,10 @@
           <ul class="pagination">
             <li th:if="${currentPage > 1}" class="page-item">
               <a  class="page-link" th:href="@{'?pageNo=' + ${currentPage-1}}" aria-label="Previous">
-                                <span aria-hidden="true">
-                                   <i class="fa-solid fa-angle-left"
-                                      style="color: #0d6efd; width: 100%;"></i>
-                                </span>
+                  <span aria-hidden="true">
+                    <i class="fa-solid fa-angle-left"
+                       style="color: #0d6efd; width: 100%;"></i>
+                  </span>
               </a>
             </li>
             <li class="page-item" th:each="i:${#numbers.sequence(1,totalPage)}" th:classappend="${currentPage == i ? 'active' : ''}"><a th:text="${i}" class="page-link" th:href="@{'?pageNo='+ ${i}}">1</a></li>
@@ -70,3 +93,23 @@
       </div>
     </div>
   </span>
+<!--<script>-->
+<!--    const icon = document.querySelector(".task_order_admin");-->
+<!--const menu = document.querySelector(".task_order_wrap");-->
+
+<!--// Toggle hiển thị menu khi click vào icon-->
+<!--icon.addEventListener("click", function (event) {-->
+<!--    menu.classList.toggle("show");-->
+<!--//      event.stopPropagation(); // Ngăn chặn click ra ngoài-->
+<!--    alert("mọe");-->
+<!--});-->
+
+<!--// Ẩn menu nếu click ra ngoài-->
+<!--document.addEventListener("click", function (event) {-->
+<!--    if (!icon.contains(event.target) && !menu.contains(event.target)) {-->
+<!--        menu.classList.remove("show");-->
+<!--          alert("mọe");-->
+<!--    }-->
+<!--});-->
+
+<!--</script>-->

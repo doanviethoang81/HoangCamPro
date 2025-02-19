@@ -57,12 +57,30 @@
             <div style="padding-top: 20px;"></div>
             <h3 class="name-title">Thanh toán</h3>
             <div class="payment_wrap">
-              <input type="checkbox" id="checkbox_payment" name="paymentMethod" value="true">
+              <input type="radio" id="checkbox_payment" name="paymentMethod" value="true">
               <span class="payment_wrap-name">
                 Thanh toán khi giao hàng (COD)
               </span>
               <p>
                 <span class="fa-solid fa-money-bill-1" style="color: #74C0FC;"></span>
+              </p>
+            </div>
+            <div class="payment_wrap">
+              <input type="radio" id="checkbox_vn_pay" name="paymentMethod" value="VN_PAY">
+              <span class="payment_wrap-name">
+                Thanh toán VNPAY
+              </span>
+              <p>
+                <img style="width: 22px; height: 22px" th:src="@{/fe/img/vnpay-logo.jpg}" alt="VNPAY">
+              </p>
+            </div>
+            <div class="payment_wrap">
+              <input type="radio" id="E-wallet-payment " name="paymentMethod" value="MOMO">
+              <span class="payment_wrap-name">
+                Thanh toán MoMo
+              </span>
+              <p>
+                <img style="width: 22px; height: 22px" th:src="@{/fe/img/momo_square_pinkbg.svg}" alt="mono">
               </p>
             </div>
           </div>

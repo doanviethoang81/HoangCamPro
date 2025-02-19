@@ -181,14 +181,18 @@ public class ProductController {
             }
 
             List<ProductVariant> variants = productVariantService.getProductVariantsByProductId(product.getId());
-            double price = Double.parseDouble(variants.getFirst().getPrice());
-            double discount =Double.parseDouble(variants.getFirst().getDiscount());
+            Float price = Float.parseFloat(variants.getFirst().getPrice());
+            Float discount =Float.parseFloat(variants.getFirst().getDiscount());
 
             double economize = price - discount;
-            double discountPercentage = (discount / price) * 100;// tính phần trăm giảm giá
+            int discountPercentage= (int) Math.floor(((price - discount)/ price) * 100);// tính phần trăm giảm giá
             model.addAttribute("discountPercentage", discountPercentage);
             model.addAttribute("economize", economize);
 
+            String nameCategory = product.getCategory().getName();
+            String nameProduct = product.getName();
+            model.addAttribute("nameCategory", nameCategory);
+            model.addAttribute("nameProduct", nameProduct);
             model.addAttribute("list", product);
             model.addAttribute("variants", variants);
 
@@ -205,9 +209,18 @@ public class ProductController {
         Optional<ProductVariant> variant = productVariantService.findById(id);
         if (variant.isPresent()) {
             Map<String, Object> response = new HashMap<>();
+
+            int discountPercentage = (int) Math.floor(((Float.parseFloat(variant.get().getPrice()) - Float.parseFloat(variant.get().getDiscount()))
+                    / Float.parseFloat(variant.get().getPrice())) * 100);
+
+            Float economize= Float.parseFloat(variant.get().getPrice()) - Float.parseFloat(variant.get().getDiscount());
+
             response.put("sku", variant.get().getSku());
             response.put("discount", variant.get().getDiscount());
             response.put("price", variant.get().getPrice());
+            response.put("discountPercentage", discountPercentage);
+            response.put("economize", economize);
+
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
